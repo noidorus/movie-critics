@@ -28,9 +28,7 @@ export class FirebaseService {
     limit?: number;
   }): Promise<FilmsResponse> {
     try {
-      const cachedResponse = await this.cacheService.get<FilmsResponse>(
-        `films:${page}:${limit}`,
-      );
+      const cachedResponse = await this.cacheService.get<FilmsResponse>(`films:${page}:${limit}`);
 
       if (cachedResponse) {
         console.log('Films from cache');
@@ -69,10 +67,7 @@ export class FirebaseService {
     }
 
     const response = await this.#filters.get();
-    const filters = response.docs.reduce<Filters>(
-      (acc, val) => ({ ...acc, ...val.data() }),
-      {},
-    );
+    const filters = response.docs.reduce<Filters>((acc, val) => ({ ...acc, ...val.data() }), {});
 
     await this.cacheService.set('filters', filters);
     return filters;
