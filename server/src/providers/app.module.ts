@@ -3,8 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { FirebaseModule } from './firebase.module';
 import { HttpModule } from '@nestjs/axios';
 import { FilmsController } from 'src/controllers/films.controller';
-import { KinopoiskService } from 'src/services/kinopoisk.service';
-
 @Module({
   imports: [
     HttpModule,
@@ -12,6 +10,6 @@ import { KinopoiskService } from 'src/services/kinopoisk.service';
     FirebaseModule,
   ],
   controllers: [FilmsController],
-  providers: [KinopoiskService],
+  providers: [],
 })
 export class AppModule {}

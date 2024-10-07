@@ -1,6 +1,8 @@
-import { ItemType } from './kinopoisk.types';
-
-export interface IFilm extends FilmInsctance {
+export interface Film {
+  id: string;
+  nameRu: string | null;
+  nameEn: string | null;
+  nameOriginal: string | null;
   countries: string[];
   genres: string[];
   year: number;
@@ -13,9 +15,14 @@ export interface IFilm extends FilmInsctance {
   shortDescription: string;
 }
 
-export interface FilmInsctance {
-  id: string;
-  nameRu: string | null;
-  nameEn: string | null;
-  nameOriginal: string | null;
+export interface Filters {
+  [key: string]: string[];
 }
+export interface FilmsResponse {
+  items: Film[];
+  total: number;
+  totalPages: number;
+  page: number;
+}
+
+export type ItemType = 'VIEDO' | 'FILM' | 'MINI_SERIES' | 'TV_SERIES';
