@@ -28,27 +28,28 @@ export class FirebaseService {
     limit?: number;
   }): Promise<FilmsResponse> {
     try {
-      const cachedResponse = await this.cacheService.get<FilmsResponse>(`films:${page}:${limit}`);
+      const cachedData = await this.cacheService.get<FilmsResponse>(`films:${page}:${limit}`);
 
-      if (cachedResponse) {
-        console.log('Films from cache');
-        return cachedResponse;
+      if (cachedData) {
+        return cachedData;
       }
 
-      const count = await this.#films.count().get();
-      const response = await this.#films
+      const total = await this.#films
+        .count()
+        .get()
+        .then((res) => res.data().count);
+
+      const items = await this.#films
         .limit(limit)
         .offset((page - 1) * limit)
-        .get();
+        .get()
+        .then(({ docs }) => docs.map((doc) => ({ id: doc.id, ...(doc.data() as Film) })));
 
       const data = {
-        total: count.data().count,
+        total,
         page,
-        totalPages: Math.ceil(count.data().count / limit),
-        items: response.docs.map((doc) => {
-          const data = doc.data() as Film;
-          return { ...data, id: doc.id };
-        }),
+        totalPages: Math.ceil(total / limit),
+        items,
       };
 
       await this.cacheService.set(`films:${page}:${limit}`, data);
@@ -58,18 +59,44 @@ export class FirebaseService {
     }
   }
 
-  async getFilters(): Promise<Filters> {
-    const cachedResponse = await this.cacheService.get<Filters>('filters');
+  async getFilmById(id: string): Promise<Film> {
+    try {
+      const cachedData = await this.cacheService.get<Film>(`film:${id}`);
 
-    if (cachedResponse) {
-      console.log('Filters from cache');
-      return cachedResponse;
+      if (cachedData) {
+        return cachedData;
+      }
+
+      const data = await this.#films
+        .doc(id)
+        .get()
+        .then((doc) => doc.data() as Film);
+
+      await this.cacheService.set(`film:${id}`, data);
+      return data;
+    } catch (err) {
+      throw err;
     }
+  }
 
-    const response = await this.#filters.get();
-    const filters = response.docs.reduce<Filters>((acc, val) => ({ ...acc, ...val.data() }), {});
+  async getFilters(): Promise<Filters> {
+    try {
+      const cachedData = await this.cacheService.get<Filters>('filters').catch(() => {
+        console.log('dasdakjsbdjkasnd');
+      });
 
-    await this.cacheService.set('filters', filters);
-    return filters;
+      if (cachedData) {
+        return cachedData;
+      }
+
+      const data = await this.#filters
+        .get()
+        .then(({ docs }) => docs.reduce((acc, val) => ({ ...acc, ...val.data() }), {} as Filters));
+
+      await this.cacheService.set('filters', data);
+      return data;
+    } catch (err) {
+      throw err;
+    }
   }
 }

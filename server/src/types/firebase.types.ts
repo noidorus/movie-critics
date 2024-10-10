@@ -16,8 +16,11 @@ export interface Film {
 }
 
 export interface Filters {
-  [key: string]: string[];
+  countries: string[];
+  genres: string[];
+  types: ['VIDEO', 'FILM', 'MINI_SERIES', 'TV_SERIES', 'TV_SHOW'];
 }
+
 export interface FilmsResponse {
   items: Film[];
   total: number;
@@ -25,4 +28,10 @@ export interface FilmsResponse {
   page: number;
 }
 
-export type ItemType = 'VIEDO' | 'FILM' | 'MINI_SERIES' | 'TV_SERIES';
+export enum ItemType {
+  VIDEO = 'VIEDO',
+  FILM = 'FILM',
+  MINI_SERIES = 'MINI_SERIES',
+  TV_SERIES = 'TV_SERIES',
+  TV_SHOW = 'TV_SHOW',
+}

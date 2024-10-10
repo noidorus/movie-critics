@@ -24,7 +24,7 @@ module.exports = {
     'no-redeclare': 'off',
     '@typescript-eslint/no-redeclare': 'error',
     curly: ['error', 'all'],
-    quotes: ['error', 'single'],
+    quotes: ['error', 'single', { avoidEscape: true }],
     'prefer-const': 'error',
     eqeqeq: 'error',
     'no-unreachable': 'error',
