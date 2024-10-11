@@ -20,13 +20,7 @@ export class FirebaseService {
     this.#filters = this.#db.collection('filters');
   }
 
-  async getFilms({
-    page = 1,
-    limit = 10,
-  }: {
-    page?: number;
-    limit?: number;
-  }): Promise<FilmsResponse> {
+  async getFilms(page: number, limit: number): Promise<FilmsResponse> {
     try {
       const cachedData = await this.cacheService.get<FilmsResponse>(`films:${page}:${limit}`);
 
@@ -71,6 +65,10 @@ export class FirebaseService {
         .doc(id)
         .get()
         .then((doc) => doc.data() as Film);
+
+      if (!data) {
+        return null;
+      }
 
       await this.cacheService.set(`film:${id}`, data);
       return data;
