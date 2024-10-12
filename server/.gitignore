@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+# Configs
+serviceAccountKey.json
+
 # Logs
 logs
 *.log
