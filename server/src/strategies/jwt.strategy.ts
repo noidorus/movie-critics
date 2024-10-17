@@ -5,6 +5,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from 'src/services';
 import { JwtPayload } from 'src/interfaces/jwtPayload.interface';
 import { Request } from 'express';
+import { UserEntity } from 'src/entities/User.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,6 +20,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
-    return this.authService.validateUser(payload);
+    return new UserEntity(await this.authService.validateUser(payload));
   }
 }

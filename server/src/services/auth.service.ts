@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { compare } from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
+import { compare, genSalt, hash } from 'bcrypt';
 import { UsersService } from './users.service';
 import { LoginUserDTO, RegisterDTO } from 'src/dto/user';
-import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'src/interfaces/jwtPayload.interface';
-import { UserResponseDTO } from 'src/dto/user/UserResponse.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,8 @@ export class AuthService {
   ) {}
 
   async register(userDto: RegisterDTO) {
-    return this.usersService.create(userDto);
+    const hashedPassword = await hash(userDto.password, await genSalt());
+    return await this.usersService.create({ ...userDto, password: hashedPassword });
   }
 
   async login({ username, password }: LoginUserDTO) {
@@ -23,20 +24,19 @@ export class AuthService {
       const areEqual = await compare(password, user.password);
 
       if (!areEqual) {
-        throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+        throw new HttpException('Invalid credentials', HttpStatus.FORBIDDEN);
       }
       const token = this._createToken(user);
 
       return { user, token };
     } catch {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Invalid credentials', HttpStatus.FORBIDDEN);
     }
   }
 
-  async validateUser({ username }: JwtPayload): Promise<UserResponseDTO> {
+  async validateUser({ username }: JwtPayload): Promise<User> {
     try {
-      const user = await this.usersService.getUserByUsername(username);
-      return new UserResponseDTO(user);
+      return await this.usersService.getUserByUsername(username);
     } catch {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
     }

@@ -1,31 +1,28 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import { RegisterDTO } from 'src/dto/user/Register.dto';
-import { genSalt, hash } from 'bcrypt';
+import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(userDto: RegisterDTO) {
-    const userInDb = await this.prisma.user.findFirst({
-      where: { OR: [{ email: userDto.email }, { username: userDto.username }] },
-    });
+  async create(userDto: RegisterDTO): Promise<User> {
+    try {
+      return await this.prisma.user.create({ data: userDto });
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        if (err.code === 'P2002') {
+          throw new HttpException('User already exists', HttpStatus.CONFLICT);
+        }
+      }
 
-    if (userInDb) {
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    const salt = await genSalt();
-    await this.prisma.user.create({
-      data: { ...userDto, password: await hash(userDto.password, salt) },
-    });
-
-    throw new HttpException('User created', HttpStatus.CREATED);
   }
 
-  async getUserByUsername(username: string) {
-    const user = await this.prisma.user.findFirst({ where: { username } });
+  async getUserByUsername(username: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { username } });
 
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
