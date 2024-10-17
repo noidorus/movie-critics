@@ -5,11 +5,15 @@ import { FilmsController } from 'src/controllers/films.controller';
 import { CacheModule } from '@nestjs/cache-manager';
 import { SEC_60 } from 'src/constants/constants';
 
+// import { PrismaService } from 'src/services/prisma.service';
+import { AuthModule } from './auth.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ cache: true, isGlobal: true }),
     CacheModule.register({ isGlobal: true, ttl: SEC_60 }),
     FirebaseModule,
+    AuthModule,
   ],
   controllers: [FilmsController],
   providers: [],
