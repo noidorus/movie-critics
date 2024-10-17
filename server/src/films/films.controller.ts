@@ -1,20 +1,12 @@
-import {
-  Controller,
-  Get,
-  HttpException,
-  Param,
-  Query,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { FilmsService } from './films.service';
+import { Controller, Get, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { FilmResponseDTO, FilmsQueryDTO, FilmsResponseDTO, FiltersResponseDTO } from './dto';
-import { FirebaseService } from 'src/firebase/firebase.service';
 
 @ApiTags('Films')
 @Controller('api/films')
 export class FilmsController {
-  constructor(private readonly firebaseService: FirebaseService) {}
+  constructor(private readonly filmsService: FilmsService) {}
 
   @Get()
   @ApiOperation({
@@ -26,34 +18,20 @@ export class FilmsController {
   @UsePipes(new ValidationPipe())
   async getFilms(@Query() query: FilmsQueryDTO): Promise<FilmsResponseDTO> {
     const { page = 1, limit = 10 } = query;
-    try {
-      return await this.firebaseService.getFilms(+page, +limit);
-    } catch {
-      throw new HttpException('An error occurred while fetching chart data', 500);
-    }
+    return await this.filmsService.getFilms(+page, +limit);
   }
 
   @Get('filters')
   @ApiOkResponse({ status: 200, type: FiltersResponseDTO })
   @ApiOperation({ summary: 'Get filters data' })
   async getFilters(): Promise<FiltersResponseDTO> {
-    try {
-      return await this.firebaseService.getFilters();
-    } catch {
-      throw new HttpException('An error occurred while fetching chart data', 500);
-    }
+    return await this.filmsService.getFilters();
   }
 
   @Get(':id')
   @ApiOkResponse({ status: 200, type: FilmResponseDTO })
   @ApiOperation({ summary: 'Get film data by id' })
   async getFilmById(@Param('id') id: string): Promise<FilmResponseDTO> {
-    const film = await this.firebaseService.getFilmById(id);
-
-    if (!film) {
-      throw new HttpException('Film not found', 404);
-    }
-
-    return film;
+    return await this.filmsService.getFilmById(id);
   }
 }
