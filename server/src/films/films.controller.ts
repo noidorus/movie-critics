@@ -8,13 +8,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiOkResponse } from '@nestjs/swagger';
-import {
-  FilmResponseDTO,
-  FilmsQueryDTO,
-  FilmsResponseDTO,
-  FiltersResponseDTO,
-} from 'src/dto/films';
-import { FirebaseService } from 'src/services/firebase.service';
+import { FilmResponseDTO, FilmsQueryDTO, FilmsResponseDTO, FiltersResponseDTO } from './dto';
+import { FirebaseService } from 'src/firebase/firebase.service';
 
 @ApiTags('Films')
 @Controller('api/films')

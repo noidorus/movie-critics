@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
-import { FirebaseService } from 'src/services/firebase.service';
+import { FirebaseService } from './firebase.service';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',

@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
-import { RegisterDTO } from 'src/dto/user/Register.dto';
 import { Prisma, User } from '@prisma/client';
+import { PrismaService } from 'src/prismaDB/prisma.service';
+import { CreateUserDTO } from './dto/createUser.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(userDto: RegisterDTO): Promise<User> {
+  async create(userDto: CreateUserDTO): Promise<User> {
     try {
       return await this.prisma.user.create({ data: userDto });
     } catch (err) {

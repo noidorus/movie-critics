@@ -2,9 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { compare, genSalt, hash } from 'bcrypt';
-import { UsersService } from './users.service';
-import { LoginUserDTO, RegisterDTO } from 'src/dto/user';
-import { JwtPayload } from 'src/interfaces/jwtPayload.interface';
+import { JwtPayload } from 'src/auth/interfaces/jwtPayload.interface';
+import { UsersService } from 'src/users/users.service';
+import { RegisterDTO, LoginDTO } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
     return await this.usersService.create({ ...userDto, password: hashedPassword });
   }
 
-  async login({ username, password }: LoginUserDTO) {
+  async login({ username, password }: LoginDTO) {
     try {
       const user = await this.usersService.getUserByUsername(username);
       const areEqual = await compare(password, user.password);

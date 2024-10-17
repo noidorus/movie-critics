@@ -2,7 +2,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Injectable, Inject } from '@nestjs/common';
 import { app, firestore } from 'firebase-admin';
-import { FilmsResponse, Film, Filters } from 'src/interfaces/firebase.interface';
+import { FilmsResponse, Film, Filters } from './firebase.interface';
 
 @Injectable()
 export class FirebaseService {

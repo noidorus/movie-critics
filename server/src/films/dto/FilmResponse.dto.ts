@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Film, ItemType } from 'src/interfaces/firebase.interface';
+import { Film, ItemType } from 'src/firebase/firebase.interface';
 
 export class FilmResponseDTO implements Film {
   @ApiProperty({ example: '1282979' })

@@ -1,11 +1,10 @@
 import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
-import { RegisterDTO } from 'src/dto/user/Register.dto';
-import { AuthService } from 'src/services/auth.service';
-import { LoginUserDTO } from 'src/dto/user';
 import { Response } from 'express';
-import { UserEntity } from 'src/entities/User.entity';
-import JwtAuthGuard from 'src/guards/jwt-auth.guard';
-import { RequestWithUser } from 'src/interfaces/requestWithUser.interface';
+import { UserEntity } from 'src/users/user.entity';
+import { AuthService } from './auth.service';
+import { LoginDTO, RegisterDTO } from './dto';
+import { RequestWithUser } from './interfaces';
+import JwtAuthGuard from './jwt-auth.guard';
 
 @Controller('api/auth')
 export class AuthController {
@@ -19,7 +18,7 @@ export class AuthController {
 
   @Post('login')
   async login(
-    @Body() userDto: LoginUserDTO,
+    @Body() userDto: LoginDTO,
     @Res({ passthrough: true }) res: Response,
   ): Promise<UserEntity> {
     const { token, user } = await this.authService.login(userDto);
