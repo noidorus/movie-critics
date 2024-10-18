@@ -1,8 +1,8 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { app, firestore } from 'firebase-admin';
-import { FilmsResponse, Film, Filters } from 'src/types/firebase.types';
+import { FilmsResponse, Film, Filters } from './firebase.interface';
 
 @Injectable()
 export class FirebaseService {
@@ -49,7 +49,8 @@ export class FirebaseService {
       await this.cacheService.set(`films:${page}:${limit}`, data);
       return data;
     } catch (err) {
-      throw err;
+      console.error(err);
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -73,15 +74,14 @@ export class FirebaseService {
       await this.cacheService.set(`film:${id}`, data);
       return data;
     } catch (err) {
-      throw err;
+      console.error(err);
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   async getFilters(): Promise<Filters> {
     try {
-      const cachedData = await this.cacheService.get<Filters>('filters').catch(() => {
-        console.log('dasdakjsbdjkasnd');
-      });
+      const cachedData = await this.cacheService.get<Filters>('filters');
 
       if (cachedData) {
         return cachedData;
@@ -94,7 +94,8 @@ export class FirebaseService {
       await this.cacheService.set('filters', data);
       return data;
     } catch (err) {
-      throw err;
+      console.error(err);
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

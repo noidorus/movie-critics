@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { FilmResponseDTO } from './FilmResponse.dto';
-import { FilmsResponse } from 'src/types/firebase.types';
+import { FilmsResponse } from 'src/films/firebase/firebase.interface';
 
 export class FilmsResponseDTO implements FilmsResponse {
   @ApiProperty({ example: 80 })

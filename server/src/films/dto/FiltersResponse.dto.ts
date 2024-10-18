@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Filters } from 'src/types/firebase.types';
+import { Filters } from 'src/films/firebase/firebase.interface';
 
 export class FiltersResponseDTO implements Filters {
   @ApiProperty({ example: ['США', 'Канада', 'Дания'] })
