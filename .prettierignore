@@ -1,0 +1,10 @@
+.git
+node_modules
+.gitignore
+LICENSE
+build
+dist
+dist-ssr
+.all-contributorsrc
+.vscode
+.idea
