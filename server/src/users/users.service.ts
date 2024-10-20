@@ -16,7 +16,7 @@ export class UsersService {
           throw new HttpException('User already exists', HttpStatus.CONFLICT);
         }
       }
-
+      console.error(err);
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

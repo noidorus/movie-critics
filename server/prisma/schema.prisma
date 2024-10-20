@@ -21,12 +21,69 @@ model User {
   role      Role     @default(CLIENT)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  Rating    Rating[]
 
-  @@map("user")
+  @@map("users")
+}
+
+model Film {
+  id               Int       @id @default(autoincrement())
+  kpId             String?   @unique
+  nameRu           String?
+  nameOriginal     String?
+  slogan           String?
+  description      String?
+  shortDescription String?
+  filmLength       Int?
+  year             Int
+  posterUrl        String
+  posterUrlPreview String
+  type             VideoType
+  countries        Country[]
+  genres           Genre[]
+  ratings          Rating[]
+
+  @@map(name: "films")
+}
+
+model Genre {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  films Film[]
+
+  @@map(name: "genres")
+}
+
+model Rating {
+  id         Int  @id @default(autoincrement())
+  user       User @relation(fields: [userId], references: [id])
+  userId     Int
+  film       Film @relation(fields: [filmId], references: [id])
+  filmId     Int
+  userRating Int
+
+  @@unique([filmId, userId])
+  @@map(name: "ratings")
+}
+
+model Country {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  films Film[]
+
+  @@map(name: "countries")
 }
 
 enum Role {
   CLIENT
   ADMIN
   ROOT
+}
+
+enum VideoType {
+  VIDEO
+  FILM
+  MINI_SERIES
+  TV_SERIES
+  TV_SHOW
 }
