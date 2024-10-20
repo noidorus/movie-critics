@@ -15,7 +15,9 @@ export class AuthService {
 
   async register(userDto: RegisterDTO) {
     const hashedPassword = await hash(userDto.password, await genSalt());
-    return await this.usersService.create({ ...userDto, password: hashedPassword });
+    await this.usersService.create({ ...userDto, password: hashedPassword });
+
+    throw new HttpException('User created', HttpStatus.CREATED);
   }
 
   async login({ username, password }: LoginDTO) {

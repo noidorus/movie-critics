@@ -7,22 +7,22 @@ export class UserEntity implements User {
     Object.assign(this, partial);
   }
 
-  @ApiProperty()
+  @ApiProperty({ example: 1 })
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'user123' })
   username: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'pXwQ8@example.com' })
   email: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: Role.CLIENT })
   role: Role;
 
-  @ApiProperty()
+  @ApiProperty({ example: new Date() })
   createdAt: Date;
 
-  @ApiProperty()
+  @ApiProperty({ example: new Date() })
   updatedAt: Date;
 
   @Exclude()
