@@ -1,1 +1,1 @@
-# movie-critics-frontend
+to-do: заполнить ридми
