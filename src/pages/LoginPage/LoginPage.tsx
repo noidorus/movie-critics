@@ -13,7 +13,7 @@ export default function LoginPage() {
                 <LoginForm />
                 <Button
                     label="Нет аккаунта?"
-                    className='button'
+                    className="button"
                     onClick={() => navigate('/register')}
                 />
             </div>

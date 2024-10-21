@@ -26,7 +26,10 @@ export const loginUser = createAsyncThunk<
         });
 
         if (!response.ok) {
-            throw { message: 'Неверные имя пользователя или пароль', status: response.status } as AuthError;
+            throw {
+                message: 'Неверные имя пользователя или пароль',
+                status: response.status,
+            } as AuthError;
         }
 
         const data: LoginResponseData = await response.json();
@@ -79,12 +82,16 @@ export const checkAuth = createAsyncThunk<User, void, { rejectValue: AuthError }
             });
 
             if (!response.ok) {
-                throw new Error('Ошибка проверки аутентификации');
+                throw {
+                    message: 'Неверные имя пользователя или пароль',
+                    status: response.status,
+                } as AuthError;
             }
 
             return response.json();
         } catch (error: unknown) {
-            return rejectWithValue({ message: 'Ошибка проверки аутентификации', status: 500 });
+            const authError = error as AuthError;
+            return rejectWithValue(authError);
         }
     },
 );

@@ -31,7 +31,7 @@ const authSlice = createSlice({
         },
         clearAuthError(state) {
             state.error = null;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -45,7 +45,10 @@ const authSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(loginUser.rejected, (state, action: PayloadAction<AuthError | undefined>) => {
-                state.error = action.payload || { message: 'Ошибка сервера. Попробуйте позже.', status: 500 };
+                state.error = action.payload || {
+                    message: 'Ошибка сервера. Попробуйте позже.',
+                    status: 500,
+                };
                 state.isLoading = false;
                 state.user = null;
             })
