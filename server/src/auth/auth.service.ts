@@ -1,51 +1,80 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
-import { compare, genSalt, hash } from 'bcrypt';
-import { JwtPayload } from 'src/auth/interfaces/jwtPayload.interface';
-import { UsersService } from 'src/users/users.service';
-import { RegisterDTO, LoginDTO } from './dto';
+import { compare } from 'bcrypt';
+import { UserService } from 'src/user/user.service';
+import { RegisterDTO } from './dto';
+import { JwtConfig, JwtPayload, JwtCookie } from './interfaces';
+import { TypedConfigService } from 'src/config/typed-config.service';
 
 @Injectable()
 export class AuthService {
+  private readonly jwt: JwtConfig;
+  private readonly refreshJwt: JwtConfig;
+
   constructor(
-    private readonly usersService: UsersService,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
-  ) {}
-
-  async register(userDto: RegisterDTO) {
-    const hashedPassword = await hash(userDto.password, await genSalt());
-    await this.usersService.create({ ...userDto, password: hashedPassword });
-
-    throw new HttpException('User created', HttpStatus.CREATED);
+    readonly configService: TypedConfigService,
+  ) {
+    this.jwt = configService.get('jwt');
+    this.refreshJwt = configService.get('refreshJwt');
   }
 
-  async login({ username, password }: LoginDTO) {
+  async register(userDto: RegisterDTO): Promise<void> {
     try {
-      const user = await this.usersService.getUserByUsername(username);
-      const areEqual = await compare(password, user.password);
+      await this.userService.create(userDto).then(() => {
+        throw new HttpException('User created', HttpStatus.CREATED);
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async validateCredentials(
+    username: string,
+    value: string,
+    hashedValueKey: 'password' | 'refreshToken',
+  ) {
+    try {
+      const user = await this.userService.getUserByUsername(username);
+
+      const areEqual = await compare(value, user[hashedValueKey]);
 
       if (!areEqual) {
         throw new HttpException('Invalid credentials', HttpStatus.FORBIDDEN);
       }
-      const token = this._createToken(user);
 
-      return { user, token };
+      return user;
     } catch {
       throw new HttpException('Invalid credentials', HttpStatus.FORBIDDEN);
     }
   }
 
-  async validateUser({ username }: JwtPayload): Promise<User> {
+  createAccessToken({ username }: JwtPayload): JwtCookie {
+    return this._createToken({ username }, this.jwt);
+  }
+
+  async logout(username: string): Promise<[string, string]> {
+    await this.userService.removeRefreshToken(username);
+
+    return [this.jwt.name, this.refreshJwt.name];
+  }
+
+  async createRefreshToken({ username }: JwtPayload): Promise<JwtCookie> {
     try {
-      return await this.usersService.getUserByUsername(username);
-    } catch {
-      throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+      const token = this._createToken({ username }, this.refreshJwt);
+      await this.userService.setRefreshToken(username, token.token);
+      return token;
+    } catch (err) {
+      throw err;
     }
   }
 
-  private _createToken({ username, email }: JwtPayload) {
-    const user: JwtPayload = { username, email };
-    return this.jwtService.sign(user);
+  private _createToken({ username }: JwtPayload, { expHours, secret, name }: JwtConfig): JwtCookie {
+    const user: JwtPayload = { username };
+    const maxAge = expHours * 60 * 60 * 1000; // convert minutes to milliseconds
+    const token = this.jwtService.sign(user, { expiresIn: maxAge, secret });
+
+    return { token, maxAge, name };
   }
 }
