@@ -5,7 +5,7 @@ import { checkAuth } from './store/Auth/authThunks';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
-import ChatPage from './pages/ChatPage/ChatPage';
+import MoviesPage from './pages/MoviesPage/MoviesPage';
 import './App.css';
 export default function App() {
     const user = useAppSelector(selectUser);
@@ -32,8 +32,8 @@ export default function App() {
                     </>
                 ) : (
                     <>
-                        <Route path="/chat" element={<ChatPage />} />
-                        <Route path="*" element={<Navigate to="/chat" />} />
+                        <Route path="/movies" element={<MoviesPage />} />
+                        <Route path="*" element={<Navigate to="/movies" />} />
                     </>
                 )}
             </Routes>

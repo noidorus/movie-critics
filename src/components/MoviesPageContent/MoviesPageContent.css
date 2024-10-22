@@ -1,0 +1,22 @@
+.movies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px;
+}
+
+.movies-title {
+    margin: 20px 0 0 20px;
+    font-size: 2.6rem;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.loading-message {
+    text-align: center;
+    font-size: 1.2rem;
+}
