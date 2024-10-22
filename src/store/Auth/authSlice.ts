@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthError, LoginResponseData } from '../../DTO/AuthDTO';
-import { loginUser, registerUser, checkAuth } from './authThunks';
+import { loginUser, registerUser, checkAuth, logout } from './authThunks'; // Импортируем logout
 import { User } from '../../types/UserType';
 
 interface AuthState {
@@ -19,11 +19,6 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logout(state) {
-            state.user = null;
-            state.isLoading = false;
-            localStorage.removeItem('user');
-        },
         setUser(state, action) {
             state.user = action.payload;
             localStorage.setItem('user', JSON.stringify(action.payload));
@@ -72,9 +67,24 @@ const authSlice = createSlice({
             })
             .addCase(checkAuth.rejected, (state) => {
                 state.user = null;
+            })
+            .addCase(logout.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.user = null;
+                state.isLoading = false;
+                localStorage.removeItem('user');
+            })
+            .addCase(logout.rejected, (state, action: PayloadAction<AuthError | undefined>) => {
+                state.error = action.payload || {
+                    message: 'Ошибка при выходе',
+                    status: 500,
+                };
+                state.isLoading = false;
             });
     },
 });
 
-export const { logout, clearAuthError, setUser } = authSlice.actions;
+export const { clearAuthError, setUser } = authSlice.actions;
 export default authSlice.reducer;

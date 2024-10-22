@@ -83,7 +83,31 @@ export const checkAuth = createAsyncThunk<User, void, { rejectValue: AuthError }
 
             if (!response.ok) {
                 throw {
-                    message: 'Неверные имя пользователя или пароль',
+                    message: 'Ошибка авторизации',
+                    status: response.status,
+                } as AuthError;
+            }
+
+            return response.json();
+        } catch (error: unknown) {
+            const authError = error as AuthError;
+            return rejectWithValue(authError);
+        }
+    },
+);
+
+export const logout = createAsyncThunk<void, void, { rejectValue: AuthError }>(
+    'logout',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`${API_URL}/logout`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                throw {
+                    message: 'Не получилось выйти',
                     status: response.status,
                 } as AuthError;
             }
