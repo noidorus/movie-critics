@@ -5,7 +5,7 @@ import moviesReducer from './Movies/moviesSlice';
 export const store = configureStore({
     reducer: {
         auth: authReducer,
-        movies: moviesReducer
+        movies: moviesReducer,
     },
 });
 

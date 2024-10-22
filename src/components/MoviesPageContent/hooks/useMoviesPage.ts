@@ -1,7 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 import { fetchMovies } from '../../../store/Movies/moviesThunks';
-import { selectMovies, selectIsLoading, selectCurrentPage, selectTotalPages, selectMoviesError } from '../../../store/Movies/moviesSelector';
+import {
+    selectMovies,
+    selectIsLoading,
+    selectCurrentPage,
+    selectTotalPages,
+    selectMoviesError,
+} from '../../../store/Movies/moviesSelector';
 
 export const useMoviesPage = () => {
     const dispatch = useAppDispatch();
@@ -11,7 +17,7 @@ export const useMoviesPage = () => {
     const error = useAppSelector(selectMoviesError);
     const currentPage = useAppSelector(selectCurrentPage);
     const totalPages = useAppSelector(selectTotalPages);
-    
+
     const [isFetching, setIsFetching] = useState(false);
     const isInitialLoad = useRef(true);
 
@@ -23,7 +29,9 @@ export const useMoviesPage = () => {
     }, [dispatch]);
 
     const handleScroll = () => {
-        const isBottomReached = window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 1;
+        const isBottomReached =
+            window.innerHeight + document.documentElement.scrollTop >=
+            document.documentElement.offsetHeight - 1;
         if (!isBottomReached || isFetching || isLoading || currentPage >= totalPages) {
             return;
         }

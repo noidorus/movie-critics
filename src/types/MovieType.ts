@@ -3,4 +3,4 @@ export type Movie = {
     nameOriginal: string;
     nameRu: string;
     posterUrlPreview: string;
-}
+};
