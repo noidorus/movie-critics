@@ -272,91 +272,7 @@ export const items: SeedFilm[] = [
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1187970.jpg?alt=media&token=29cc6479-1340-420b-8c38-7008a510e2c3',
     slogan: null,
   },
-  {
-    kpId: '1200520',
-    year: 2016,
-    description: null,
-    filmLength: 5,
-    countries: ['Корея Южная'],
-    shortDescription: null,
-    type: 'VIDEO',
-    nameRu: null,
-    nameOriginal: 'BTS: Fire',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1200520.jpg?alt=media&token=cee1d06b-2b4a-460c-a6b3-cfb6ad873587',
-    genres: ['музыка', 'короткометражка'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1200520.jpg?alt=media&token=0bcccdca-b512-4355-9e05-0ce22057722e',
-    slogan: null,
-  },
-  {
-    kpId: '1200524',
-    year: 2018,
-    description: null,
-    filmLength: 5,
-    countries: ['Корея Южная'],
-    shortDescription: null,
-    type: 'VIDEO',
-    nameRu: null,
-    nameOriginal: 'BTS: Fake Love',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1200524.jpg?alt=media&token=3ef2a6a2-f8f7-4bd2-8f96-c36f03b4b730',
-    genres: ['музыка', 'короткометражка'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1200524.jpg?alt=media&token=2dc7b167-3491-4f36-9225-86effa15f151',
-    slogan: null,
-  },
-  {
-    kpId: '1200527',
-    year: 2015,
-    description: null,
-    filmLength: 8,
-    countries: ['Корея Южная'],
-    shortDescription: null,
-    type: 'VIDEO',
-    nameRu: null,
-    nameOriginal: 'BTS: Run',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1200527.jpg?alt=media&token=d8ca30cc-0729-44ba-a300-7e10b516f696',
-    genres: ['музыка', 'короткометражка'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1200527.jpg?alt=media&token=2953d9c1-2eb6-496b-aa2f-1f3d08f6810b',
-    slogan: null,
-  },
-  {
-    kpId: '1200528',
-    year: 2017,
-    description: null,
-    filmLength: 5,
-    countries: ['Корея Южная'],
-    shortDescription: null,
-    type: 'VIDEO',
-    nameRu: null,
-    nameOriginal: 'BTS: Not Today',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1200528.jpg?alt=media&token=67389692-a6c6-4f95-acc7-27fd75c02c7c',
-    genres: ['музыка', 'короткометражка'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1200528.jpg?alt=media&token=d00fa0e5-d5b5-4382-bb7f-5a95853cd213',
-    slogan: null,
-  },
-  {
-    kpId: '1201206',
-    year: 2016,
-    description: null,
-    filmLength: 6,
-    countries: ['Корея Южная'],
-    shortDescription: null,
-    type: 'VIDEO',
-    nameRu: null,
-    nameOriginal: 'BTS: Blood Sweat & Tears',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1201206.jpg?alt=media&token=af8b948e-5a2c-42d9-80f6-47bdab692faa',
-    genres: ['музыка', 'короткометражка'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1201206.jpg?alt=media&token=5e052ef0-f623-47e8-bf97-78f486c29415',
-    slogan: null,
-  },
+
   {
     kpId: '1227897',
     year: 2006,
@@ -557,23 +473,7 @@ export const items: SeedFilm[] = [
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1339977.jpg?alt=media&token=619b7f4b-766d-4140-aa2e-e40d72e5eadc',
     slogan: 'Clean up on aisle 5.',
   },
-  {
-    kpId: '1354149',
-    year: 2013,
-    description: null,
-    filmLength: 5,
-    countries: ['Украина'],
-    shortDescription: null,
-    type: 'TV_SERIES',
-    nameRu: null,
-    nameOriginal: 'Optimus Gang',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1354149.jpg?alt=media&token=960b1ae9-662b-4807-9c95-30460343bea8',
-    genres: ['комедия'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1354149.jpg?alt=media&token=21e72502-314a-4bcb-b5fe-6e34dfeaba89',
-    slogan: null,
-  },
+
   {
     kpId: '1368895',
     year: 2018,
@@ -611,23 +511,7 @@ export const items: SeedFilm[] = [
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1379016.jpg?alt=media&token=50fccd0d-ebd6-430f-a34b-fab495acacab',
     slogan: 'Снова в кругу семьи',
   },
-  {
-    kpId: '1399205',
-    year: 2016,
-    description: null,
-    filmLength: null,
-    countries: ['Корея Южная'],
-    shortDescription: null,
-    type: 'TV_SHOW',
-    nameRu: null,
-    nameOriginal: 'BTS: Bon Voyage',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1399205.jpg?alt=media&token=d7ae112d-c037-48c6-97c8-02ab0bb0e220',
-    genres: ['реальное ТВ'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1399205.jpg?alt=media&token=375dd66a-59a2-4d9d-985c-01bc35bbbff5',
-    slogan: null,
-  },
+
   {
     kpId: '2000090',
     year: 2020,
@@ -681,23 +565,6 @@ export const items: SeedFilm[] = [
     genres: ['документальный'],
     posterUrlPreview:
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F2500772.jpg?alt=media&token=c75b1ca5-9979-4e26-accb-3c294212eaab',
-    slogan: null,
-  },
-  {
-    kpId: '300980',
-    year: 2005,
-    description: null,
-    filmLength: null,
-    countries: ['Великобритания'],
-    shortDescription: null,
-    type: 'VIDEO',
-    nameRu: 'Буш-музыка',
-    nameOriginal: 'Boosh Music',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F300980.jpg?alt=media&token=aa4dfabc-a5d7-4b71-a9b1-3a1341bc7d87',
-    genres: ['фэнтези', 'комедия', 'мюзикл', 'короткометражка'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F300980.jpg?alt=media&token=b3e3eeb0-32f5-4e06-a7c0-c1931be2dc28',
     slogan: null,
   },
   {

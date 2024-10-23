@@ -13,6 +13,7 @@ CREATE TABLE "users" (
     "role" "Role" NOT NULL DEFAULT 'CLIENT',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "refreshToken" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );

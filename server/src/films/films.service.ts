@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prismaDB/prisma.service';
 import { items } from './seed';
 import { FilmWithRealtions, VideoTypesArr } from './films.interfaces';
 import { FiltersEntity, FilmEntity, FilmsEntity } from './entities';
+import { Country, Genre } from '@prisma/client';
 
 @Injectable()
 export class FilmsService {
@@ -24,8 +25,7 @@ export class FilmsService {
         totalItems,
         items: items.map((item) => new FilmEntity(this.getFilmWithAvg(item))),
       };
-    } catch (err) {
-      console.error(err);
+    } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -50,8 +50,7 @@ export class FilmsService {
       }
 
       return new FilmEntity(this.getFilmWithAvg(film));
-    } catch (err) {
-      console.error(err);
+    } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -66,41 +65,51 @@ export class FilmsService {
       };
 
       return new FiltersEntity(filters);
-    } catch (err) {
-      console.error(err);
+    } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   async seeding() {
-    const filmsPromises = items.map(async (item) => {
+    const films = [];
+    for (const item of items) {
       const { countries, genres, ...rest } = item;
 
-      const countriesIds = await this.upsertCountries(countries);
-      const genresIds = await this.upsertGenres(genres);
-      return await this.prisma.film.upsert({
+      const countriesIds = await this.upsertFilters(countries, (obj) => {
+        return this.prisma.country.upsert(obj);
+      });
+
+      const genresIds = await this.upsertFilters(genres, (obj) => {
+        return this.prisma.genre.upsert(obj);
+      });
+
+      const film = await this.prisma.film.upsert({
         where: { kpId: rest.kpId },
         create: { ...rest, countries: { connect: countriesIds }, genres: { connect: genresIds } },
         update: {},
       });
-    });
 
-    return await Promise.all(filmsPromises);
+      films.push(film);
+    }
+
+    return films;
   }
 
-  private async upsertCountries(name: string[]) {
-    return Promise.all(
-      name.map((name) =>
-        this.prisma.country.upsert({ where: { name }, create: { name }, update: {} }),
-      ),
-    );
-  }
+  private async upsertFilters<T extends Country | Genre>(
+    names: string[],
+    upsertCallback: (obj: UpsertFilterObj) => Promise<T>,
+  ) {
+    const filters: T[] = [];
+    for (const name of names) {
+      const filter = await upsertCallback({ where: { name }, create: { name }, update: {} });
+      filters.push(filter);
+    }
 
-  private upsertGenres(name: string[]) {
-    return Promise.all(
-      name.map((name) =>
-        this.prisma.genre.upsert({ where: { name }, create: { name }, update: {} }),
-      ),
-    );
+    return filters;
   }
+}
+interface UpsertFilterObj {
+  where: { name: string };
+  create: { name: string };
+  update: object;
 }
