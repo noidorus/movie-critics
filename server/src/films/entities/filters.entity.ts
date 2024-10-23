@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Country, Genre } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { VideoTypesArr } from '../films.interfaces';
+import { VideoTypesArr } from '../film.interfaces';
 
 export class FiltersEntity {
   constructor(partial: Partial<FiltersEntity>) {

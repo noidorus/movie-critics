@@ -11,6 +11,7 @@ export default (): EnvConfig => ({
     secret: process.env.REFRESH_JWT_SECRET || 'secret',
     expHours: +process.env.REFRESH_JWT_EXP_HOURS || 24,
   },
+  omdbApiKey: process.env.OMDB_API_KEY,
   databaseUrl: process.env.DATABASE_URL,
 });
 
@@ -18,4 +19,5 @@ export interface EnvConfig {
   jwt: JwtConfig;
   refreshJwt: JwtConfig;
   databaseUrl: string;
+  omdbApiKey: string;
 }

@@ -1,13 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prismaDB/prisma.service';
 import { items } from './seed';
-import { FilmWithRealtions, VideoTypesArr } from './films.interfaces';
+import { FilmWithRealtions, VideoTypesArr } from './film.interfaces';
 import { FiltersEntity, FilmEntity, FilmsEntity } from './entities';
 import { Country, Genre } from '@prisma/client';
+import { OmdbService } from '../omdb/omdb.service';
 
 @Injectable()
 export class FilmsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly omdbService: OmdbService,
+  ) {}
 
   async getFilms(page: number, limit: number): Promise<FilmsEntity> {
     try {
@@ -30,15 +34,7 @@ export class FilmsService {
     }
   }
 
-  private getFilmWithAvg(film: FilmWithRealtions): FilmEntity {
-    const ratings = film.ratings;
-    return {
-      ...film,
-      avgRating: ratings.reduce((acc, { userRating }) => acc + userRating, 0) / ratings.length,
-    };
-  }
-
-  async getFilmById(id: number): Promise<FilmEntity> {
+  async getFilmById(id: number) {
     try {
       const film: FilmWithRealtions = await this.prisma.film.findUnique({
         where: { id },
@@ -49,10 +45,25 @@ export class FilmsService {
         throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
       }
 
-      return new FilmEntity(this.getFilmWithAvg(film));
+      const { plot, ...extraInfo } = await this.omdbService.getFilmByTitle(film.nameOriginal);
+
+      return {
+        ...this.getFilmWithAvg(film),
+        description: film.description || plot,
+        extraInfo,
+      };
+      // return new FilmEntity(this.getFilmWithAvg(film));
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  private getFilmWithAvg(film: FilmWithRealtions): FilmEntity {
+    const ratings = film.ratings;
+    return {
+      ...film,
+      avgRating: ratings.reduce((acc, { userRating }) => acc + userRating, 0) / ratings.length,
+    };
   }
 
   async getFilters(): Promise<FiltersEntity> {
