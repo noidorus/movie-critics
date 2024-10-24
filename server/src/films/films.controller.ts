@@ -1,8 +1,22 @@
 import { FilmsService } from './films.service';
-import { Controller, Get, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FilmsQueryDTO } from './dto';
 import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
+import { JwtAuthGuard } from 'src/auth/guards';
+import { RateFilmBodyDTO } from './dto/RateFilmBody.dto';
+import { RequestWithUser } from 'src/auth/interfaces';
 
 @ApiTags('Films')
 @Controller('api/films')
@@ -40,5 +54,13 @@ export class FilmsController {
   @ApiOperation({ summary: 'Get film data by id' })
   async getFilmById(@Param('id') id: number): Promise<FilmWithExtrasEntity> {
     return await this.filmsService.getFilmById(+id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('rate')
+  @ApiOperation({ summary: 'Rate film, auth required' })
+  @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
+  async rateFilm(@Body() dto: RateFilmBodyDTO, @Req() req: RequestWithUser) {
+    return this.filmsService.rateFilm(dto, req.user.id);
   }
 }

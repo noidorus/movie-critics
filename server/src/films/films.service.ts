@@ -5,6 +5,7 @@ import { FilmWithRealtions, VideoTypesArr } from './film.interfaces';
 import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
 import { Country, Genre } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
+import { RateFilmBodyDTO } from './dto/RateFilmBody.dto';
 
 @Injectable()
 export class FilmsService {
@@ -47,7 +48,6 @@ export class FilmsService {
 
       const { plot, ...extraInfo } = await this.omdbService.getFilmByTitle(film.nameOriginal);
 
-      console.log(film);
       return new FilmWithExtrasEntity({
         ...this.getFilmWithAvg(film),
         description: film.description || plot,
@@ -78,6 +78,26 @@ export class FilmsService {
       return new FiltersEntity(filters);
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async rateFilm(dto: RateFilmBodyDTO, userId: number) {
+    try {
+      const film = await this.prisma.film.findUnique({ where: { id: dto.filmId } });
+
+      if (!film) {
+        throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
+      }
+
+      const rating = await this.prisma.rating.upsert({
+        where: { filmId_userId: { filmId: dto.filmId, userId } },
+        create: { filmId: dto.filmId, userId, userRating: dto.rating },
+        update: { userRating: dto.rating },
+      });
+
+      return rating;
+    } catch (err) {
+      throw err;
     }
   }
 
