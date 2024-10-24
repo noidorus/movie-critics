@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prismaDB/prisma.service';
 import { items } from './seed';
 import { FilmWithRealtions, VideoTypesArr } from './film.interfaces';
-import { FiltersEntity, FilmEntity, FilmsEntity } from './entities';
+import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
 import { Country, Genre } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
 
@@ -23,12 +23,12 @@ export class FilmsService {
 
       const totalItems = await this.prisma.film.count();
 
-      return {
+      return new FilmsEntity({
         page,
         totalPages: Math.ceil(totalItems / limit),
         totalItems,
-        items: items.map((item) => new FilmEntity(this.getFilmWithAvg(item))),
-      };
+        items: items.map((item) => this.getFilmWithAvg(item)),
+      });
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -47,18 +47,18 @@ export class FilmsService {
 
       const { plot, ...extraInfo } = await this.omdbService.getFilmByTitle(film.nameOriginal);
 
-      return {
+      console.log(film);
+      return new FilmWithExtrasEntity({
         ...this.getFilmWithAvg(film),
         description: film.description || plot,
-        extraInfo,
-      };
-      // return new FilmEntity(this.getFilmWithAvg(film));
+        ...extraInfo,
+      });
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  private getFilmWithAvg(film: FilmWithRealtions): FilmEntity {
+  private getFilmWithAvg(film: FilmWithRealtions) {
     const ratings = film.ratings;
     return {
       ...film,

@@ -5,10 +5,9 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { lastValueFrom, map, catchError, of } from 'rxjs';
 import { TypedConfigService } from 'src/config/typed-config.service';
 import { OmdbFilmData, TransformedOmdbFilmData } from './omdb.interface';
-
 @Injectable()
 export class OmdbService {
-  url: string;
+  private readonly url: string;
 
   constructor(
     private readonly configService: TypedConfigService,
@@ -25,7 +24,7 @@ export class OmdbService {
       return info;
     }
 
-    const cachedFilm = await this.cacheManager.get<TransformedOmdbFilmData>(title);
+    const cachedFilm = await this.cacheManager.get<TransformedOmdbFilmData>(`omdb:${title}`);
     if (cachedFilm) {
       console.log('Fetched from cache: ', cachedFilm);
       return cachedFilm;
@@ -46,7 +45,7 @@ export class OmdbService {
       ),
     );
 
-    await this.cacheManager.set(title, info);
+    await this.cacheManager.set(`omdb:${title}`, info);
 
     return info;
   }

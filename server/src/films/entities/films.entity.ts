@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { FilmEntity } from './film.entity';
+import { Transform } from 'class-transformer';
 
 export class FilmsEntity {
   constructor(partial: Partial<FilmsEntity>) {
@@ -39,5 +40,6 @@ export class FilmsEntity {
     ],
     type: [FilmEntity],
   })
+  @Transform(({ value }) => value.map((item: FilmEntity) => new FilmEntity(item)))
   items: FilmEntity[];
 }

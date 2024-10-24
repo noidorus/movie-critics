@@ -2,7 +2,7 @@ import { FilmsService } from './films.service';
 import { Controller, Get, Param, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FilmsQueryDTO } from './dto';
-import { FiltersEntity, FilmEntity, FilmsEntity } from './entities';
+import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
 
 @ApiTags('Films')
 @Controller('api/films')
@@ -36,9 +36,9 @@ export class FilmsController {
   }
 
   @Get(':id')
-  @ApiOkResponse({ status: 200, type: FilmEntity })
+  @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
   @ApiOperation({ summary: 'Get film data by id' })
-  async getFilmById(@Param('id') id: number): Promise<FilmEntity> {
+  async getFilmById(@Param('id') id: number): Promise<FilmWithExtrasEntity> {
     return await this.filmsService.getFilmById(+id);
   }
 }
