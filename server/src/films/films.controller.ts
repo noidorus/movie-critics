@@ -19,7 +19,7 @@ import { RateFilmBodyDTO } from './dto/RateFilmBody.dto';
 import { RequestWithUser } from 'src/auth/interfaces';
 
 @ApiTags('Films')
-@Controller('api/films')
+@Controller('films')
 export class FilmsController {
   constructor(private readonly filmsService: FilmsService) {}
 
