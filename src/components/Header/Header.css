@@ -54,4 +54,5 @@
 .header_button_checked,
 .header_button_checked:hover {
     background-color: #a855f733;
+    cursor: default;
 }

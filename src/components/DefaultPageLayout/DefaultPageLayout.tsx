@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 
 type DefaultPageLayoutProps = {
     children: React.ReactNode;
-    activeTab: string;
+    activeTab?: string;
 };
 
 const DefaultPageLayout: React.FC<DefaultPageLayoutProps> = ({ children, activeTab }) => {

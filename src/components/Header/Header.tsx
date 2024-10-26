@@ -1,16 +1,18 @@
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../store/Auth/authThunks';
+import { selectUser } from '../../store/Auth/authSelectors';
 
 type HeaderProps = {
-    activeTab: string;
+    activeTab?: string;
 };
 
 export default function Header({ activeTab }: HeaderProps) {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const user = useAppSelector(selectUser);
 
     const handleLogout = async () => {
         await dispatch(logout());
@@ -32,7 +34,6 @@ export default function Header({ activeTab }: HeaderProps) {
                     <Button
                         type="button"
                         className={`header_button ${activeTab === 'rating' ? 'header_button_checked' : ''}`}
-                        onClick={() => navigate('/rating')}
                     >
                         <span>Рейтинг</span>
                     </Button>
@@ -45,14 +46,24 @@ export default function Header({ activeTab }: HeaderProps) {
                 </div>
             </div>
             <div>
-                <div className="navigation_buttons">
-                    <Button type="button" className="header_button">
-                        <span>Моя страница</span>
+                {user ? (
+                    <div className="navigation_buttons">
+                        <Button type="button" className="header_button">
+                            <span>Моя страница</span>
+                        </Button>
+                        <Button type="button" className="header_button" onClick={handleLogout}>
+                            <span>Выйти</span>
+                        </Button>
+                    </div>
+                ) : (
+                    <Button
+                        type="button"
+                        className="header_button"
+                        onClick={() => navigate('/login')}
+                    >
+                        <span>Войти</span>
                     </Button>
-                    <Button type="button" className="header_button" onClick={handleLogout}>
-                        <span>Выйти</span>
-                    </Button>
-                </div>
+                )}
             </div>
         </div>
     );
