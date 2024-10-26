@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthError, LoginResponseData } from '../../DTO/AuthDTO';
-import { loginUser, registerUser, checkAuth, logout } from './authThunks'; // Импортируем logout
+import { loginUser, registerUser, checkAuth, logout } from './authThunks';
 import { User } from '../../types/UserType';
 
 interface AuthState {

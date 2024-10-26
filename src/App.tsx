@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import MoviesPage from './pages/MoviesPage/MoviesPage';
 import './App.css';
+import MoviePage from './pages/MoviePage/MoviePage';
 export default function App() {
     const user = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
@@ -24,6 +25,8 @@ export default function App() {
     return (
         <Router>
             <Routes>
+                <Route path="/movies" element={<MoviesPage />} />
+                <Route path="/movies/:id" element={<MoviePage />} />
                 {!user ? (
                     <>
                         <Route path="/login" element={<LoginPage />} />
@@ -32,7 +35,6 @@ export default function App() {
                     </>
                 ) : (
                     <>
-                        <Route path="/movies" element={<MoviesPage />} />
                         <Route path="*" element={<Navigate to="/movies" />} />
                     </>
                 )}
