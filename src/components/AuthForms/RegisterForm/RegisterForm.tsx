@@ -20,7 +20,7 @@ export default function RegisterForm() {
             if (registerUser.fulfilled.match(registerResult)) {
                 const loginResult = await dispatch(loginUser({ username, password }));
                 if (loginUser.fulfilled.match(loginResult)) {
-                    navigate('/chat');
+                    navigate('/movies');
                 }
             }
         }

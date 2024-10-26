@@ -18,7 +18,7 @@ export default function LoginForm() {
         console.log('submit');
         const loginResult = await dispatch(loginUser({ username, password }));
         if (loginUser.fulfilled.match(loginResult)) {
-            navigate('/chat');
+            navigate('/movies');
         }
     };
 
