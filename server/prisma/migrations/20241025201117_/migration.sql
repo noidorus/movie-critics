@@ -31,9 +31,21 @@ CREATE TABLE "films" (
     "year" INTEGER NOT NULL,
     "posterUrl" TEXT NOT NULL,
     "posterUrlPreview" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "type" "VideoType" NOT NULL,
 
     CONSTRAINT "films_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "lists" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "authorId" INTEGER NOT NULL,
+    "private" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "lists_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -69,6 +81,12 @@ CREATE TABLE "_FilmToGenre" (
 );
 
 -- CreateTable
+CREATE TABLE "_FilmToListFilms" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_CountryToFilm" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -99,10 +117,19 @@ CREATE UNIQUE INDEX "_FilmToGenre_AB_unique" ON "_FilmToGenre"("A", "B");
 CREATE INDEX "_FilmToGenre_B_index" ON "_FilmToGenre"("B");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "_FilmToListFilms_AB_unique" ON "_FilmToListFilms"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_FilmToListFilms_B_index" ON "_FilmToListFilms"("B");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_CountryToFilm_AB_unique" ON "_CountryToFilm"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_CountryToFilm_B_index" ON "_CountryToFilm"("B");
+
+-- AddForeignKey
+ALTER TABLE "lists" ADD CONSTRAINT "lists_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ratings" ADD CONSTRAINT "ratings_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -115,6 +142,12 @@ ALTER TABLE "_FilmToGenre" ADD CONSTRAINT "_FilmToGenre_A_fkey" FOREIGN KEY ("A"
 
 -- AddForeignKey
 ALTER TABLE "_FilmToGenre" ADD CONSTRAINT "_FilmToGenre_B_fkey" FOREIGN KEY ("B") REFERENCES "genres"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_FilmToListFilms" ADD CONSTRAINT "_FilmToListFilms_A_fkey" FOREIGN KEY ("A") REFERENCES "films"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_FilmToListFilms" ADD CONSTRAINT "_FilmToListFilms_B_fkey" FOREIGN KEY ("B") REFERENCES "lists"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_CountryToFilm" ADD CONSTRAINT "_CountryToFilm_A_fkey" FOREIGN KEY ("A") REFERENCES "countries"("id") ON DELETE CASCADE ON UPDATE CASCADE;

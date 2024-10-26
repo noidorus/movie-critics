@@ -52,6 +52,9 @@ export class FilmEntity implements Film {
   })
   posterUrlPreview: string;
 
+  @ApiProperty({ example: new Date() })
+  createdAt: Date;
+
   @ApiProperty({ example: 'TV_SERIES', enum: VideoType })
   type: VideoType;
 
