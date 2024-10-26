@@ -26,10 +26,16 @@
 }
 
 .movie-title {
+    display: block;
     text-align: center;
     font-size: 1.2rem;
+    font-weight: 600;
     margin: 10px 0;
     padding: 10px;
     color: #f9f9f9;
-    flex-shrink: 0;
+}
+
+.movie-title:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
