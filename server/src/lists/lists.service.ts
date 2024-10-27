@@ -1,37 +1,36 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prismaDB/prisma.service';
-import { CreateListDTO, ChangeListVisibilityDTO } from './dto';
+import { CreateListDTO } from './dto';
 import { Prisma } from '@prisma/client';
+import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
+import { FilmInListEntity } from 'src/films/entities/';
+import {
+  InfoListWithAuthorAndFilms,
+  ListEntity,
+  ShortInfoListWithAuthorAndFilms,
+} from './entities';
 
 @Injectable()
 export class ListsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getLists() {
-    return await this.prisma.listFilms.findMany({ where: { private: false } });
-  }
-
-  async getListById(id: number, authorId?: number) {
-    const list = await this.prisma.listFilms.findUnique({
-      where: { id },
+  async getLists(): Promise<ShortInfoListWithAuthorAndFilms[]> {
+    return await this.prisma.listFilms.findMany({
+      where: { private: false },
       include: {
-        films: { include: { ratings: true, countries: true, genres: true } },
+        films: { select: { id: true, posterUrlPreview: true } },
+        author: { select: { username: true } },
       },
     });
-
-    if (!list || (list.private && authorId !== list.authorId)) {
-      throw new HttpException('List not found', HttpStatus.NOT_FOUND);
-    }
-
-    return list;
   }
 
-  async getMyLists(authorId: number) {
+  async getMyLists(authorId: number): Promise<ShortInfoListWithAuthorAndFilms[]> {
     try {
       return await this.prisma.listFilms.findMany({
         where: { authorId },
         include: {
-          films: { include: { ratings: true, countries: true, genres: true } },
+          films: { select: { id: true, posterUrlPreview: true } },
+          author: { select: { username: true } },
         },
       });
     } catch {
@@ -39,11 +38,31 @@ export class ListsService {
     }
   }
 
-  async createList(authorId: number, dto: CreateListDTO) {
+  async getListById(id: number, authorId?: number): Promise<InfoListWithAuthorAndFilms> {
+    const list = await this.prisma.listFilms.findUnique({
+      where: { id },
+      include: {
+        films: { include: { ratings: true, countries: true, genres: true } },
+        author: { select: { username: true } },
+      },
+    });
+
+    if (!list || (list.private && authorId !== list.authorId)) {
+      throw new HttpException('List not found', HttpStatus.NOT_FOUND);
+    }
+
+    return {
+      ...list,
+      films: list.films.map(
+        (film) => new FilmInListEntity({ ...film, avgRating: calculateAvgRating(film.ratings) }),
+      ),
+    };
+  }
+
+  async createList(authorId: number, dto: CreateListDTO): Promise<ListEntity> {
     try {
       return await this.prisma.listFilms.create({
         data: { ...dto, authorId },
-        include: { films: true },
       });
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -58,7 +77,7 @@ export class ListsService {
     }
   }
 
-  async removeList(authorId: number, id: number) {
+  async removeList(authorId: number, id: number): Promise<void> {
     try {
       await this.prisma.listFilms.delete({ where: { id, authorId } });
       throw new HttpException('List deleted', HttpStatus.OK);
@@ -72,13 +91,14 @@ export class ListsService {
     }
   }
 
-  async addFilmToList(authorId: number, id: number, filmId: number) {
+  async addFilmToList(authorId: number, id: number, filmId: number): Promise<void> {
     try {
-      return await this.prisma.listFilms.update({
+      await this.prisma.listFilms.update({
         where: { id, authorId },
         data: { films: { connect: { id: filmId } } },
-        include: { films: true },
+        select: { films: true },
       });
+      throw new HttpException('Film added to list', HttpStatus.OK);
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         switch (err.code) {
@@ -93,12 +113,12 @@ export class ListsService {
     }
   }
 
-  async removeFilmFromList(authorId: number, id: number, filmId: number) {
+  async removeFilmFromList(authorId: number, id: number, filmId: number): Promise<void> {
     try {
       await this.prisma.listFilms.update({
         where: { id, authorId },
         data: { films: { disconnect: { id: filmId } } },
-        include: { films: true },
+        select: { films: true, name: true, id: true },
       });
 
       throw new HttpException('Film removed from list', HttpStatus.OK);
@@ -112,11 +132,11 @@ export class ListsService {
     }
   }
 
-  async changeVisibility(authorId: number, dto: ChangeListVisibilityDTO) {
+  async changeVisibility(authorId: number, id: number, isPrivate: boolean): Promise<ListEntity> {
     try {
       return await this.prisma.listFilms.update({
-        where: { id: dto.id, authorId },
-        data: { private: dto.private },
+        where: { id, authorId },
+        data: { private: isPrivate },
       });
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {

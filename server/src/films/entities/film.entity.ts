@@ -58,15 +58,15 @@ export class FilmEntity implements Film {
   @ApiProperty({ example: 'TV_SERIES', enum: VideoType })
   type: VideoType;
 
-  @ApiProperty({ example: ['США', 'Канада', 'Дания'] })
-  @Transform(({ value }) => value.map((item: Country) => item.name))
+  @ApiProperty({ example: [{ name: 'США' }, { name: 'Канада' }, { name: 'Дания' }] })
+  @Transform(({ value }) => value.map(({ name }: Country) => ({ name })))
   countries: Country[];
 
-  @ApiProperty({ example: ['приключения', 'боевик', 'мультфильм', 'семейный', 'детский'] })
-  @Transform(({ value }) => value.map((item: Genre) => item.name))
+  @ApiProperty({ example: [{ name: 'семейный' }, { name: 'детский' }] })
+  @Transform(({ value }) => value.map(({ name }: Genre) => ({ name })))
   genres: Genre[];
 
-  @Exclude()
+  @ApiProperty({ example: [{ id: 1, userRating: 6, userId: 1, filmId: 1 }] })
   ratings: Rating[];
 
   @ApiProperty({ example: 8 })

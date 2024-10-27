@@ -2,10 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prismaDB/prisma.service';
 import { items } from './seed';
 import { FilmWithRealtions, VideoTypesArr } from './film.interfaces';
-import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
+import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity, FilmNoRatingsEntity } from './entities';
 import { Country, Genre } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
 import { RateFilmBodyDTO } from './dto/RateFilmBody.dto';
+import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
 
 @Injectable()
 export class FilmsService {
@@ -28,14 +29,14 @@ export class FilmsService {
         page,
         totalPages: Math.ceil(totalItems / limit),
         totalItems,
-        items: items.map((item) => this.getFilmWithAvg(item)),
+        items: items.map((item) => new FilmNoRatingsEntity(item)),
       });
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async getFilmById(id: number) {
+  async getFilmById(id: number): Promise<FilmWithExtrasEntity> {
     try {
       const film: FilmWithRealtions = await this.prisma.film.findUnique({
         where: { id },
@@ -45,21 +46,14 @@ export class FilmsService {
       const { plot, ...extraInfo } = await this.omdbService.getFilmByTitle(film.nameOriginal);
 
       return new FilmWithExtrasEntity({
-        ...this.getFilmWithAvg(film),
+        ...film,
+        avgRating: calculateAvgRating(film.ratings),
         description: film.description || plot,
         ...extraInfo,
       });
     } catch {
       throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
     }
-  }
-
-  private getFilmWithAvg(film: FilmWithRealtions) {
-    const ratings = film.ratings;
-    return {
-      ...film,
-      avgRating: ratings.reduce((acc, { userRating }) => acc + userRating, 0) / ratings.length,
-    };
   }
 
   async getFilters(): Promise<FiltersEntity> {
