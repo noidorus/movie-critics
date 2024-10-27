@@ -24,6 +24,7 @@ export class ListEntity implements ListFilms {
   @ApiProperty({ example: new Date() })
   updatedAt: Date;
 
+  // TODO: add films example
   @ApiProperty({ example: [] })
   films: any[];
 }

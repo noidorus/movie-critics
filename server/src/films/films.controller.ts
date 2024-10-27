@@ -17,6 +17,7 @@ import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { RateFilmBodyDTO } from './dto/RateFilmBody.dto';
 import { RequestWithUser } from 'src/auth/interfaces';
+import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
 
 @ApiTags('Films')
 @Controller('films')
@@ -52,8 +53,10 @@ export class FilmsController {
   @Get(':id')
   @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
   @ApiOperation({ summary: 'Get film data by id' })
-  async getFilmById(@Param('id') id: number): Promise<FilmWithExtrasEntity> {
-    return await this.filmsService.getFilmById(+id);
+  async getFilmById(
+    @Param('id', PositiveNumberValidationPipe) id: number,
+  ): Promise<FilmWithExtrasEntity> {
+    return await this.filmsService.getFilmById(id);
   }
 
   @UseGuards(JwtAuthGuard)

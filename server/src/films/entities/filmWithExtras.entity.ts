@@ -66,6 +66,7 @@ export class FilmWithExtrasEntity implements Film {
   @Transform(({ value }) => value.map((item: Genre) => item.name))
   genres: Genre[];
 
+  @ApiProperty({ example: [{ id: 1, userRating: 6, userId: 1, filmId: 1 }] })
   ratings: Rating[];
 
   @ApiProperty({ example: 8, nullable: true })

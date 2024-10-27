@@ -42,10 +42,6 @@ export class FilmsService {
         include: { genres: true, countries: true, ratings: true },
       });
 
-      if (!film) {
-        throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
-      }
-
       const { plot, ...extraInfo } = await this.omdbService.getFilmByTitle(film.nameOriginal);
 
       return new FilmWithExtrasEntity({
@@ -54,7 +50,7 @@ export class FilmsService {
         ...extraInfo,
       });
     } catch {
-      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
     }
   }
 

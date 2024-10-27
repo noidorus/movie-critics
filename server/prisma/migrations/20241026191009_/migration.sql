@@ -44,6 +44,7 @@ CREATE TABLE "lists" (
     "authorId" INTEGER NOT NULL,
     "private" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "lists_pkey" PRIMARY KEY ("id")
 );
@@ -100,6 +101,9 @@ CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "films_kpId_key" ON "films"("kpId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "lists_authorId_name_key" ON "lists"("authorId", "name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "genres_name_key" ON "genres"("name");
