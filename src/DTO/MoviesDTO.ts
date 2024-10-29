@@ -1,6 +1,6 @@
 import { MoviePreviewData } from '../types/MovieType';
 
-export type MovieResponseData = {
+export type MoviesResponseData = {
     items: MoviePreviewData[];
     totalPages: number;
     page: number;

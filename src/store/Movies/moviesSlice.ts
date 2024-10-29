@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchMovies } from './moviesThunks';
-import { MovieResponseData } from '../../DTO/MoviesDTO';
+import { MoviesResponseData } from '../../DTO/MoviesDTO';
 import { MoviePreviewData } from '../../types/MovieType';
 
 interface MoviesState {
@@ -29,7 +29,7 @@ const moviesSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(fetchMovies.fulfilled, (state, action: PayloadAction<MovieResponseData>) => {
+            .addCase(fetchMovies.fulfilled, (state, action: PayloadAction<MoviesResponseData>) => {
                 state.movies = [...state.movies, ...action.payload.items];
                 state.isLoading = false;
                 state.currentPage = action.payload.page;
@@ -37,7 +37,7 @@ const moviesSlice = createSlice({
             })
             .addCase(fetchMovies.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload ? action.payload.message : 'Failed to fetch movies';
+                state.error = action.payload ? action.payload.message : 'Ошибка при получении фильмов. Попробуйте позже';
             });
     },
 });

@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { MovieResponseData } from '../../DTO/MoviesDTO';
+import { MoviesResponseData } from '../../DTO/MoviesDTO';
 
 const API_URL = 'http://localhost:3001/api/films';
 
-export const fetchMovies = createAsyncThunk<MovieResponseData, number, { rejectValue: Error }>(
+export const fetchMovies = createAsyncThunk<MoviesResponseData, number, { rejectValue: Error }>(
     'movies/fetchMovies',
     async (page = 1, { rejectWithValue }) => {
         try {
@@ -11,8 +11,7 @@ export const fetchMovies = createAsyncThunk<MovieResponseData, number, { rejectV
             if (!response.ok) {
                 throw new Error('Ошибка. Попробуйте позже или обратитесь в поддержку.');
             }
-            const data: MovieResponseData = await response.json();
-            console.log(data);
+            const data: MoviesResponseData = await response.json();
             return data;
         } catch (error: unknown) {
             if (error instanceof TypeError) {
