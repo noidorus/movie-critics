@@ -4,7 +4,7 @@ import { loginUser } from '../../../store/Auth/authThunks';
 import { useAppDispatch } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useAuthFormHandler } from '../hooks/useAuthFormHandler';
-import './LoginForm.css';
+import styles from '../AuthForms.module.css';
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -33,9 +33,9 @@ export default function LoginForm() {
     } = useAuthFormHandler({ onSubmit, isLogin: true });
 
     return (
-        <form className="form" onSubmit={handleSubmit}>
-            <div className="input_wrapper">
-                <label htmlFor="login" className="label">
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.inputWrapper}>
+                <label htmlFor="login" className={styles.label}>
                     Имя пользователя
                 </label>
                 <InputText
@@ -43,12 +43,12 @@ export default function LoginForm() {
                     onChange={handleLoginChange}
                     id="login"
                     placeholder="Никнейм"
-                    className="input"
+                    className={styles.input}
                 />
-                {errors.login && <p className="error">{errors.login}</p>}
+                {errors.login && <p className={styles.error}>{errors.login}</p>}
             </div>
-            <div className="input_wrapper">
-                <label htmlFor="password" className="label">
+            <div className={styles.inputWrapper}>
+                <label htmlFor="password" className={styles.label}>
                     Пароль
                 </label>
                 <InputText
@@ -56,13 +56,13 @@ export default function LoginForm() {
                     onChange={handlePasswordChange}
                     id="password"
                     placeholder="*********"
-                    className="input"
+                    className={styles.input}
                     type="password"
                 />
-                {errors.password && <p className="error">{errors.password}</p>}
+                {errors.password && <p className={styles.error}>{errors.password}</p>}
             </div>
-            <Button type="submit" className="button" label="Войти" />
-            {error && <p className="error">{error.message}</p>}
+            <Button type="submit" className={styles.button} label="Войти" />
+            {error && <p className={styles.error}>{error.message}</p>}
         </form>
     );
 }

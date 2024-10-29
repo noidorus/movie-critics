@@ -17,7 +17,7 @@
     align-items: center;
 }
 
-.header_logo {
+.logo {
     font-family: Inter, sans-serif;
     font-size: 24px;
     font-weight: 500;
@@ -25,13 +25,13 @@
     color: #8e96a0;
 }
 
-.navigation_buttons {
+.buttons {
     display: flex;
     flex-direction: row;
     gap: 7px;
 }
 
-.header_button {
+.button {
     display: flex;
     flex-direction: row;
     gap: 7px;
@@ -47,12 +47,12 @@
     color: #8e96a0;
 }
 
-.header_button:hover {
+.button:hover {
     background-color: #e0e6ed;
 }
 
-.header_button_checked,
-.header_button_checked:hover {
+.buttonChecked,
+.buttonChecked:hover {
     background-color: #a855f733;
     cursor: default;
 }

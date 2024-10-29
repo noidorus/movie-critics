@@ -1,4 +1,4 @@
-.movie-item {
+.movie {
     list-style: none;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -9,12 +9,12 @@
         box-shadow 0.3s ease;
 }
 
-.movie-item:hover {
+.movie:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-.movie-poster {
+.poster {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -25,7 +25,7 @@
     border-bottom: 1px solid #e0e0e0;
 }
 
-.movie-title {
+.title {
     display: block;
     text-align: center;
     font-size: 1.2rem;
@@ -36,7 +36,7 @@
     text-decoration: none;
 }
 
-.movie-title:hover {
+.title:hover {
     text-decoration: underline;
     cursor: pointer;
 }

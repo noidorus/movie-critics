@@ -1,22 +1,25 @@
-.movies-list {
+.list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     margin: 20px;
 }
 
-.movies-title {
+.title {
     margin: 20px 0 0 20px;
     font-size: 2.6rem;
+    font-weight: 600;
 }
 
-.error-message {
+.errorMessage {
     color: red;
     text-align: center;
     font-size: 1.2rem;
 }
 
-.loading-message {
+.loadingMessage {
     text-align: center;
     font-size: 1.2rem;
+    margin-block: 20px;
+    color: white;
 }

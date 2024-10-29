@@ -15,3 +15,20 @@
     font-size: 40px;
     margin-block-end: 16px;
 }
+
+.button {
+    width: 250px;
+    font-size: 20px;
+    text-align: center;
+    justify-content: center;
+    margin-block: 8px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    padding-inline-start: 10px;
+    padding-inline-end: 10px;
+    padding-block: 8px;
+}
+
+.button:hover {
+    background-color: #8d8a8a;
+}

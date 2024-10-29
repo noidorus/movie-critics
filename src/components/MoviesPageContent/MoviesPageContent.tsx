@@ -1,27 +1,27 @@
 import { useMoviesPage } from './hooks/useMoviesPage';
 import MoviePreview from './MoviePreview/MoviePreview';
-import './MoviesPageContent.css';
+import styles from './MoviesPageContent.module.css';
 
 export default function MoviesPageContent() {
-    const { movies, isLoading, error, isFetching } = useMoviesPage();
+    const { movies, isLoading, error } = useMoviesPage();
 
     if (isLoading && movies.length === 0) {
-        return <p className="loading-message">Загрузка...</p>;
+        return <p className={styles.loadingMessage}>Загрузка...</p>;
     }
 
     if (error) {
-        return <p className="error-message">Ошибка: {error}</p>;
+        return <p className={styles.errorMessage}>Ошибка: {error}</p>;
     }
 
     return (
         <>
-            <p className="movies-title">Фильмы</p>
-            <ul className="movies-list">
+            <p className={styles.title}>Фильмы</p>
+            <ul className={styles.list}>
                 {movies.map((movie) => (
                     <MoviePreview key={movie.id} movie={movie} />
                 ))}
             </ul>
-            {isFetching && <p className="loading-message">Загрузка ещё...</p>}
+            {isLoading && <p className={styles.loadingMessage}>Загрузка ещё...</p>}
         </>
     );
 }

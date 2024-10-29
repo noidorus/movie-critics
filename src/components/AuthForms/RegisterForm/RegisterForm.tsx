@@ -4,7 +4,7 @@ import { registerUser, loginUser } from '../../../store/Auth/authThunks';
 import { useAppDispatch } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useAuthFormHandler } from '../hooks/useAuthFormHandler';
-import './RegisterForm.css';
+import styles from '../AuthForms.module.css';
 
 export default function RegisterForm() {
     const navigate = useNavigate();
@@ -39,9 +39,9 @@ export default function RegisterForm() {
     } = useAuthFormHandler({ onSubmit, isLogin: false });
 
     return (
-        <form className="form" onSubmit={handleSubmit}>
-            <div className="input_wrapper">
-                <label htmlFor="login" className="label">
+        <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.inputWrapper}>
+                <label htmlFor="login" className={styles.label}>
                     Имя пользователя
                 </label>
                 <InputText
@@ -49,12 +49,12 @@ export default function RegisterForm() {
                     onChange={handleLoginChange}
                     id="login"
                     placeholder="Никнейм"
-                    className="input"
+                    className={styles.input}
                 />
-                {errors.login && <p className="error">{errors.login}</p>}
+                {errors.login && <p className={styles.error}>{errors.login}</p>}
             </div>
-            <div className="input_wrapper">
-                <label htmlFor="email" className="label">
+            <div className={styles.inputWrapper}>
+                <label htmlFor="email" className={styles.label}>
                     Электронная почта
                 </label>
                 <InputText
@@ -62,12 +62,12 @@ export default function RegisterForm() {
                     onChange={handleEmailChange}
                     id="email"
                     placeholder="example@example.com"
-                    className="input"
+                    className={styles.input}
                 />
-                {errors.email && <p className="error">{errors.email}</p>}
+                {errors.email && <p className={styles.error}>{errors.email}</p>}
             </div>
-            <div className="input_wrapper">
-                <label htmlFor="password" className="label">
+            <div className={styles.inputWrapper}>
+                <label htmlFor="password" className={styles.label}>
                     Пароль
                 </label>
                 <InputText
@@ -75,13 +75,13 @@ export default function RegisterForm() {
                     onChange={handlePasswordChange}
                     id="password"
                     placeholder="*********"
-                    className="input"
+                    className={styles.input}
                     type="password"
                 />
-                {errors.password && <p className="error">{errors.password}</p>}
+                {errors.password && <p className={styles.error}>{errors.password}</p>}
             </div>
-            <Button type="submit" className="button" label="Зарегистрироваться" />
-            {error && <p className="error">{error.message}</p>}
+            <Button type="submit" className={styles.button} label="Зарегистрироваться" />
+            {error && <p className={styles.error}>{error.message}</p>}
         </form>
     );
 }
