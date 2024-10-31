@@ -14,22 +14,23 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
-  username     String   @unique
+  id           Int         @id @default(autoincrement())
+  email        String      @unique
+  username     String      @unique
   password     String
-  role         Role     @default(CLIENT)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
-  Rating       Rating[]
+  role         Role        @default(CLIENT)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @default(now()) @updatedAt
   refreshToken String?
+  ratings      Rating[]
+  lists        ListFilms[]
 
   @@map("users")
 }
 
 model Film {
-  id               Int       @id @default(autoincrement())
-  kpId             String?   @unique
+  id               Int         @id @default(autoincrement())
+  kpId             String?     @unique
   nameRu           String?
   nameOriginal     String?
   slogan           String?
@@ -39,12 +40,28 @@ model Film {
   year             Int
   posterUrl        String
   posterUrlPreview String
+  createdAt        DateTime    @default(now())
   type             VideoType
   countries        Country[]
   genres           Genre[]
   ratings          Rating[]
+  lists            ListFilms[]
 
   @@map(name: "films")
+}
+
+model ListFilms {
+  id        Int      @id @default(autoincrement())
+  name      String
+  films     Film[]
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  private   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@unique([authorId, name])
+  @@map(name: "lists")
 }
 
 model Genre {

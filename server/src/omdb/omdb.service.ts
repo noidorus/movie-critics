@@ -26,7 +26,6 @@ export class OmdbService {
 
     const cachedFilm = await this.cacheManager.get<TransformedOmdbFilmData>(`omdb:${title}`);
     if (cachedFilm) {
-      console.log('Fetched from cache: ', cachedFilm);
       return cachedFilm;
     }
 
