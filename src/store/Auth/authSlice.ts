@@ -1,31 +1,58 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthError, LoginResponseData } from '../../DTO/AuthDTO';
-import { loginUser, registerUser, checkAuth, logout } from './authThunks';
+import { loginUser, registerUser, checkAuth, logout, refreshAccessToken } from './authThunks';
 import { User } from '../../types/UserType';
 
 interface AuthState {
     user: User | null;
     error: AuthError | null;
     isLoading: boolean;
+    formFields: {
+        login: string;
+        email: string;
+        password: string;
+    };
+    formErrors: {
+        login: string;
+        email: string;
+        password: string;
+    };
 }
 
 const initialState: AuthState = {
     user: JSON.parse(localStorage.getItem('user') as string) || null,
     error: null,
     isLoading: false,
+    formFields: {
+        login: '',
+        email: '',
+        password: '',
+    },
+    formErrors: {
+        login: '',
+        email: '',
+        password: '',
+    },
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setUser(state, action) {
+        setUser(state, action: PayloadAction<User>) {
             state.user = action.payload;
             localStorage.setItem('user', JSON.stringify(action.payload));
             state.isLoading = false;
         },
         clearAuthError(state) {
             state.error = null;
+            state.formErrors = { login: '', email: '', password: '' };
+        },
+        setField(state, action: PayloadAction<{ field: keyof AuthState['formFields']; value: string }>) {
+            state.formFields[action.payload.field] = action.payload.value;
+        },
+        setFormErrors(state, action: PayloadAction<AuthState['formErrors']>) {
+            state.formErrors = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -67,6 +94,7 @@ const authSlice = createSlice({
             })
             .addCase(checkAuth.rejected, (state) => {
                 state.user = null;
+                localStorage.removeItem('user');
             })
             .addCase(logout.pending, (state) => {
                 state.isLoading = true;
@@ -82,9 +110,22 @@ const authSlice = createSlice({
                     status: 500,
                 };
                 state.isLoading = false;
+            })
+            .addCase(refreshAccessToken.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(refreshAccessToken.fulfilled, (state, action: PayloadAction<User>) => {
+                state.isLoading = false;
+                state.user = action.payload;
+            })
+            .addCase(refreshAccessToken.rejected, (state) => {
+                state.isLoading = false;
+                state.user = null;
+                localStorage.removeItem('user');
             });
     },
 });
 
-export const { clearAuthError, setUser } = authSlice.actions;
+export const { clearAuthError, setUser, setField, setFormErrors, } = authSlice.actions;
 export default authSlice.reducer;

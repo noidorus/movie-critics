@@ -1,40 +1,62 @@
+import zod from 'zod';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { clearAuthError } from '../../../store/Auth/authSlice';
-import { selectAuthError } from '../../../store/Auth/authSelectors';
-import { useAuthForm } from './useAuthForm';
+import { clearAuthError, setField, setFormErrors } from '../../../store/Auth/authSlice';
+import { loginUser, registerUser } from '../../../store/Auth/authThunks';
+import { selectAuthError, selectLoading, selectFormFields, selectFormErrors } from '../../../store/Auth/authSelectors';
+import { authSchema } from './validationSchema';
 
 interface AuthFormHandlerProps {
-    onSubmit: (username: string, email: string | null, password: string) => Promise<void>;
     isLogin: boolean;
 }
 
-export const useAuthFormHandler = ({ onSubmit, isLogin }: AuthFormHandlerProps) => {
+export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
     const dispatch = useAppDispatch();
-    const error = useAppSelector(selectAuthError);
-    const { login, setLogin, email, setEmail, password, setPassword, errors, validateForm } =
-        useAuthForm(isLogin);
+    const { login, email, password } = useAppSelector(selectFormFields);
+    const errors = useAppSelector(selectFormErrors);
+    const serverError = useAppSelector(selectAuthError);
+    const loading = useAppSelector(selectLoading);
 
     useEffect(() => {
+        dispatch(setField({ field: 'login', value: '' }));
+        dispatch(setField({ field: 'password', value: '' }));
+        dispatch(setField({ field: 'email', value: '' }));
         dispatch(clearAuthError());
     }, [dispatch]);
 
-    const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLogin(e.target.value);
+    const handleFieldChange = (field: 'login' | 'email' | 'password', value: string) => {
+        dispatch(setField({ field, value }));
     };
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
+    const validateForm = () => {
+        try {
+            authSchema.parse({ login, email: isLogin ? undefined : email, password });
+            dispatch(setFormErrors({ login: '', email: '', password: '' }));
+            return true;
+        } catch (err) {
+            if (err instanceof zod.ZodError) {
+                const formErrors = {
+                    login: err.formErrors.fieldErrors.login?.[0] || '',
+                    email: err.formErrors.fieldErrors.email?.[0] || '',
+                    password: err.formErrors.fieldErrors.password?.[0] || '',
+                };
+                dispatch(setFormErrors(formErrors));
+            }
+            return false;
+        }
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (validateForm()) {
-            await onSubmit(login, isLogin ? null : email, password);
+            if (isLogin) {
+                dispatch(loginUser({ username: login, password }));
+            } else {
+                const result = await dispatch(registerUser({ username: login, email, password }));
+                unwrapResult(result);
+                await dispatch(loginUser({ username: login, password }));
+            }
         }
     };
 
@@ -42,11 +64,10 @@ export const useAuthFormHandler = ({ onSubmit, isLogin }: AuthFormHandlerProps) 
         login,
         email,
         password,
-        handleLoginChange,
-        handleEmailChange,
-        handlePasswordChange,
+        handleFieldChange,
         handleSubmit,
         errors,
-        error,
+        serverError,
+        loading,
     };
 };

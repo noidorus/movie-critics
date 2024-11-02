@@ -1,52 +1,27 @@
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import { registerUser, loginUser } from '../../../store/Auth/authThunks';
-import { useAppDispatch } from '../../../store/hooks';
-import { useNavigate } from 'react-router-dom';
 import { useAuthFormHandler } from '../hooks/useAuthFormHandler';
 import styles from '../AuthForms.module.css';
 
 export default function RegisterForm() {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-
-    const onSubmit = async (
-        username: string,
-        email: string | null,
-        password: string,
-    ): Promise<void> => {
-        if (email) {
-            const registerResult = await dispatch(registerUser({ username, email, password }));
-            if (registerUser.fulfilled.match(registerResult)) {
-                const loginResult = await dispatch(loginUser({ username, password }));
-                if (loginUser.fulfilled.match(loginResult)) {
-                    navigate('/movies');
-                }
-            }
-        }
-    };
-
     const {
         login,
         email,
         password,
-        handleLoginChange,
-        handleEmailChange,
-        handlePasswordChange,
+        handleFieldChange,
         handleSubmit,
         errors,
-        error,
-    } = useAuthFormHandler({ onSubmit, isLogin: false });
+        serverError,
+        loading
+    } = useAuthFormHandler({ isLogin: false });
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputWrapper}>
-                <label htmlFor="login" className={styles.label}>
-                    Имя пользователя
-                </label>
+                <label htmlFor="login" className={styles.label}>Имя пользователя</label>
                 <InputText
                     value={login}
-                    onChange={handleLoginChange}
+                    onChange={(e) => handleFieldChange('login', e.target.value)}
                     id="login"
                     placeholder="Никнейм"
                     className={styles.input}
@@ -54,12 +29,10 @@ export default function RegisterForm() {
                 {errors.login && <p className={styles.error}>{errors.login}</p>}
             </div>
             <div className={styles.inputWrapper}>
-                <label htmlFor="email" className={styles.label}>
-                    Электронная почта
-                </label>
+                <label htmlFor="email" className={styles.label}>Электронная почта</label>
                 <InputText
                     value={email}
-                    onChange={handleEmailChange}
+                    onChange={(e) => handleFieldChange('email', e.target.value)}
                     id="email"
                     placeholder="example@example.com"
                     className={styles.input}
@@ -67,12 +40,10 @@ export default function RegisterForm() {
                 {errors.email && <p className={styles.error}>{errors.email}</p>}
             </div>
             <div className={styles.inputWrapper}>
-                <label htmlFor="password" className={styles.label}>
-                    Пароль
-                </label>
+                <label htmlFor="password" className={styles.label}>Пароль</label>
                 <InputText
                     value={password}
-                    onChange={handlePasswordChange}
+                    onChange={(e) => handleFieldChange('password', e.target.value)}
                     id="password"
                     placeholder="*********"
                     className={styles.input}
@@ -80,8 +51,13 @@ export default function RegisterForm() {
                 />
                 {errors.password && <p className={styles.error}>{errors.password}</p>}
             </div>
-            <Button type="submit" className={styles.button} label="Зарегистрироваться" />
-            {error && <p className={styles.error}>{error.message}</p>}
+            <Button
+                type="submit"
+                className={styles.button}
+                label={loading ? "Загрузка..." : "Зарегистрироваться"}
+                disabled={loading}
+            />
+            {serverError && <p className={styles.error}>{serverError.message}</p>}
         </form>
     );
 }
