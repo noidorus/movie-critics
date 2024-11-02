@@ -9,6 +9,7 @@ import MoviesPage from './pages/MoviesPage/MoviesPage';
 import MoviePage from './pages/MoviePage/MoviePage';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 import './App.css';
 
 export default function App() {
