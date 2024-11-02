@@ -1,4 +1,4 @@
-type Rating = {
+export type Rating = {
     id: number;
     userId: number;
     filmId: number;
@@ -11,6 +11,7 @@ export type Movie = {
     nameRu: string;
     posterUrlPreview: string;
     slogan: string;
+    type: string;
     description: string;
     filmLength: number;
     year: number;
