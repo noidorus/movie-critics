@@ -1,0 +1,22 @@
+.content {
+    inline-size: 1280px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #f8f9fa;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+}
+
+@media (max-width: 1280px) {
+    .content {
+        inline-size: 95vw;
+    }
+}
+
+@media (max-width: 1024px) {
+    .content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+}

@@ -1,0 +1,62 @@
+.dialog {
+    width: 600px;
+    max-width: 90%;
+}
+
+.dialogContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.ratingOptions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.ratingButton {
+    margin: 0;
+    min-width: 40px;
+    padding: 0.5rem;
+    font-size: 14px;
+}
+
+.selected {
+    background-color: #007adf;
+    color: white;
+}
+
+.errorMessage {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.submitButton {
+    margin-top: 20px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .dialog {
+        width: 80%;
+    }
+
+    .ratingOptions {
+        gap: 4px;
+    }
+
+    .ratingButton {
+        width: 35px;
+        padding: 0.3rem;
+        font-size: 12px;
+    }
+}
