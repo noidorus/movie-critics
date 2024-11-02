@@ -32,3 +32,13 @@
 .button:hover {
     background-color: #8d8a8a;
 }
+
+@media (max-width: 800px) {
+    .wrapper {
+        width: 80%;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+}

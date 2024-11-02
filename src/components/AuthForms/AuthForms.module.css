@@ -47,3 +47,9 @@
     font-size: 18px;
     color: red;
 }
+
+@media (max-width: 550px) {
+    .input {
+        inline-size: 250px;
+    }
+}
