@@ -31,11 +31,11 @@
 
 .selected {
     background-color: #007adf;
-    color: white;
+    color: #f9f9f9;
 }
 
 .errorMessage {
-    color: red;
+    color: #f00;
     margin-top: 10px;
     text-align: center;
 }
@@ -46,6 +46,7 @@
 }
 
 @media (max-width: 768px) {
+
     .dialog {
         width: 80%;
     }

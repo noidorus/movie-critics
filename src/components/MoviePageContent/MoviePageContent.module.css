@@ -9,12 +9,14 @@
 }
 
 @media (max-width: 1280px) {
+
     .content {
         inline-size: 95vw;
     }
 }
 
 @media (max-width: 1024px) {
+
     .content {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;

@@ -45,10 +45,11 @@
 
 .error {
     font-size: 18px;
-    color: red;
+    color: #f00;
 }
 
 @media (max-width: 550px) {
+
     .input {
         inline-size: 250px;
     }
