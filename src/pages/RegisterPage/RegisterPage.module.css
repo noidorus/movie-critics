@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     margin-inline: auto;
-    margin-block-start: 200px;
+    margin-block-start: 100px;
     padding-block: 24px;
     align-items: center;
     max-width: 800px;
@@ -27,6 +27,7 @@
     padding-inline-start: 10px;
     padding-inline-end: 10px;
     padding-block: 8px;
+    text-decoration: none;
 }
 
 .button:hover {
@@ -36,6 +37,7 @@
 @media (max-width: 800px) {
     .wrapper {
         width: 80%;
+        margin-block-start: 50px;
     }
 
     .title {

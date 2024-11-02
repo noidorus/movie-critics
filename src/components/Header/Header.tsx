@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from 'primereact/button';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../store/Auth/authThunks';
 import { selectUser } from '../../store/Auth/authSelectors';
@@ -12,7 +12,6 @@ type HeaderProps = {
 
 export default function Header({ activeTab }: HeaderProps) {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const user = useAppSelector(selectUser);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +20,6 @@ export default function Header({ activeTab }: HeaderProps) {
 
     const handleLogout = async () => {
         await dispatch(logout());
-        navigate('/login');
     };
 
     return (
@@ -35,41 +33,34 @@ export default function Header({ activeTab }: HeaderProps) {
 
                 <div className={`${styles.buttons} ${isMenuOpen ? styles.open : ''}`}>
                     <div className={styles.leftButtons}>
-                        <Button
-                            type="button"
-                            className={`${styles.button} ${activeTab === 'movies' ? styles.buttonChecked : ''}`}
-                            onClick={() => navigate('/movies')}
-                        >
+                        <Link to="/movies" className={`${styles.button} ${activeTab === 'movies' ? styles.buttonChecked : ''}`}>
                             <span>Фильмы</span>
-                        </Button>
-                        <Button
-                            type="button"
+                        </Link>
+                        <Link to="/rating"
                             className={`${styles.button} ${activeTab === 'rating' ? styles.buttonChecked : ''}`}
                         >
                             <span>Рейтинг</span>
-                        </Button>
-                        <Button
-                            type="button"
-                            className={`${styles.button} ${activeTab === 'collections' ? styles.buttonChecked : ''}`}
+                        </Link>
+                        <Link to="/collections" className={`${styles.button} ${activeTab === 'collections' ? styles.buttonChecked : ''}`}
                         >
                             <span>Подборки</span>
-                        </Button>
+                        </Link>
                     </div>
 
                     <div className={styles.rightButtons}>
                         {user ? (
                             <>
-                                <Button type="button" className={styles.button}>
+                                <Link to="/profile" className={`${styles.button} ${activeTab === 'profile' ? styles.buttonChecked : ''}`}>
                                     <span>Моя страница</span>
-                                </Button>
-                                <Button type="button" className={styles.button} onClick={handleLogout}>
+                                </Link>
+                                <Link to="/login" className={styles.button} onClick={handleLogout}>
                                     <span>Выйти</span>
-                                </Button>
+                                </Link>
                             </>
                         ) : (
-                            <Button type="button" className={styles.button} onClick={() => navigate('/login')}>
+                            <Link to="/login" className={styles.button}>
                                 <span>Войти</span>
-                            </Button>
+                            </Link>
                         )}
                     </div>
                 </div>
