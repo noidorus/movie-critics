@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import zod from 'zod';
 import { AuthError, LoginResponseData } from '../../DTO/AuthDTO';
 import { loginUser, registerUser, checkAuth, logout, refreshAccessToken } from './authThunks';
 import { User } from '../../types/UserType';
+import { authSchema } from './validationSchema';
 
 interface AuthState {
     user: User | null;
@@ -17,6 +19,7 @@ interface AuthState {
         email: string;
         password: string;
     };
+    isFormValid: boolean;
 }
 
 const initialState: AuthState = {
@@ -33,6 +36,7 @@ const initialState: AuthState = {
         email: '',
         password: '',
     },
+    isFormValid: true,
 };
 
 const authSlice = createSlice({
@@ -53,6 +57,27 @@ const authSlice = createSlice({
         },
         setFormErrors(state, action: PayloadAction<AuthState['formErrors']>) {
             state.formErrors = action.payload;
+        },
+        validateForm(state, action: PayloadAction<boolean>) {
+            const isLogin = action.payload;
+            try {
+                if (isLogin) {
+                    authSchema.pick({ login: true, password: true }).parse(state.formFields);
+                } else {
+                    authSchema.parse(state.formFields);
+                }
+                state.formErrors = { login: '', email: '', password: '' };
+                state.isFormValid = true;
+            } catch (err) {
+                if (err instanceof zod.ZodError) {
+                    state.formErrors = {
+                        login: err.formErrors.fieldErrors.login?.[0] || '',
+                        email: err.formErrors.fieldErrors.email?.[0] || '',
+                        password: err.formErrors.fieldErrors.password?.[0] || '',
+                    };
+                    state.isFormValid = false;
+                }
+            }
         },
     },
     extraReducers: (builder) => {
@@ -127,5 +152,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { clearAuthError, setUser, setField, setFormErrors, } = authSlice.actions;
+export const { clearAuthError, setUser, setField, setFormErrors, validateForm } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,11 +1,9 @@
-import zod from 'zod';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { clearAuthError, setField, setFormErrors } from '../../../store/Auth/authSlice';
+import { clearAuthError, setField, validateForm } from '../../../store/Auth/authSlice';
 import { loginUser, registerUser } from '../../../store/Auth/authThunks';
-import { selectAuthError, selectLoading, selectFormFields, selectFormErrors } from '../../../store/Auth/authSelectors';
-import { authSchema } from './validationSchema';
+import { selectAuthError, selectLoading, selectFormFields, selectFormErrors, selectIsFormValid } from '../../../store/Auth/authSelectors';
 
 interface AuthFormHandlerProps {
     isLogin: boolean;
@@ -17,6 +15,9 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
     const errors = useAppSelector(selectFormErrors);
     const serverError = useAppSelector(selectAuthError);
     const loading = useAppSelector(selectLoading);
+    const isFormValid = useAppSelector(selectIsFormValid);
+
+    const [shouldSubmit, setShouldSubmit] = useState(false);
 
     useEffect(() => {
         dispatch(setField({ field: 'login', value: '' }));
@@ -29,36 +30,26 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
         dispatch(setField({ field, value }));
     };
 
-    const validateForm = () => {
-        try {
-            authSchema.parse({ login, email: isLogin ? undefined : email, password });
-            dispatch(setFormErrors({ login: '', email: '', password: '' }));
-            return true;
-        } catch (err) {
-            if (err instanceof zod.ZodError) {
-                const formErrors = {
-                    login: err.formErrors.fieldErrors.login?.[0] || '',
-                    email: err.formErrors.fieldErrors.email?.[0] || '',
-                    password: err.formErrors.fieldErrors.password?.[0] || '',
-                };
-                dispatch(setFormErrors(formErrors));
-            }
-            return false;
-        }
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        dispatch(validateForm(isLogin));
+        setShouldSubmit(true);
     };
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        if (validateForm()) {
-            if (isLogin) {
-                dispatch(loginUser({ username: login, password }));
-            } else {
-                const result = await dispatch(registerUser({ username: login, email, password }));
-                unwrapResult(result);
-                await dispatch(loginUser({ username: login, password }));
+    useEffect(() => {
+        if (shouldSubmit) {
+            if (isFormValid) {
+                if (isLogin) {
+                    dispatch(loginUser({ username: login, password }));
+                } else {
+                    dispatch(registerUser({ username: login, email, password }))
+                        .then((result) => unwrapResult(result))
+                        .then(() => dispatch(loginUser({ username: login, password })));
+                }
             }
+            setShouldSubmit(false);
         }
-    };
+    }, [isFormValid, shouldSubmit, isLogin, dispatch, login, email, password, errors]);
 
     return {
         login,
