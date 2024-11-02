@@ -7,4 +7,5 @@ export default {
         'rule-empty-line-before': 'always',
         'declaration-empty-line-before': 'never',
     },
+    ignore: ['first-nested'],
 };
