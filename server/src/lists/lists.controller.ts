@@ -58,7 +58,7 @@ export class ListsController {
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Param('filmId', PositiveNumberValidationPipe) filmId: number,
-  ): Promise<void> {
+  ): Promise<true> {
     return this.listsService.addFilmToList(req.user.id, id, filmId);
   }
 
@@ -78,7 +78,7 @@ export class ListsController {
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Param('filmId', PositiveNumberValidationPipe) filmId: number,
-  ): Promise<void> {
+  ): Promise<true> {
     return this.listsService.removeFilmFromList(req.user.id, id, filmId);
   }
 

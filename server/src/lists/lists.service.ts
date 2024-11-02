@@ -77,10 +77,10 @@ export class ListsService {
     }
   }
 
-  async removeList(authorId: number, id: number): Promise<void> {
+  async removeList(authorId: number, id: number): Promise<true> {
     try {
       await this.prisma.listFilms.delete({ where: { id, authorId } });
-      throw new HttpException('List deleted', HttpStatus.OK);
+      return true;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
@@ -91,14 +91,14 @@ export class ListsService {
     }
   }
 
-  async addFilmToList(authorId: number, id: number, filmId: number): Promise<void> {
+  async addFilmToList(authorId: number, id: number, filmId: number): Promise<true> {
     try {
       await this.prisma.listFilms.update({
         where: { id, authorId },
         data: { films: { connect: { id: filmId } } },
         select: { films: true },
       });
-      throw new HttpException('Film added to list', HttpStatus.OK);
+      return true;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         switch (err.code) {
@@ -113,7 +113,7 @@ export class ListsService {
     }
   }
 
-  async removeFilmFromList(authorId: number, id: number, filmId: number): Promise<void> {
+  async removeFilmFromList(authorId: number, id: number, filmId: number): Promise<true> {
     try {
       await this.prisma.listFilms.update({
         where: { id, authorId },
@@ -121,7 +121,7 @@ export class ListsService {
         select: { films: true, name: true, id: true },
       });
 
-      throw new HttpException('Film removed from list', HttpStatus.OK);
+      return true;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
