@@ -119,3 +119,30 @@ export const logout = createAsyncThunk<void, void, { rejectValue: AuthError }>(
         }
     },
 );
+
+export const refreshAccessToken = createAsyncThunk<User, void, { rejectValue: AuthError }>(
+    'auth/refresh',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch(`${API_URL}/refresh`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                throw {
+                    message: 'Ошибка обновления токена',
+                    status: response.status,
+                };
+            }
+
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error: unknown) {
+            const authError = error as AuthError;
+            console.log(authError);
+            return rejectWithValue(authError);
+        }
+    },
+);
