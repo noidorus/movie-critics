@@ -4,20 +4,15 @@ import { useAuthFormHandler } from '../hooks/useAuthFormHandler';
 import styles from '../AuthForms.module.css';
 
 export default function LoginForm() {
-    const {
-        login,
-        password,
-        handleFieldChange,
-        handleSubmit,
-        errors,
-        serverError,
-        loading
-    } = useAuthFormHandler({ isLogin: true });
+    const { login, password, handleFieldChange, handleSubmit, errors, serverError, loading } =
+        useAuthFormHandler({ isLogin: true });
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputWrapper}>
-                <label htmlFor="login" className={styles.label}>Имя пользователя</label>
+                <label htmlFor="login" className={styles.label}>
+                    Имя пользователя
+                </label>
                 <InputText
                     value={login}
                     onChange={(e) => handleFieldChange('login', e.target.value)}
@@ -28,7 +23,9 @@ export default function LoginForm() {
                 {errors.login && <p className={styles.error}>{errors.login}</p>}
             </div>
             <div className={styles.inputWrapper}>
-                <label htmlFor="password" className={styles.label}>Пароль</label>
+                <label htmlFor="password" className={styles.label}>
+                    Пароль
+                </label>
                 <InputText
                     value={password}
                     onChange={(e) => handleFieldChange('password', e.target.value)}
@@ -42,7 +39,7 @@ export default function LoginForm() {
             <Button
                 type="submit"
                 className={styles.button}
-                label={loading ? "Загрузка..." : "Войти"}
+                label={loading ? 'Загрузка...' : 'Войти'}
                 disabled={loading}
             />
             {serverError && <p className={styles.error}>{serverError.message}</p>}

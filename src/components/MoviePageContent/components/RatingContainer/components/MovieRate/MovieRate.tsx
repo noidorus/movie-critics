@@ -16,14 +16,8 @@ export default function MovieRate({ userId, movieId, ratings, onRatingUpdate }: 
         return <div>Загрузка...</div>;
     }
 
-    const {
-        isDialogVisible,
-        ratingLoading,
-        userRating,
-        openDialog,
-        closeDialog,
-        updateRating
-    } = useMovieRate(userId, movieId, ratings);
+    const { isDialogVisible, ratingLoading, userRating, openDialog, closeDialog, updateRating } =
+        useMovieRate(userId, movieId, ratings);
 
     return (
         <div className={styles.yourRatingContainer}>
@@ -38,7 +32,7 @@ export default function MovieRate({ userId, movieId, ratings, onRatingUpdate }: 
                 </Button>
             )}
 
-            <MovieRateDialog 
+            <MovieRateDialog
                 visible={isDialogVisible}
                 onHide={closeDialog}
                 movieId={movieId}

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectUser } from './store/Auth/authSelectors';
 import { checkAuth, refreshAccessToken } from './store/Auth/authThunks';
-import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import MoviesPage from './pages/MoviesPage/MoviesPage';
@@ -28,13 +28,15 @@ export default function App() {
     }, [dispatch, user]);
 
     useEffect(() => {
-        const refreshTokenInterval = setInterval(() => {
-            dispatch(refreshAccessToken());
-        }, 1000 * 60 * 5);
+        const refreshTokenInterval = setInterval(
+            () => {
+                dispatch(refreshAccessToken());
+            },
+            1000 * 60 * 5,
+        );
 
         return () => clearInterval(refreshTokenInterval);
     }, [dispatch]);
-
 
     return (
         <Router>

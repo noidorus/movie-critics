@@ -9,7 +9,9 @@ export function useMovieRate(userId: number, movieId: number, ratings: Rating[])
     const [isDialogVisible, setDialogVisible] = useState(false);
 
     const ratingLoading = useAppSelector(selectRatingLoading);
-    const userRating = ratings.find(rating => rating.userId === userId && rating.filmId === movieId)?.userRating;
+    const userRating = ratings.find(
+        (rating) => rating.userId === userId && rating.filmId === movieId,
+    )?.userRating;
 
     const openDialog = () => setDialogVisible(true);
     const closeDialog = () => setDialogVisible(false);
@@ -25,6 +27,6 @@ export function useMovieRate(userId: number, movieId: number, ratings: Rating[])
         userRating,
         openDialog,
         closeDialog,
-        updateRating
+        updateRating,
     };
 }

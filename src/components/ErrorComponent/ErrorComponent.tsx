@@ -1,11 +1,9 @@
-import styles from './ErrorComponent.module.css'
+import styles from './ErrorComponent.module.css';
 
 type Props = {
-    error: string
-}
+    error: string;
+};
 
-export default function ErrorComponent({error}: Props) {
-    return (
-        <p className={styles.errorMessage}>{error}</p>
-    )
+export default function ErrorComponent({ error }: Props) {
+    return <p className={styles.errorMessage}>{error}</p>;
 }

@@ -19,7 +19,7 @@ export function useMoviePageContent() {
     const isLoading = useAppSelector(selectIsLoading);
     const error = useAppSelector(selectMovieError);
     const user = useAppSelector(selectUser);
-    const ratingUpdated = useAppSelector(selectRatingUpdated); 
+    const ratingUpdated = useAppSelector(selectRatingUpdated);
 
     useEffect(() => {
         if (id) {

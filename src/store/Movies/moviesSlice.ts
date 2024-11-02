@@ -43,12 +43,16 @@ const moviesSlice = createSlice({
                 state.isLoading = false;
                 state.isFetching = false;
                 state.currentPage = action.payload.page;
-                if (state.currentPage === 1) state.initialLoad = false;
+                if (state.currentPage === 1) {
+                    state.initialLoad = false;
+                }
                 state.totalPages = action.payload.totalPages;
             })
             .addCase(fetchMovies.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload ? action.payload.message : 'Ошибка при получении фильмов. Попробуйте позже';
+                state.error = action.payload
+                    ? action.payload.message
+                    : 'Ошибка при получении фильмов. Попробуйте позже';
             });
     },
 });

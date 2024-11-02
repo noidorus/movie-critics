@@ -26,22 +26,28 @@ export default function Header({ activeTab }: HeaderProps) {
         <div className={styles.header}>
             <div className={styles.navigation}>
                 <p className={styles.logo}>MOVIE CRITICS</p>
-                
+
                 <Button className={styles.menuButton} onClick={toggleMenu}>
                     <span className="pi pi-bars"></span>
                 </Button>
 
                 <div className={`${styles.buttons} ${isMenuOpen ? styles.open : ''}`}>
                     <div className={styles.leftButtons}>
-                        <Link to="/movies" className={`${styles.button} ${activeTab === 'movies' ? styles.buttonChecked : ''}`}>
+                        <Link
+                            to="/movies"
+                            className={`${styles.button} ${activeTab === 'movies' ? styles.buttonChecked : ''}`}
+                        >
                             <span>Фильмы</span>
                         </Link>
-                        <Link to="/rating"
+                        <Link
+                            to="/rating"
                             className={`${styles.button} ${activeTab === 'rating' ? styles.buttonChecked : ''}`}
                         >
                             <span>Рейтинг</span>
                         </Link>
-                        <Link to="/collections" className={`${styles.button} ${activeTab === 'collections' ? styles.buttonChecked : ''}`}
+                        <Link
+                            to="/collections"
+                            className={`${styles.button} ${activeTab === 'collections' ? styles.buttonChecked : ''}`}
                         >
                             <span>Подборки</span>
                         </Link>
@@ -50,7 +56,10 @@ export default function Header({ activeTab }: HeaderProps) {
                     <div className={styles.rightButtons}>
                         {user ? (
                             <>
-                                <Link to="/profile" className={`${styles.button} ${activeTab === 'profile' ? styles.buttonChecked : ''}`}>
+                                <Link
+                                    to="/profile"
+                                    className={`${styles.button} ${activeTab === 'profile' ? styles.buttonChecked : ''}`}
+                                >
                                     <span>Моя страница</span>
                                 </Link>
                                 <Link to="/login" className={styles.button} onClick={handleLogout}>

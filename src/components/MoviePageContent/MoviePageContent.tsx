@@ -10,7 +10,7 @@ export default function MoviePageContent() {
     const { movie, isLoading, error, user, handleRatingUpdate } = useMoviePageContent();
 
     if (isLoading) {
-        return <Loader/>;
+        return <Loader />;
     }
 
     if (error) {

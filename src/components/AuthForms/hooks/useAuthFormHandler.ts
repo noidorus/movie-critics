@@ -3,7 +3,13 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { clearAuthError, setField, validateForm } from '../../../store/Auth/authSlice';
 import { loginUser, registerUser } from '../../../store/Auth/authThunks';
-import { selectAuthError, selectLoading, selectFormFields, selectFormErrors, selectIsFormValid } from '../../../store/Auth/authSelectors';
+import {
+    selectAuthError,
+    selectLoading,
+    selectFormFields,
+    selectFormErrors,
+    selectIsFormValid,
+} from '../../../store/Auth/authSelectors';
 
 interface AuthFormHandlerProps {
     isLogin: boolean;

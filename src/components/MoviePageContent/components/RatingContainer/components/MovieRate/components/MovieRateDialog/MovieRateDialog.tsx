@@ -18,14 +18,15 @@ export default function MovieRateDialog({
     userRating,
     onRatingUpdate,
 }: MovieRateDialogProps) {
-    const { selectedRating, setSelectedRating, handleRateMovie, loading, error } = useMovieRateDialog(movieId, onRatingUpdate);
+    const { selectedRating, setSelectedRating, handleRateMovie, loading, error } =
+        useMovieRateDialog(movieId, onRatingUpdate);
 
     return (
-        <Dialog 
-            visible={visible} 
-            onHide={onHide} 
-            header="Оценить фильм" 
-            closable 
+        <Dialog
+            visible={visible}
+            onHide={onHide}
+            header="Оценить фильм"
+            closable
             className={styles.dialog}
         >
             <div className={styles.dialogContent}>
@@ -35,7 +36,7 @@ export default function MovieRateDialog({
                     <p>У вас пока нет оценки для этого фильма.</p>
                 )}
                 <div className={styles.ratingOptions}>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value => (
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
                         <Button
                             key={value}
                             className={`${styles.ratingButton} ${selectedRating === value ? styles.selected : ''}`}

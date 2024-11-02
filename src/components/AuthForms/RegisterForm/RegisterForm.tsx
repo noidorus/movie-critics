@@ -12,13 +12,15 @@ export default function RegisterForm() {
         handleSubmit,
         errors,
         serverError,
-        loading
+        loading,
     } = useAuthFormHandler({ isLogin: false });
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputWrapper}>
-                <label htmlFor="login" className={styles.label}>Имя пользователя</label>
+                <label htmlFor="login" className={styles.label}>
+                    Имя пользователя
+                </label>
                 <InputText
                     value={login}
                     onChange={(e) => handleFieldChange('login', e.target.value)}
@@ -29,7 +31,9 @@ export default function RegisterForm() {
                 {errors.login && <p className={styles.error}>{errors.login}</p>}
             </div>
             <div className={styles.inputWrapper}>
-                <label htmlFor="email" className={styles.label}>Электронная почта</label>
+                <label htmlFor="email" className={styles.label}>
+                    Электронная почта
+                </label>
                 <InputText
                     value={email}
                     onChange={(e) => handleFieldChange('email', e.target.value)}
@@ -40,7 +44,9 @@ export default function RegisterForm() {
                 {errors.email && <p className={styles.error}>{errors.email}</p>}
             </div>
             <div className={styles.inputWrapper}>
-                <label htmlFor="password" className={styles.label}>Пароль</label>
+                <label htmlFor="password" className={styles.label}>
+                    Пароль
+                </label>
                 <InputText
                     value={password}
                     onChange={(e) => handleFieldChange('password', e.target.value)}
@@ -54,7 +60,7 @@ export default function RegisterForm() {
             <Button
                 type="submit"
                 className={styles.button}
-                label={loading ? "Загрузка..." : "Зарегистрироваться"}
+                label={loading ? 'Загрузка...' : 'Зарегистрироваться'}
                 disabled={loading}
             />
             {serverError && <p className={styles.error}>{serverError.message}</p>}

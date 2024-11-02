@@ -8,7 +8,7 @@ import {
     selectTotalPages,
     selectMoviesError,
     selectIsFetching,
-    selectInitialLoad
+    selectInitialLoad,
 } from '../../../store/Movies/moviesSelector';
 import { setFetching } from '../../../store/Movies/moviesSlice';
 
@@ -34,7 +34,9 @@ export const useMoviesPage = () => {
             window.innerHeight + document.documentElement.scrollTop >=
             document.documentElement.offsetHeight - 1;
 
-        if (!isBottomReached || isFetching || isLoading || currentPage >= totalPages) return;
+        if (!isBottomReached || isFetching || isLoading || currentPage >= totalPages) {
+            return;
+        }
 
         dispatch(setFetching(true));
         dispatch(fetchMovies(currentPage + 1)).then(() => dispatch(setFetching(false)));

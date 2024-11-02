@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Movie } from "../../types/MovieType";
+import { Movie } from '../../types/MovieType';
 import { fetchMovieById, rateMovie } from './movieThunks';
 
 interface MovieState {
@@ -40,7 +40,9 @@ const movieSlice = createSlice({
             })
             .addCase(fetchMovieById.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload ? action.payload.message : 'Ошибка при получении фильмов. Попробуйте позже';
+                state.error = action.payload
+                    ? action.payload.message
+                    : 'Ошибка при получении фильмов. Попробуйте позже';
             })
             .addCase(rateMovie.pending, (state) => {
                 state.ratingLoading = true;
@@ -51,8 +53,10 @@ const movieSlice = createSlice({
                 state.movie = action.payload;
             })
             .addCase(rateMovie.rejected, (state, action) => {
-                state.ratingLoading = false; 
-                state.ratingError = action.payload ? action.payload.message : 'Ошибка при отправке оценки. Попробуйте позже';
+                state.ratingLoading = false;
+                state.ratingError = action.payload
+                    ? action.payload.message
+                    : 'Ошибка при отправке оценки. Попробуйте позже';
             });
     },
 });

@@ -52,7 +52,10 @@ const authSlice = createSlice({
             state.error = null;
             state.formErrors = { login: '', email: '', password: '' };
         },
-        setField(state, action: PayloadAction<{ field: keyof AuthState['formFields']; value: string }>) {
+        setField(
+            state,
+            action: PayloadAction<{ field: keyof AuthState['formFields']; value: string }>,
+        ) {
             state.formFields[action.payload.field] = action.payload.value;
         },
         setFormErrors(state, action: PayloadAction<AuthState['formErrors']>) {
