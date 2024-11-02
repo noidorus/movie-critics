@@ -60,10 +60,14 @@ export class FilmsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('rate')
+  @Post(':id/rate')
   @ApiOperation({ summary: 'Rate film, auth required' })
   @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
-  async rateFilm(@Body() dto: RateFilmBodyDTO, @Req() req: RequestWithUser) {
-    return this.filmsService.rateFilm(dto, req.user.id);
+  async rateFilm(
+    @Req() req: RequestWithUser,
+    @Param('id', PositiveNumberValidationPipe) id: number,
+    @Body() { rating }: RateFilmBodyDTO,
+  ) {
+    return this.filmsService.rateFilm(req.user.id, id, rating);
   }
 }

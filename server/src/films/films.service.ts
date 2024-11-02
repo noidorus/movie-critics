@@ -3,9 +3,8 @@ import { PrismaService } from 'src/prismaDB/prisma.service';
 import { items } from './seed';
 import { FilmWithRealtions, VideoTypesArr } from './film.interfaces';
 import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity, FilmNoRatingsEntity } from './entities';
-import { Country, Genre } from '@prisma/client';
+import { Country, Genre, Rating } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
-import { RateFilmBodyDTO } from './dto/RateFilmBody.dto';
 import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
 
 @Injectable()
@@ -71,21 +70,19 @@ export class FilmsService {
     }
   }
 
-  async rateFilm(dto: RateFilmBodyDTO, userId: number) {
+  async rateFilm(userId: number, filmId: number, rating: number): Promise<Rating> {
     try {
-      const film = await this.prisma.film.findUnique({ where: { id: dto.filmId } });
+      const film = await this.prisma.film.findUnique({ where: { id: filmId } });
 
       if (!film) {
         throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
       }
 
-      const rating = await this.prisma.rating.upsert({
-        where: { filmId_userId: { filmId: dto.filmId, userId } },
-        create: { filmId: dto.filmId, userId, userRating: dto.rating },
-        update: { userRating: dto.rating },
+      return await this.prisma.rating.upsert({
+        where: { filmId_userId: { filmId, userId } },
+        create: { filmId, userId, userRating: rating },
+        update: { userRating: rating },
       });
-
-      return rating;
     } catch (err) {
       throw err;
     }

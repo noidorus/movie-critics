@@ -8,9 +8,4 @@ export class RateFilmBodyDTO {
   @Min(1)
   @Max(10)
   rating: number;
-
-  @ApiProperty({ type: Number })
-  @IsNumber()
-  @IsNotEmpty()
-  filmId: number;
 }

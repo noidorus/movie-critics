@@ -91,14 +91,16 @@ export class ListsService {
     }
   }
 
-  async addFilmToList(authorId: number, id: number, filmId: number): Promise<true> {
+  async addFilmToList(authorId: number, id: number, filmId: number): Promise<FilmInListEntity> {
     try {
       await this.prisma.listFilms.update({
         where: { id, authorId },
         data: { films: { connect: { id: filmId } } },
         select: { films: true },
       });
-      return true;
+
+      const film = await this.prisma.film.findUnique({ where: { id: filmId } });
+      return new FilmInListEntity(film);
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         switch (err.code) {
@@ -134,10 +136,12 @@ export class ListsService {
 
   async changeVisibility(authorId: number, id: number, isPrivate: boolean): Promise<ListEntity> {
     try {
-      return await this.prisma.listFilms.update({
+      const list = await this.prisma.listFilms.update({
         where: { id, authorId },
         data: { private: isPrivate },
       });
+
+      return new ListEntity(list);
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {

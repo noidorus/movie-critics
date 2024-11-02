@@ -10,6 +10,7 @@ import {
   ShortInfoListWithAuthorAndFilms,
 } from './entities';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
+import { FilmInListEntity } from 'src/films/entities';
 
 @ApiTags('Lists')
 @Controller('lists')
@@ -46,7 +47,7 @@ export class ListsController {
   @ApiOkResponse({ type: ListEntity, description: 'List created' })
   @ApiOperation({ summary: 'Create list, available only for authorized users' })
   @Post()
-  createList(@Body() dto: CreateListDTO, @Req() req: RequestWithUser) {
+  createList(@Body() dto: CreateListDTO, @Req() req: RequestWithUser): Promise<ListEntity> {
     return this.listsService.createList(req.user.id, dto);
   }
 
@@ -58,15 +59,18 @@ export class ListsController {
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Param('filmId', PositiveNumberValidationPipe) filmId: number,
-  ): Promise<true> {
+  ): Promise<FilmInListEntity> {
     return this.listsService.addFilmToList(req.user.id, id, filmId);
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete list, available only for authorized users' })
-  @ApiOkResponse({ description: 'List deleted' })
+  @ApiOkResponse({ example: true, description: 'List deleted' })
   @Delete(':id')
-  removeList(@Param('id', PositiveNumberValidationPipe) id: number, @Req() req: RequestWithUser) {
+  removeList(
+    @Param('id', PositiveNumberValidationPipe) id: number,
+    @Req() req: RequestWithUser,
+  ): Promise<true> {
     return this.listsService.removeList(req.user.id, id);
   }
 
@@ -90,7 +94,7 @@ export class ListsController {
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Body() dto: ChangeListVisibilityDTO,
     @Req() req: RequestWithUser,
-  ) {
+  ): Promise<ListEntity> {
     return this.listsService.changeVisibility(req.user.id, id, dto.private);
   }
 }
