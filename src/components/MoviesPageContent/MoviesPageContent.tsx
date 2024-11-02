@@ -1,3 +1,4 @@
+import Loader from '../Loader/Loader';
 import { useMoviesPage } from './hooks/useMoviesPage';
 import MoviePreview from './MoviePreview/MoviePreview';
 import styles from './MoviesPageContent.module.css';
@@ -6,7 +7,7 @@ export default function MoviesPageContent() {
     const { movies, isLoading, error } = useMoviesPage();
 
     if (isLoading && movies.length === 0) {
-        return <p className={styles.loadingMessage}>Загрузка...</p>;
+        return <Loader />;
     }
 
     if (error) {
