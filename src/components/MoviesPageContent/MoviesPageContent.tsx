@@ -1,3 +1,4 @@
+import ErrorComponent from '../ErrorComponent/ErrorComponent';
 import Loader from '../Loader/Loader';
 import { useMoviesPage } from './hooks/useMoviesPage';
 import MoviePreview from './MoviePreview/MoviePreview';
@@ -11,7 +12,7 @@ export default function MoviesPageContent() {
     }
 
     if (error) {
-        return <p className={styles.errorMessage}>Ошибка: {error}</p>;
+        return <ErrorComponent error={error} />;
     }
 
     return (

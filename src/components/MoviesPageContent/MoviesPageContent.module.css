@@ -9,17 +9,5 @@
     margin: 20px 0 0 20px;
     font-size: 2.6rem;
     font-weight: 600;
-}
-
-.errorMessage {
-    color: red;
-    text-align: center;
-    font-size: 1.2rem;
-}
-
-.loadingMessage {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-block: 20px;
-    color: white;
+    color: #f9f9f9;
 }
