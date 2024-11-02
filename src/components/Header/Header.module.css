@@ -12,9 +12,9 @@
 
 .navigation {
     display: flex;
-    flex-direction: row;
-    gap: 24px;
     align-items: center;
+    width: 100%;
+    position: relative;
 }
 
 .logo {
@@ -23,18 +23,28 @@
     font-weight: 500;
     line-height: 29.05px;
     color: #8e96a0;
+    margin-right: 10px;
 }
 
 .buttons {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.leftButtons {
+    display: flex;
+    gap: 7px;
+}
+
+.rightButtons {
+    display: flex;
     gap: 7px;
 }
 
 .button {
     display: flex;
-    flex-direction: row;
-    gap: 7px;
     align-items: center;
     background-color: #121417;
     padding: 10.5px 17.5px;
@@ -55,4 +65,52 @@
 .buttonChecked:hover {
     background-color: #a855f733;
     cursor: default;
+}
+
+.menuButton {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .buttons {
+        display: none;
+        flex-direction: column;
+        background-color: #1c212a;
+        position: absolute;
+        top: 60px;
+        right: 14px;
+        width: 200px;
+        padding: 10px;
+        border-radius: 6px;
+        gap: 10px;
+        z-index: 2;
+    }
+
+    .buttons.open {
+        display: flex;
+    }
+
+    .leftButtons,
+    .rightButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menuButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        color: #8e96a0;
+        font-size: 24px;
+        margin-left: auto;
+    }
+
+    .button {
+        width: 140px;
+        justify-content: center;
+        text-wrap: nowrap;
+        box-sizing: border-box;
+    }
 }
