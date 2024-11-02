@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../../../../store/hooks';
 import { rateMovie } from '../../../../../../../../../store/Movie/movieThunks';
 import { setRatingUpdated } from '../../../../../../../../../store/Movie/movieSlice';
@@ -14,10 +14,12 @@ export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void) 
     const error = useAppSelector(selectRatingError);
     const [selectedRating, setSelectedRating] = useState<number | null>(null);
 
-    const handleRateMovie = async () => {
-        if (selectedRating === null) {
-            return;
-        }
+    const memoizedSetSelectedRating = useCallback((rating: number | null) => {
+        setSelectedRating(rating);
+    }, []);
+
+    const handleRateMovie = useCallback(async () => {
+        if (selectedRating === null) return;
 
         const rateData: RateRequestData = {
             rating: selectedRating,
@@ -30,13 +32,16 @@ export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void) 
             dispatch(setRatingUpdated(true));
             onRatingUpdate();
         }
-    };
+    }, [dispatch, selectedRating, movieId, onRatingUpdate]);
 
-    return {
-        selectedRating,
-        setSelectedRating,
-        handleRateMovie,
-        loading,
-        error,
-    };
+    return useMemo(
+        () => ({
+            selectedRating,
+            setSelectedRating: memoizedSetSelectedRating,
+            handleRateMovie,
+            loading,
+            error,
+        }),
+        [selectedRating, memoizedSetSelectedRating, handleRateMovie, loading, error],
+    );
 }

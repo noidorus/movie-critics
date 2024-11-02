@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
 import { fetchMovies } from '../../../store/Movies/moviesThunks';
 import {
@@ -29,7 +29,7 @@ export const useMoviesPage = () => {
         }
     }, [dispatch, currentPage, initialLoad]);
 
-    const handleScroll = () => {
+    const handleScroll = useCallback(() => {
         const isBottomReached =
             window.innerHeight + document.documentElement.scrollTop >=
             document.documentElement.offsetHeight - 1;
@@ -40,12 +40,15 @@ export const useMoviesPage = () => {
 
         dispatch(setFetching(true));
         dispatch(fetchMovies(currentPage + 1)).then(() => dispatch(setFetching(false)));
-    };
+    }, [dispatch, isFetching, isLoading, currentPage, totalPages]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [isFetching, isLoading, currentPage, totalPages]);
+    }, [handleScroll]);
 
-    return { movies, isLoading, error, isFetching };
+    return useMemo(
+        () => ({ movies, isLoading, error, isFetching }),
+        [movies, isLoading, error, isFetching],
+    );
 };

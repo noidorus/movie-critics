@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -18,9 +18,9 @@ export default function Header({ activeTab }: HeaderProps) {
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-    const handleLogout = async () => {
+    const handleLogout = useCallback(async () => {
         await dispatch(logout());
-    };
+    }, [dispatch]);
 
     return (
         <div className={styles.header}>

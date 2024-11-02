@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieById } from '../../../store/Movie/movieThunks';
 import { useAppSelector, useAppDispatch } from '../../../store/hooks';
@@ -34,15 +34,18 @@ export function useMoviePageContent() {
         }
     }, [ratingUpdated, dispatch, id]);
 
-    const handleRatingUpdate = () => {
+    const handleRatingUpdate = useCallback(() => {
         dispatch(setRatingUpdated(true));
-    };
+    }, [dispatch]);
 
-    return {
-        movie,
-        isLoading,
-        error,
-        user,
-        handleRatingUpdate,
-    };
+    return useMemo(
+        () => ({
+            movie,
+            isLoading,
+            error,
+            user,
+            handleRatingUpdate,
+        }),
+        [movie, isLoading, error, user, handleRatingUpdate],
+    );
 }

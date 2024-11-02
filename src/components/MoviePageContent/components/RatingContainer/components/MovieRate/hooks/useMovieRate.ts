@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../../../../store/hooks';
 import { setRatingUpdated } from '../../../../../../../store/Movie/movieSlice';
 import { Rating } from '../../../../../../../types/MovieType';
@@ -9,24 +9,29 @@ export function useMovieRate(userId: number, movieId: number, ratings: Rating[])
     const [isDialogVisible, setDialogVisible] = useState(false);
 
     const ratingLoading = useAppSelector(selectRatingLoading);
-    const userRating = ratings.find(
-        (rating) => rating.userId === userId && rating.filmId === movieId,
-    )?.userRating;
 
-    const openDialog = () => setDialogVisible(true);
-    const closeDialog = () => setDialogVisible(false);
+    const userRating = useMemo(() => {
+        return ratings.find((rating) => rating.userId === userId && rating.filmId === movieId)
+            ?.userRating;
+    }, [ratings, userId, movieId]);
 
-    const updateRating = () => {
+    const openDialog = useCallback(() => setDialogVisible(true), []);
+    const closeDialog = useCallback(() => setDialogVisible(false), []);
+
+    const updateRating = useCallback(() => {
         dispatch(setRatingUpdated(true));
         closeDialog();
-    };
+    }, [dispatch, closeDialog]);
 
-    return {
-        isDialogVisible,
-        ratingLoading,
-        userRating,
-        openDialog,
-        closeDialog,
-        updateRating,
-    };
+    return useMemo(
+        () => ({
+            isDialogVisible,
+            ratingLoading,
+            userRating,
+            openDialog,
+            closeDialog,
+            updateRating,
+        }),
+        [isDialogVisible, ratingLoading, userRating, openDialog, closeDialog, updateRating],
+    );
 }

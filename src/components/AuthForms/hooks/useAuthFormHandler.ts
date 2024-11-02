@@ -1,5 +1,5 @@
 import { unwrapResult } from '@reduxjs/toolkit';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { clearAuthError, setField, validateForm } from '../../../store/Auth/authSlice';
 import { loginUser, registerUser } from '../../../store/Auth/authThunks';
@@ -32,16 +32,23 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
         dispatch(clearAuthError());
     }, [dispatch]);
 
-    const handleFieldChange = (field: 'login' | 'email' | 'password', value: string) => {
-        dispatch(setField({ field, value }));
-    };
+    const handleFieldChange = useCallback(
+        (field: 'login' | 'email' | 'password', value: string) => {
+            dispatch(setField({ field, value }));
+        },
+        [dispatch],
+    );
 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        dispatch(validateForm(isLogin));
-        setShouldSubmit(true);
-    };
+    const handleSubmit = useCallback(
+        (event: React.FormEvent) => {
+            event.preventDefault();
+            dispatch(validateForm(isLogin));
+            setShouldSubmit(true);
+        },
+        [dispatch, isLogin],
+    );
 
+    //посмотреть на эффект еще раз позже, попробовать избавиться от одного из условий
     useEffect(() => {
         if (shouldSubmit) {
             if (isFormValid) {
@@ -57,14 +64,17 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
         }
     }, [isFormValid, shouldSubmit, isLogin, dispatch, login, email, password, errors]);
 
-    return {
-        login,
-        email,
-        password,
-        handleFieldChange,
-        handleSubmit,
-        errors,
-        serverError,
-        loading,
-    };
+    return useMemo(
+        () => ({
+            login,
+            email,
+            password,
+            handleFieldChange,
+            handleSubmit,
+            errors,
+            serverError,
+            loading,
+        }),
+        [login, email, password, handleFieldChange, handleSubmit, errors, serverError, loading],
+    );
 };
