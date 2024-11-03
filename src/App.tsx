@@ -1,12 +1,16 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { selectUser } from './store/Auth/authSelectors';
-import { checkAuth, refreshAccessToken } from './store/Auth/authThunks';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage/LoginPage';
-import RegisterPage from './pages/RegisterPage/RegisterPage';
-import MoviesPage from './pages/MoviesPage/MoviesPage';
-import MoviePage from './pages/MoviePage/MoviePage';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectUser } from '@/store/Auth/authSelectors';
+import { checkAuth, refreshAccessToken } from '@/store/Auth/authThunks';
+import LoginPage from '@/pages/LoginPage/LoginPage';
+import RegisterPage from '@/pages/RegisterPage/RegisterPage';
+import MoviesPage from '@/pages/MoviesPage/MoviesPage';
+import MoviePage from '@/pages/MoviePage/MoviePage';
+import CollectionsPage from '@/pages/CollectionsPage/CollectionsPage';
+import UserCollectionsPage from '@/pages/UserCollectionsPage/UserCollectionsPage';
+import CollectionPage from '@/pages/CollectionPage/CollectionPage';
+
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -43,6 +47,8 @@ export default function App() {
             <Routes>
                 <Route path="/movies" element={<MoviesPage />} />
                 <Route path="/movies/:id" element={<MoviePage />} />
+                <Route path="/collections" element={<CollectionsPage />} />
+                <Route path="/collections/:id" element={<CollectionPage />} />
                 {!user ? (
                     <>
                         <Route path="/login" element={<LoginPage />} />
@@ -52,6 +58,7 @@ export default function App() {
                 ) : (
                     <>
                         <Route path="*" element={<Navigate to="/movies" />} />
+                        <Route path="/collections/my" element={<UserCollectionsPage />} />
                     </>
                 )}
             </Routes>

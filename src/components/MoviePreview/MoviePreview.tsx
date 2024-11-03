@@ -1,5 +1,5 @@
 import React from 'react';
-import { MoviePreviewData } from '../../../types/MovieType';
+import { MoviePreviewData } from '@/types/MovieType';
 import styles from './MoviePreview.module.css';
 
 interface MoviePreviewProps {
