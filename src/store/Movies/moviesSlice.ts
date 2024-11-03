@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchMovies } from './moviesThunks';
-import { MoviesResponseData } from '../../DTO/MoviesDTO';
-import { MoviePreviewData } from '../../types/MovieType';
+import { MoviesResponseData } from '@/DTO/MoviesDTO';
+import { MoviePreviewData } from '@/types/MovieType';
 
 interface MoviesState {
     movies: MoviePreviewData[];

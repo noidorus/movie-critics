@@ -1,4 +1,4 @@
-import { MoviePreviewData } from '../types/MovieType';
+import { MoviePreviewData } from '@/types/MovieType';
 
 export type MoviesResponseData = {
     items: MoviePreviewData[];

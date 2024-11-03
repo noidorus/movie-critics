@@ -1,4 +1,4 @@
-import RegisterForm from '../../components/AuthForms/RegisterForm/RegisterForm';
+import RegisterForm from '@/components/AuthForms/RegisterForm/RegisterForm';
 import { Link } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
 

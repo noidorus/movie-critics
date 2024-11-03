@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { logout } from '../../store/Auth/authThunks';
-import { selectUser } from '../../store/Auth/authSelectors';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { logout } from '@/store/Auth/authThunks';
+import { selectUser } from '@/store/Auth/authSelectors';
 import styles from './Header.module.css';
 
 type HeaderProps = {
@@ -57,10 +57,10 @@ export default function Header({ activeTab }: HeaderProps) {
                         {user ? (
                             <>
                                 <Link
-                                    to="/profile"
-                                    className={`${styles.button} ${activeTab === 'profile' ? styles.buttonChecked : ''}`}
+                                    to="/collections/my"
+                                    className={`${styles.button} ${activeTab === 'collections/my' ? styles.buttonChecked : ''}`}
                                 >
-                                    <span>Моя страница</span>
+                                    <span>Мои подборки</span>
                                 </Link>
                                 <Link to="/login" className={styles.button} onClick={handleLogout}>
                                     <span>Выйти</span>

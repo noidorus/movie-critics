@@ -1,5 +1,5 @@
 import { Button } from 'primereact/button';
-import { Rating } from '../../../../../../types/MovieType';
+import { Rating } from '@/types/MovieType';
 import MovieRateDialog from './components/MovieRateDialog/MovieRateDialog';
 import { useMovieRate } from './hooks/useMovieRate';
 import styles from './MovieRate.module.css';

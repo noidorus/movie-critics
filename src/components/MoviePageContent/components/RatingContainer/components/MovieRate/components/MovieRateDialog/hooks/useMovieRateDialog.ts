@@ -1,12 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../../../../../../store/hooks';
-import { rateMovie } from '../../../../../../../../../store/Movie/movieThunks';
-import { setRatingUpdated } from '../../../../../../../../../store/Movie/movieSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { rateMovie } from '@/store/Movie/movieThunks';
+import { setRatingUpdated } from '@/store/Movie/movieSlice';
 import {
     selectRatingLoading,
     selectRatingError,
-} from '../../../../../../../../../store/Movie/movieSelectors';
-import { RateRequestData } from '../../../../../../../../../DTO/MovieDTO';
+} from '@/store/Movie/movieSelectors';
+import { RateRequestData } from '@/DTO/MovieDTO';
 
 export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void) {
     const dispatch = useAppDispatch();

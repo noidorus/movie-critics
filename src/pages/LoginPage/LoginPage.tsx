@@ -1,4 +1,4 @@
-import LoginForm from '../../components/AuthForms/LoginForm/LoginForm';
+import LoginForm from '@/components/AuthForms/LoginForm/LoginForm';
 import { Link } from 'react-router-dom';
 import styles from './LoginPage.module.css';
 

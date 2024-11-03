@@ -7,7 +7,7 @@ export type Rating = {
 
 type Genre = {
     name: string;
-}
+};
 
 export type Movie = {
     id: number;

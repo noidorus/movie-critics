@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Movie } from '../../types/MovieType';
-import { RateRequestData } from '../../DTO/MovieDTO';
+import { Movie } from '@/types/MovieType';
+import { RateRequestData } from '@/DTO/MovieDTO';
 
 const API_URL = 'http://localhost:3001/api/films';
 

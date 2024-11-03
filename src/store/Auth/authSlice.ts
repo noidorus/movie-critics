@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import zod from 'zod';
-import { AuthError, LoginResponseData } from '../../DTO/AuthDTO';
+import { AuthError, LoginResponseData } from '@/DTO/AuthDTO';
 import { loginUser, registerUser, checkAuth, logout, refreshAccessToken } from './authThunks';
-import { User } from '../../types/UserType';
+import { User } from '@/types/UserType';
 import { authSchema } from './validationSchema';
 
 interface AuthState {

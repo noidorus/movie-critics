@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../../../../../store/hooks';
-import { setRatingUpdated } from '../../../../../../../store/Movie/movieSlice';
-import { Rating } from '../../../../../../../types/MovieType';
-import { selectRatingLoading } from '../../../../../../../store/Movie/movieSelectors';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { setRatingUpdated } from '@/store/Movie/movieSlice';
+import { Rating } from '@/types/MovieType';
+import { selectRatingLoading } from '@/store/Movie/movieSelectors';
 
 export function useMovieRate(userId: number, movieId: number, ratings: Rating[]) {
     const dispatch = useAppDispatch();

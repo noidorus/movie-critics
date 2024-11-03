@@ -4,7 +4,7 @@ import DescriptionContainer from './components/DescriptionContainer/DescriptionC
 import RatingContainer from './components/RatingContainer/RatingContainer';
 import styles from './MoviePageContent.module.css';
 import { useMoviePageContent } from './hooks/useMoviePageContent';
-import ErrorComponent from '../ErrorComponent/ErrorComponent';
+import ErrorComponent from '@/components/ErrorComponent/ErrorComponent';
 
 export default function MoviePageContent() {
     const { movie, isLoading, error, user, handleRatingUpdate } = useMoviePageContent();

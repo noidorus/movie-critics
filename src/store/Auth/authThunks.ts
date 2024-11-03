@@ -5,8 +5,8 @@ import type {
     RegisterRequestData,
     RegisterResponseData,
     AuthError,
-} from '../../DTO/AuthDTO';
-import { User } from '../../types/UserType';
+} from '@/DTO/AuthDTO';
+import { User } from '@/types/UserType';
 
 const API_URL = 'http://localhost:3001/api/auth';
 

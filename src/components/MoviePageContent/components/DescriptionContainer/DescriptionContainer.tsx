@@ -1,4 +1,4 @@
-import { Movie } from '../../../../types/MovieType';
+import { Movie } from '@/types/MovieType';
 import styles from './DescriptionContainer.module.css';
 
 type Props = {

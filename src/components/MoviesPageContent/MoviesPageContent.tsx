@@ -1,7 +1,7 @@
-import ErrorComponent from '../ErrorComponent/ErrorComponent';
-import Loader from '../Loader/Loader';
+import ErrorComponent from '@/components/ErrorComponent/ErrorComponent';
+import Loader from '@/components/Loader/Loader';
+import MoviePreview from '@/components/MoviePreview/MoviePreview';
 import { useMoviesPage } from './hooks/useMoviesPage';
-import MoviePreview from './MoviePreview/MoviePreview';
 import styles from './MoviesPageContent.module.css';
 
 export default function MoviesPageContent() {

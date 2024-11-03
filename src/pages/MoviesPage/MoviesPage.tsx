@@ -1,5 +1,5 @@
-import DefaultPageLayout from '../../components/DefaultPageLayout/DefaultPageLayout';
-import MoviesPageContent from '../../components/MoviesPageContent/MoviesPageContent';
+import DefaultPageLayout from '@/components/DefaultPageLayout/DefaultPageLayout';
+import MoviesPageContent from '@/components/MoviesPageContent/MoviesPageContent';
 
 export default function MoviesPage() {
     return (

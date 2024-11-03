@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Movie } from '../../types/MovieType';
+import { Movie } from '@/types/MovieType';
 import { fetchMovieById, rateMovie } from './movieThunks';
 
 interface MovieState {

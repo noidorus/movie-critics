@@ -1,5 +1,5 @@
-import { Movie } from '../../../../types/MovieType';
-import { User } from '../../../../types/UserType';
+import { Movie } from '@/types/MovieType';
+import { User } from '@/types/UserType';
 import styles from './RatingContainer.module.css';
 import MovieRate from './components/MovieRate/MovieRate';
 
