@@ -24,6 +24,7 @@ model User {
   refreshToken String?
   ratings      Rating[]
   lists        ListFilms[]
+  Comment      Comment[]
 
   @@map("users")
 }
@@ -46,8 +47,20 @@ model Film {
   genres           Genre[]
   ratings          Rating[]
   lists            ListFilms[]
+  comments         Comment[]
 
   @@map(name: "films")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  film      Film     @relation(fields: [filmId], references: [id])
+  filmId    Int
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model ListFilms {

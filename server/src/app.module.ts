@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { FilmsModule } from './films/films.module';
 import configuration from './config/configuration';
 import { ListsModule } from './lists/lists.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ListsModule } from './lists/lists.module';
     FilmsModule,
     AuthModule,
     ListsModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [],
