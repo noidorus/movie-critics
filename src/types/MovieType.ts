@@ -5,6 +5,10 @@ export type Rating = {
     userRating: number;
 };
 
+type Genre = {
+    name: string;
+}
+
 export type Movie = {
     id: number;
     nameOriginal: string;
@@ -17,7 +21,7 @@ export type Movie = {
     year: number;
     posterUrl: string;
     countries: string[];
-    genres: string[];
+    genres: Genre[];
     avgRating: number;
     ratings: Rating[];
 };

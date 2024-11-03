@@ -31,12 +31,12 @@ export const rateMovie = createAsyncThunk<Movie, RateRequestData, { rejectValue:
     'movies/rateMovie',
     async ({ rating, filmId }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${API_URL}/rate`, {
+            const response = await fetch(`${API_URL}/${filmId}/rate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ rating, filmId }),
+                body: JSON.stringify({ rating }),
                 credentials: 'include',
             });
             if (!response.ok) {

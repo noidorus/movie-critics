@@ -5,7 +5,7 @@ type Props = {
     movie: Movie;
 };
 
-export default function TitleContainer({ movie }: Props) {
+export default function DescriptionContainer({ movie }: Props) {
     return (
         <div className={styles.descriptionContainer}>
             <img
@@ -17,8 +17,8 @@ export default function TitleContainer({ movie }: Props) {
                 {movie.genres && (
                     <ul className={styles.genres}>
                         {movie.genres.map((genre) => (
-                            <li key={genre} className={styles.genre}>
-                                {genre}
+                            <li key={genre.name} className={styles.genre}>
+                                {genre.name}
                             </li>
                         ))}
                     </ul>
