@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { CreateCommentDTO, EditCommentDTO } from './dto';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { RequestWithUser } from 'src/auth/interfaces';
@@ -12,15 +12,6 @@ import { CommentEntity } from './comment.entity';
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-  @Get(':filmId')
-  @ApiOperation({ summary: 'Get comments by film id' })
-  @ApiOkResponse({ type: [CommentEntity] })
-  getComments(
-    @Param('filmId', PositiveNumberValidationPipe) filmId: number,
-  ): Promise<CommentEntity[]> {
-    return this.commentsService.getCommentsByFilmId(filmId);
-  }
-
   @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({ summary: 'Create comment' })
@@ -30,25 +21,25 @@ export class CommentsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':commentId')
+  @Delete(':id')
   @ApiOperation({ summary: 'Delete comment by id' })
   @ApiOkResponse({ description: 'Comment deleted' })
-  async delete(
+  delete(
     @Req() req: RequestWithUser,
-    @Param('commentId', PositiveNumberValidationPipe) commentId: number,
+    @Param('id', PositiveNumberValidationPipe) id: number,
   ): Promise<true> {
-    return this.commentsService.delete(req.user.id, commentId);
+    return this.commentsService.delete(req.user.id, id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':commentId')
+  @Patch(':id')
   @ApiOperation({ summary: 'Edit comment by id' })
   @ApiOkResponse({ type: CommentEntity })
   editComment(
     @Req() req: RequestWithUser,
-    @Param('commentId', PositiveNumberValidationPipe) commentId: number,
+    @Param('id', PositiveNumberValidationPipe) id: number,
     @Body() dto: EditCommentDTO,
   ) {
-    return this.commentsService.edit(req.user.id, commentId, dto);
+    return this.commentsService.edit(req.user.id, id, dto);
   }
 }
