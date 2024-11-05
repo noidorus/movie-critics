@@ -88,6 +88,14 @@ export class FilmsService {
     }
   }
 
+  async getCommentsByFilmId(filmId: number) {
+    try {
+      return await this.prisma.comment.findMany({ where: { filmId } });
+    } catch {
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   async seeding() {
     const films = [];
     for (const item of items) {

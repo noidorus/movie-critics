@@ -1,23 +1,13 @@
-import { FilmsService } from './films.service';
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  Req,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { FilmsService } from './films.service';
 import { FilmsQueryDTO } from './dto';
 import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { RateFilmBodyDTO } from './dto/RateFilmBody.dto';
 import { RequestWithUser } from 'src/auth/interfaces';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
+import { CommentEntity } from 'src/comments/comment.entity';
 
 @ApiTags('Films')
 @Controller('films')
@@ -25,34 +15,23 @@ export class FilmsController {
   constructor(private readonly filmsService: FilmsService) {}
 
   @Get()
-  @ApiOperation({
-    summary: 'Get films data',
-    description:
-      'Get films data with optional pagination. This endpoint does not return more than 86 movies.',
-  })
+  @ApiOperation({ summary: 'Get films data' })
   @ApiOkResponse({ status: 200, type: FilmsEntity })
-  @UsePipes(new ValidationPipe())
   async getFilms(@Query() query: FilmsQueryDTO) {
     const { page = 1, limit = 10 } = query;
     return await this.filmsService.getFilms(+page, +limit);
   }
 
   @Get('filters')
-  @ApiOkResponse({ status: 200, type: FiltersEntity })
   @ApiOperation({ summary: 'Get filters data' })
+  @ApiOkResponse({ status: 200, type: FiltersEntity })
   async getFilters(): Promise<FiltersEntity> {
     return await this.filmsService.getFilters();
   }
 
-  @Get('seeding')
-  @ApiOperation({ summary: 'Seeding films data' })
-  async seeding() {
-    return await this.filmsService.seeding();
-  }
-
   @Get(':id')
-  @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
   @ApiOperation({ summary: 'Get film data by id' })
+  @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
   async getFilmById(
     @Param('id', PositiveNumberValidationPipe) id: number,
   ): Promise<FilmWithExtrasEntity> {
@@ -69,5 +48,20 @@ export class FilmsController {
     @Body() { rating }: RateFilmBodyDTO,
   ) {
     return this.filmsService.rateFilm(req.user.id, id, rating);
+  }
+
+  @Get(':id/comments')
+  @ApiOperation({ summary: 'Get comments by film id' })
+  @ApiOkResponse({ status: 200, type: [CommentEntity] })
+  async getCommentsByFilmId(
+    @Param('id', PositiveNumberValidationPipe) id: number,
+  ): Promise<CommentEntity[]> {
+    return await this.filmsService.getCommentsByFilmId(id);
+  }
+
+  @Get('seeding')
+  @ApiOperation({ summary: 'Seeding films data' })
+  async seeding() {
+    return await this.filmsService.seeding();
   }
 }
