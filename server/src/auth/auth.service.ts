@@ -22,9 +22,7 @@ export class AuthService {
 
   async register(userDto: RegisterDTO): Promise<void> {
     try {
-      await this.userService.create(userDto).then(() => {
-        throw new HttpException('User created', HttpStatus.CREATED);
-      });
+      await this.userService.create(userDto);
     } catch (err) {
       throw err;
     }

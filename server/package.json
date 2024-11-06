@@ -11,14 +11,15 @@
     "start": "nest start",
     "start:dev": "dotenv -e env/.env.development -- nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "dotenv -e env/.env.development -- node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate:dev": "dotenv -e env/.env.development -- npx prisma migrate dev"
+    "migrate:dev": "dotenv -e env/.env.development -- npx prisma migrate dev",
+    "start:migrate:prod": "dotenv -e env/.env.production -- npx prisma migrate deploy && yarn run start:prod"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.13.0",
