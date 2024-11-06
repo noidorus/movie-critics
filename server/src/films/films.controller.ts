@@ -2,12 +2,11 @@ import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nest
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FilmsService } from './films.service';
 import { FilmsQueryDTO, RateFilmBodyDTO } from './dto';
-import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity } from './entities';
+import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity, RatingEntity } from './entities';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { RequestWithUser } from 'src/auth/interfaces';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
 import { CommentEntity } from 'src/comments/comment.entity';
-import { Rating } from '@prisma/client';
 
 @ApiTags('Films')
 @Controller('films')
@@ -41,12 +40,12 @@ export class FilmsController {
   @UseGuards(JwtAuthGuard)
   @Post(':id/rate')
   @ApiOperation({ summary: 'Rate film, auth required' })
-  @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
+  @ApiOkResponse({ status: 200, type: RatingEntity })
   async rateFilm(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Body() { rating }: RateFilmBodyDTO,
-  ): Promise<Rating> {
+  ): Promise<RatingEntity> {
     return this.filmsService.rateFilm(req.user.id, id, rating);
   }
 

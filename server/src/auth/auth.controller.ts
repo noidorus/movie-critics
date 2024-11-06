@@ -25,13 +25,18 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'User created' })
   @ApiOperation({ summary: 'Register new user' })
   @Post('register')
-  async signUp(@Body() userDto: RegisterDTO) {
-    return await this.authService.register(userDto);
+  async signUp(@Body() dto: RegisterDTO) {
+    return await this.authService.register(dto);
   }
 
   @UseGuards(LocalAuthGuard)
   @ApiOperation({ summary: 'Login user' })
-  @ApiResponse({ status: 200, description: 'User logged in', type: UserEntity })
+  @ApiResponse({
+    status: 200,
+    description: 'User logged in',
+    type: UserEntity,
+    headers: { 'Set-Cookie': { description: 'Access and refreshAccess session cookie' } },
+  })
   @ApiBody({ type: LoginDTO })
   @Post('login')
   async login(
@@ -76,7 +81,12 @@ export class AuthController {
 
   @UseGuards(JwtRefreshGuard)
   @ApiOperation({ summary: 'Refresh access token' })
-  @ApiResponse({ status: 200, description: 'Access token updated', type: UserEntity })
+  @ApiResponse({
+    status: 200,
+    description: 'Access token updated',
+    type: UserEntity,
+    headers: { 'Set-Cookie': { description: 'Access session cookie' } },
+  })
   @Get('refresh')
   async refresh(@Res({ passthrough: true }) res: Response, @Req() req: RequestWithUser) {
     const { user } = req;
