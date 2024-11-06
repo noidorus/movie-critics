@@ -70,7 +70,7 @@ export class ListsController {
   removeList(
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Req() req: RequestWithUser,
-  ): Promise<true> {
+  ): Promise<void> {
     return this.listsService.removeList(req.user.id, id);
   }
 
@@ -82,7 +82,7 @@ export class ListsController {
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Param('filmId', PositiveNumberValidationPipe) filmId: number,
-  ): Promise<true> {
+  ): Promise<void> {
     return this.listsService.removeFilmFromList(req.user.id, id, filmId);
   }
 

@@ -8,7 +8,7 @@ import { CommentEntity } from './comment.entity';
 export class CommentsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(authorId: number, dto: CreateCommentDTO) {
+  async create(authorId: number, dto: CreateCommentDTO): Promise<CommentEntity> {
     try {
       const comment = await this.prisma.comment.create({ data: { ...dto, authorId } });
       return new CommentEntity(comment);
@@ -17,10 +17,9 @@ export class CommentsService {
     }
   }
 
-  async delete(authorId: number, id: number): Promise<true> {
+  async delete(authorId: number, id: number): Promise<void> {
     try {
       await this.prisma.comment.delete({ where: { authorId, id } });
-      return true;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
@@ -31,7 +30,7 @@ export class CommentsService {
     }
   }
 
-  async edit(authorId: number, id: number, dto: EditCommentDTO) {
+  async edit(authorId: number, id: number, dto: EditCommentDTO): Promise<CommentEntity> {
     try {
       const comment = await this.prisma.comment.update({
         where: { id, authorId },
