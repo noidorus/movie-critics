@@ -6,6 +6,7 @@ import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity, FilmNoRatingsEntity }
 import { Country, Genre, Rating } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
 import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
+import { CommentEntity } from 'src/comments/comment.entity';
 
 @Injectable()
 export class FilmsService {
@@ -88,7 +89,7 @@ export class FilmsService {
     }
   }
 
-  async getCommentsByFilmId(filmId: number) {
+  async getCommentsByFilmId(filmId: number): Promise<CommentEntity[]> {
     try {
       return await this.prisma.comment.findMany({ where: { filmId } });
     } catch {

@@ -27,7 +27,7 @@ export class CommentsController {
   delete(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
-  ): Promise<true> {
+  ): Promise<void> {
     return this.commentsService.delete(req.user.id, id);
   }
 
@@ -39,7 +39,7 @@ export class CommentsController {
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Body() dto: EditCommentDTO,
-  ) {
+  ): Promise<CommentEntity> {
     return this.commentsService.edit(req.user.id, id, dto);
   }
 }

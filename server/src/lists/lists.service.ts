@@ -77,10 +77,9 @@ export class ListsService {
     }
   }
 
-  async removeList(authorId: number, id: number): Promise<true> {
+  async removeList(authorId: number, id: number): Promise<void> {
     try {
       await this.prisma.listFilms.delete({ where: { id, authorId } });
-      return true;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
@@ -115,15 +114,13 @@ export class ListsService {
     }
   }
 
-  async removeFilmFromList(authorId: number, id: number, filmId: number): Promise<true> {
+  async removeFilmFromList(authorId: number, id: number, filmId: number): Promise<void> {
     try {
       await this.prisma.listFilms.update({
         where: { id, authorId },
         data: { films: { disconnect: { id: filmId } } },
         select: { films: true, name: true, id: true },
       });
-
-      return true;
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
