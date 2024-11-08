@@ -7,7 +7,9 @@ export const fetchCollection = createAsyncThunk<Collection, number, { rejectValu
     'movies/fetchCollection',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${API_URL}/${id}`);
+            const response = await fetch(`${API_URL}/${id}`,  {
+                credentials: 'include',
+            });
             if (!response.ok) {
                 throw new Error('Ошибка. Попробуйте позже или обратитесь в поддержку.');
             }
