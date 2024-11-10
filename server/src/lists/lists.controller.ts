@@ -17,25 +17,25 @@ import { FilmInListEntity } from 'src/films/entities';
 export class ListsController {
   constructor(private readonly listsService: ListsService) {}
 
+  @Get()
   @ApiOkResponse({ type: [ShortInfoListWithAuthorAndFilms] })
   @ApiOperation({ summary: 'Get all public lists' })
-  @Get()
   getLists(): Promise<ShortInfoListWithAuthorAndFilms[]> {
     return this.listsService.getLists();
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('my')
   @ApiOkResponse({ type: [ShortInfoListWithAuthorAndFilms] })
   @ApiOperation({ summary: 'Get my lists, available only for authorized users' })
-  @Get('my')
   getMyLists(@Req() req: RequestWithUser): Promise<ShortInfoListWithAuthorAndFilms[]> {
     return this.listsService.getMyLists(req.user.id);
   }
 
   @UseGuards(NullableJwtAuthGuard)
+  @Get(':id')
   @ApiOkResponse({ type: InfoListWithAuthorAndFilms })
   @ApiOperation({ summary: 'Get list by id' })
-  @Get(':id')
   getListById(
     @Req() req: RequestWithNullableUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
@@ -44,9 +44,9 @@ export class ListsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post()
   @ApiOkResponse({ type: ListEntity, description: 'List created' })
   @ApiOperation({ summary: 'Create list, available only for authorized users' })
-  @Post()
   createList(@Body() dto: CreateListDTO, @Req() req: RequestWithUser): Promise<ListEntity> {
     return this.listsService.createList(req.user.id, dto);
   }
@@ -64,9 +64,9 @@ export class ListsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Delete(':id')
   @ApiOperation({ summary: 'Delete list, available only for authorized users' })
   @ApiOkResponse({ example: true, description: 'List deleted' })
-  @Delete(':id')
   removeList(
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Req() req: RequestWithUser,
@@ -75,9 +75,9 @@ export class ListsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Delete(':id/films/:filmId')
   @ApiOperation({ summary: 'Remove film from list, available only for authorized users' })
   @ApiOkResponse({ description: 'Film removed from list' })
-  @Delete(':id/films/:filmId')
   removeFilmFromList(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
@@ -87,9 +87,9 @@ export class ListsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Patch(':id/visibility')
   @ApiOkResponse({ type: ListEntity })
   @ApiOperation({ summary: 'Change list visibility, available only for authorized users' })
-  @Patch(':id/visibility')
   changeListVisibility(
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Body() dto: ChangeListVisibilityDTO,
