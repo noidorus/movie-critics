@@ -1,23 +1,63 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Collection } from '../../types/CollectionType';
-import { fetchCollections, fetchCollectionsByMe } from './collectionsThunks';
+import { fetchCollections, fetchCollectionsByMe, createCollection } from './collectionsThunks';
 
 interface CollectionsState {
     collections: Collection[];
     isLoading: boolean;
     error: string | null;
+    collectionsUpdated: boolean;
+    actionLoading: boolean;
+    actionError: string | null;
+    collectionName: string;
+    isPrivate: boolean;
+    formError: string | null;
 }
 
 const initialState: CollectionsState = {
     collections: [],
     isLoading: false,
     error: null,
+    collectionsUpdated: false,
+    actionLoading: false,
+    actionError: null,
+    collectionName: '',
+    isPrivate: true,
+    formError: null,
 };
 
 const collectionsSlice = createSlice({
     name: 'collections',
     initialState,
-    reducers: {},
+    reducers: {
+        setCollectionsUpdated: (state, action) => {
+            state.collectionsUpdated = action.payload;
+        },
+        clearActionError: (state) => {
+            state.actionError = null;
+        },
+        setCollectionName: (state, action: PayloadAction<string>) => {
+            state.collectionName = action.payload;
+        },
+        setIsPrivate: (state, action: PayloadAction<boolean>) => {
+            state.isPrivate = action.payload;
+        },
+        clearForm: (state) => {
+            state.collectionName = '';
+            state.isPrivate = true;
+            state.formError = null;
+            state.actionError = null;
+        },
+        validateCollectionName: (state) => {
+            if (!state.collectionName.trim()) {
+                state.formError = 'Введите название подборки';
+            } else if (state.collectionName.length > 30) {
+                state.formError = 'Название не должно превышать 30 символов';
+            } else {
+                state.formError = null;
+            }
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchCollections.pending, (state) => {
@@ -49,9 +89,32 @@ const collectionsSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload
                     ? action.payload.message
-                    : 'Ошибка при получении коллекций. Попробуйте позже';
+                    : 'Ошибка при получении подборок. Попробуйте позже';
+            })
+            .addCase(createCollection.pending, (state) => {
+                state.actionLoading = true;
+                state.actionError = null;
+            })
+            .addCase(createCollection.fulfilled, (state) => {
+                state.actionLoading = false;
+                state.collectionsUpdated = true;
+            })
+            .addCase(createCollection.rejected, (state, action) => {
+                state.actionLoading = false;
+                state.actionError = action.payload
+                    ? action.payload.message
+                    : 'Ошибка при создании подборки. Попробуйте позже';
             });
     },
 });
+
+export const {
+    setCollectionsUpdated,
+    clearActionError,
+    setCollectionName,
+    setIsPrivate,
+    validateCollectionName,
+    clearForm,
+} = collectionsSlice.actions;
 
 export default collectionsSlice.reducer;

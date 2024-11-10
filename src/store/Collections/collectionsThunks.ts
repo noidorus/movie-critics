@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '../../types/CollectionType';
+import { CreateCollectionRequestData } from '@/DTO/CollectionsDTO';
 
 const API_URL = 'http://localhost:3001/api/lists';
 
@@ -50,3 +51,38 @@ export const fetchCollectionsByMe = createAsyncThunk<Collection[], void, { rejec
         }
     },
 );
+
+export const createCollection = createAsyncThunk<
+    Collection,
+    CreateCollectionRequestData,
+    { rejectValue: { message: string; name?: string } }
+>('movies/createCollection', async (collectionData, { rejectWithValue }) => {
+    try {
+        const response = await fetch(`${API_URL}`, {
+            credentials: 'include',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(collectionData),
+        });
+        if (!response.ok) {
+            if (response.status === 409) {
+                return rejectWithValue({
+                    message: 'У вас уже есть список с таким названием.',
+                    name: 'ConflictError',
+                });
+            }
+            throw new Error('Произошла ошибка при создании подборки.');
+        }
+        const data: Collection = await response.json();
+        return data;
+    } catch (error: unknown) {
+        if (error instanceof TypeError) {
+            return rejectWithValue({
+                message: 'Ошибка сервера. Попробуйте позже.',
+                name: 'TypeError',
+            });
+        }
+        const collectionsError = error as Error;
+        return rejectWithValue({ message: collectionsError.message });
+    }
+});
