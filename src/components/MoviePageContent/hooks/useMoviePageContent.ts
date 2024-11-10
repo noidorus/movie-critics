@@ -10,6 +10,14 @@ import {
 } from '@/store/Movie/movieSelectors';
 import { setRatingUpdated } from '@/store/Movie/movieSlice';
 import { selectUser } from '@/store/Auth/authSelectors';
+import { fetchComments } from '@/store/Comments/commentsThunks';
+import {
+    selectComments,
+    selectLoading,
+    selectError,
+    selectCommentsUpdated,
+} from '@/store/Comments/commentsSelectors';
+import { setCommentsUpdated } from '@/store/Comments/commentsSlice';
 
 export function useMoviePageContent() {
     const { id } = useParams<{ id: string }>();
@@ -21,9 +29,18 @@ export function useMoviePageContent() {
     const user = useAppSelector(selectUser);
     const ratingUpdated = useAppSelector(selectRatingUpdated);
 
+    const comments = useAppSelector(selectComments);
+    const commentsLoading = useAppSelector(selectLoading);
+    const commentsError = useAppSelector(selectError);
+    const commentsUpdated = useAppSelector(selectCommentsUpdated);
+
     useEffect(() => {
         if (id) {
-            dispatch(fetchMovieById(Number(id)));
+            dispatch(fetchMovieById(Number(id)))
+                .unwrap()
+                .then(() => {
+                    dispatch(fetchComments(Number(id)));
+                });
         }
     }, [dispatch, id]);
 
@@ -33,6 +50,13 @@ export function useMoviePageContent() {
             dispatch(setRatingUpdated(false));
         }
     }, [ratingUpdated, dispatch, id]);
+
+    useEffect(() => {
+        if (commentsUpdated) {
+            dispatch(fetchComments(Number(id)));
+            dispatch(setCommentsUpdated(false));
+        }
+    }, [commentsUpdated, dispatch, id]);
 
     const handleRatingUpdate = useCallback(() => {
         dispatch(setRatingUpdated(true));
@@ -45,7 +69,10 @@ export function useMoviePageContent() {
             error,
             user,
             handleRatingUpdate,
+            comments,
+            commentsLoading,
+            commentsError,
         }),
-        [movie, isLoading, error, user, handleRatingUpdate],
+        [movie, isLoading, error, user, handleRatingUpdate, comments],
     );
 }

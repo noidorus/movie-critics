@@ -5,9 +5,19 @@ import RatingContainer from './components/RatingContainer/RatingContainer';
 import styles from './MoviePageContent.module.css';
 import { useMoviePageContent } from './hooks/useMoviePageContent';
 import ErrorComponent from '@/components/ErrorComponent/ErrorComponent';
+import Comments from './components/Comments/Comments';
 
 export default function MoviePageContent() {
-    const { movie, isLoading, error, user, handleRatingUpdate } = useMoviePageContent();
+    const {
+        movie,
+        isLoading,
+        error,
+        user,
+        handleRatingUpdate,
+        comments,
+        commentsLoading,
+        commentsError,
+    } = useMoviePageContent();
 
     if (isLoading) {
         return <Loader />;
@@ -26,6 +36,13 @@ export default function MoviePageContent() {
             <TitleContainer movie={movie} />
             <RatingContainer movie={movie} user={user} onRatingUpdate={handleRatingUpdate} />
             <DescriptionContainer movie={movie} />
+            <Comments
+                filmId={movie.id}
+                comments={comments}
+                loading={commentsLoading}
+                error={commentsError}
+                user={user}
+            />
         </div>
     );
 }

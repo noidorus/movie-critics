@@ -12,6 +12,7 @@ export default function UserCollectionsPage() {
                 loading={loading}
                 error={error}
                 title="Мои подборки"
+                user={true}
             />
         </DefaultPageLayout>
     );
