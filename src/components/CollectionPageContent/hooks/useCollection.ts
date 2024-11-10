@@ -4,9 +4,12 @@ import {
     selectCollection,
     selectError,
     selectLoading,
+    selectCollectionUpdated,
 } from '@/store/Collection/collectionSelectors';
+import { selectUser } from '@/store/Auth/authSelectors';
+import { setCollectionUpdated } from '@/store/Collection/collectionSlice';
 import { fetchCollection } from '@/store/Collection/collectionThunks';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 export const useCollection = () => {
     const { id } = useParams<{ id: string }>();
@@ -16,10 +19,26 @@ export const useCollection = () => {
     const collection = useAppSelector(selectCollection);
     const loading = useAppSelector(selectLoading);
     const error = useAppSelector(selectError);
+    const user = useAppSelector(selectUser);
+    const collectionUpdated = useAppSelector(selectCollectionUpdated);
 
     useEffect(() => {
         dispatch(fetchCollection(Number(id)));
     }, [dispatch, id]);
 
-    return useMemo(() => ({ collection, loading, error }), [collection, loading, error]);
+    useEffect(() => {
+        if (collectionUpdated && id) {
+            dispatch(fetchCollection(Number(id)));
+            dispatch(setCollectionUpdated(false));
+        }
+    }, [collectionUpdated, dispatch, id]);
+
+    const handleCollectionUpdate = useCallback(() => {
+        dispatch(setCollectionUpdated(true));
+    }, [dispatch]);
+
+    return useMemo(
+        () => ({ collection, loading, error, user, handleCollectionUpdate }),
+        [collection, loading, error, user, handleCollectionUpdate],
+    );
 };
