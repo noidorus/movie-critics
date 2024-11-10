@@ -1,0 +1,11 @@
+.button {
+    block-size: 65px;
+    inline-size: 100px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    padding-inline-start: 10px;
+    padding-inline-end: 10px;
+    padding-block: 1px;
+    text-decoration: none;
+    color: #f9f9f9;
+}

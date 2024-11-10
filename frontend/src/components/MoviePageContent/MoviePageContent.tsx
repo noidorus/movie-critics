@@ -6,6 +6,7 @@ import styles from './MoviePageContent.module.css';
 import { useMoviePageContent } from './hooks/useMoviePageContent';
 import ErrorComponent from '@/components/ErrorComponent/ErrorComponent';
 import Comments from './components/Comments/Comments';
+import AddToCollectionContainer from './components/AddToCollectionContainer/AddToCollectionContainer';
 
 export default function MoviePageContent() {
     const {
@@ -35,6 +36,7 @@ export default function MoviePageContent() {
         <div className={styles.content}>
             <TitleContainer movie={movie} />
             <RatingContainer movie={movie} user={user} onRatingUpdate={handleRatingUpdate} />
+            {user ? <AddToCollectionContainer movieId={movie.id} /> : <div className={styles.emptyAddButton}></div>}
             <DescriptionContainer movie={movie} />
             <Comments
                 filmId={movie.id}
