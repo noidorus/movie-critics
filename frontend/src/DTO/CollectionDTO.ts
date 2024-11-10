@@ -3,7 +3,7 @@ export type visibilityRequestData = {
     private: boolean;
 };
 
-export type deleteMovieRequestData = {
+export type manageMovieRequestData = {
     id: number;
     filmId: number;
 };

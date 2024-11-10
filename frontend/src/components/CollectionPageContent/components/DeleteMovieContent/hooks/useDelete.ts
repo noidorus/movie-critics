@@ -2,7 +2,7 @@ import { selectActionError, selectActionLoading } from '@/store/Collection/colle
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { useCallback, useMemo } from 'react';
 import { deleteMovieFromCollection } from '@/store/Collection/collectionThunks';
-import { deleteMovieRequestData } from '@/DTO/CollectionDTO';
+import { manageMovieRequestData } from '@/DTO/CollectionDTO';
 
 type Props = {
     id: number;
@@ -17,7 +17,7 @@ export const useDelete = ({ id, filmId, onHide, onUpdate }: Props) => {
     const error = useAppSelector(selectActionError);
 
     const onDeleteMovie = useCallback(() => {
-        const data: deleteMovieRequestData = { id, filmId };
+        const data: manageMovieRequestData = { id, filmId };
         dispatch(deleteMovieFromCollection(data))
             .unwrap()
             .then(() => {

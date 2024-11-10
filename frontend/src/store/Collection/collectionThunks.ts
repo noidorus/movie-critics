@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '@/types/CollectionType';
-import { visibilityRequestData, deleteMovieRequestData } from '@/DTO/CollectionDTO';
+import { visibilityRequestData, manageMovieRequestData } from '@/DTO/CollectionDTO';
 
 const API_URL = 'http://localhost:3001/api/lists';
 
@@ -87,15 +87,43 @@ export const deleteCollection = createAsyncThunk<void, number, { rejectValue: Er
 
 export const deleteMovieFromCollection = createAsyncThunk<
     void,
-    deleteMovieRequestData,
+    manageMovieRequestData,
     { rejectValue: Error }
 >('collection/deleteMovieFromCollection', async (deleteMovieData, { rejectWithValue }) => {
     try {
-        console.log(deleteMovieData);
         const response = await fetch(
             `${API_URL}/${deleteMovieData.id}/films/${deleteMovieData.filmId}`,
             {
                 method: 'DELETE',
+                credentials: 'include',
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error('Ошибка. Попробуйте позже или обратитесь в поддержку.');
+        }
+    } catch (error: unknown) {
+        if (error instanceof TypeError) {
+            return rejectWithValue({
+                message: 'Ошибка сервера. Попробуйте позже.',
+                name: 'TypeError',
+            });
+        }
+        const collectionError = error as Error;
+        return rejectWithValue(collectionError);
+    }
+});
+
+export const addMovieToCollection = createAsyncThunk<
+    void,
+    manageMovieRequestData,
+    { rejectValue: Error }
+>('collection/addMovieToCollection', async (deleteMovieData, { rejectWithValue }) => {
+    try {
+        const response = await fetch(
+            `${API_URL}/${deleteMovieData.id}/films/${deleteMovieData.filmId}`,
+            {
+                method: 'POST',
                 credentials: 'include',
             },
         );

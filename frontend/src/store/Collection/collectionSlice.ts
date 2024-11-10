@@ -5,6 +5,7 @@ import {
     changeVisibility,
     deleteCollection,
     deleteMovieFromCollection,
+    addMovieToCollection
 } from './collectionThunks';
 
 interface CollectionState {
@@ -88,12 +89,27 @@ const collectionSlice = createSlice({
             })
             .addCase(deleteMovieFromCollection.fulfilled, (state) => {
                 state.actionLoading = false;
+                state.collectionUpdated = true;
             })
             .addCase(deleteMovieFromCollection.rejected, (state, action) => {
                 state.actionLoading = false;
                 state.actionError = action.payload
                     ? action.payload.message
                     : 'Ошибка при удалении фильма из коллекции. Попробуйте позже';
+            })
+            .addCase(addMovieToCollection.pending, (state) => {
+                state.actionLoading = true;
+                state.actionError = null;
+            })
+            .addCase(addMovieToCollection.fulfilled, (state) => {
+                state.actionLoading = false;
+                state.collectionUpdated = true;
+            })
+            .addCase(addMovieToCollection.rejected, (state, action) => {
+                state.actionLoading = false;
+                state.actionError = action.payload
+                    ? action.payload.message
+                    : 'Ошибка при добавлении фильма в коллекцию. Попробуйте позже';
             });
     },
 });
