@@ -1,20 +1,23 @@
-interface SeedFilm {
-  kpId: string;
-  nameRu: null | string;
-  nameOriginal: null | string;
-  slogan: null | string;
-  description: null | string;
-  shortDescription: null | string;
-  filmLength: number;
-  year: number;
-  posterUrl: string;
-  posterUrlPreview: string;
-  countries: string[];
-  genres: string[];
-  type: 'VIDEO' | 'FILM' | 'MINI_SERIES' | 'TV_SERIES' | 'TV_SHOW';
-}
+import { Country, Genre, PrismaClient } from '@prisma/client';
+import type { SeedFilm, UpsertFilterObj } from './interfaces';
 
-export const items: SeedFilm[] = [
+const prisma = new PrismaClient();
+
+const upsertFilters = async <T extends Country | Genre>(
+  names: string[],
+  callback: (obj: UpsertFilterObj) => Promise<T>,
+) => {
+  const filters: T[] = [];
+
+  for (const name of names) {
+    const filter = await callback({ where: { name }, create: { name }, update: {} });
+    filters.push(filter);
+  }
+
+  return filters;
+};
+
+const filmsSeed: SeedFilm[] = [
   {
     kpId: '1003587',
     year: 2016,
@@ -272,7 +275,6 @@ export const items: SeedFilm[] = [
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1187970.jpg?alt=media&token=29cc6479-1340-420b-8c38-7008a510e2c3',
     slogan: null,
   },
-
   {
     kpId: '1227897',
     year: 2006,
@@ -473,7 +475,6 @@ export const items: SeedFilm[] = [
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1339977.jpg?alt=media&token=619b7f4b-766d-4140-aa2e-e40d72e5eadc',
     slogan: 'Clean up on aisle 5.',
   },
-
   {
     kpId: '1368895',
     year: 2018,
@@ -511,7 +512,6 @@ export const items: SeedFilm[] = [
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1379016.jpg?alt=media&token=50fccd0d-ebd6-430f-a34b-fab495acacab',
     slogan: 'Снова в кругу семьи',
   },
-
   {
     kpId: '2000090',
     year: 2020,
@@ -1449,3 +1449,33 @@ export const items: SeedFilm[] = [
     slogan: null,
   },
 ];
+
+async function main() {
+  for (const film of filmsSeed) {
+    const { countries, genres, ...rest } = film;
+
+    const countriesIds = await upsertFilters(countries, (obj) => {
+      return prisma.country.upsert(obj);
+    });
+
+    const genresIds = await upsertFilters(genres, (obj) => {
+      return prisma.genre.upsert(obj);
+    });
+
+    await prisma.film.upsert({
+      where: { kpId: rest.kpId },
+      create: { ...rest, countries: { connect: countriesIds }, genres: { connect: genresIds } },
+      update: {},
+    });
+  }
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

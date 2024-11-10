@@ -16,3 +16,8 @@ services:
       - "5432:5432"
     env_file:
       - ../server/env/.env.sample
+
+# docker compose -f ./docker/docker-compose.yml -p docker up -d
+# docker ps
+# docker exec -it 9a512db803a0 sh
+# node dist/prisma/seed.js

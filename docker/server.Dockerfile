@@ -6,6 +6,7 @@ RUN yarn install --only=production --frozen-lockfile
 
 COPY server ./
 RUN npx prisma generate && yarn build
+# COPY server/prisma/filmsSeed.json dist/prisma/
 
 RUN apk add --no-cache bash
 RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh
