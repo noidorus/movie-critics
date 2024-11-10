@@ -26,14 +26,22 @@ export default function MoviePageContent() {
     }
 
     if (error || !movie) {
-       return <ErrorComponent error={error || "Такой фильм не найден. Возможно, его снимают сейчас!"} />;
+        return (
+            <ErrorComponent
+                error={error || 'Такой фильм не найден. Возможно, его снимают сейчас!'}
+            />
+        );
     }
 
     return (
         <div className={styles.content}>
             <TitleContainer movie={movie} />
             <RatingContainer movie={movie} user={user} onRatingUpdate={handleRatingUpdate} />
-            {user ? <AddToCollectionContainer movieId={movie.id} /> : <div className={styles.emptyAddButton}></div>}
+            {user ? (
+                <AddToCollectionContainer movieId={movie.id} />
+            ) : (
+                <div className={styles.emptyAddButton}></div>
+            )}
             <DescriptionContainer movie={movie} />
             <Comments
                 filmId={movie.id}

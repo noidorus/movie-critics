@@ -5,7 +5,7 @@ import {
     selectError,
     selectLoading,
     selectCollectionUpdated,
-    selectIdle
+    selectIdle,
 } from '@/store/Collection/collectionSelectors';
 import { selectUser } from '@/store/Auth/authSelectors';
 import { setCollectionUpdated } from '@/store/Collection/collectionSlice';

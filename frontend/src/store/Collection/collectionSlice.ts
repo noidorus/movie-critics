@@ -5,7 +5,7 @@ import {
     changeVisibility,
     deleteCollection,
     deleteMovieFromCollection,
-    addMovieToCollection
+    addMovieToCollection,
 } from './collectionThunks';
 
 interface CollectionState {

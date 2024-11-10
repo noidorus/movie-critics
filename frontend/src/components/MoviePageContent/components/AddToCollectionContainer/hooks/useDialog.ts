@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from 'react';
 
 export const useDialog = () => {
     const [visible, setVisible] = useState(false);
@@ -7,8 +7,5 @@ export const useDialog = () => {
         setVisible(false);
     }, []);
 
-    return useMemo(
-        () => ({ visible, setVisible, onHide }),
-        [visible, setVisible, onHide],
-    );
-}
+    return useMemo(() => ({ visible, setVisible, onHide }), [visible, setVisible, onHide]);
+};

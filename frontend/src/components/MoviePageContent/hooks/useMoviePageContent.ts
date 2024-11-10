@@ -7,7 +7,7 @@ import {
     selectIsLoading,
     selectMovieError,
     selectRatingUpdated,
-    selectIdle
+    selectIdle,
 } from '@/store/Movie/movieSelectors';
 import { setRatingUpdated } from '@/store/Movie/movieSlice';
 import { selectUser } from '@/store/Auth/authSelectors';
