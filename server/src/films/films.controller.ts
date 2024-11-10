@@ -57,10 +57,4 @@ export class FilmsController {
   ): Promise<CommentEntity[]> {
     return await this.filmsService.getCommentsByFilmId(id);
   }
-
-  @Get('seeding')
-  @ApiOperation({ summary: 'Seeding films data' })
-  async seeding() {
-    return await this.filmsService.seeding();
-  }
 }

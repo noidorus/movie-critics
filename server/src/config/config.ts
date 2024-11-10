@@ -1,4 +1,4 @@
-import { JwtConfig } from 'src/auth/interfaces';
+import { EnvConfig } from './config.interface';
 
 export default (): EnvConfig => ({
   jwt: {
@@ -14,10 +14,3 @@ export default (): EnvConfig => ({
   omdbApiKey: process.env.OMDB_API_KEY,
   databaseUrl: process.env.DATABASE_URL,
 });
-
-export interface EnvConfig {
-  jwt: JwtConfig;
-  refreshJwt: JwtConfig;
-  databaseUrl: string;
-  omdbApiKey: string;
-}
