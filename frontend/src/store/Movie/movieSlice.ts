@@ -3,6 +3,7 @@ import { Movie } from '@/types/MovieType';
 import { fetchMovieById, rateMovie } from './movieThunks';
 
 interface MovieState {
+    idle: boolean;
     movie: Movie | null;
     isLoading: boolean;
     error: string | null;
@@ -12,6 +13,7 @@ interface MovieState {
 }
 
 const initialState: MovieState = {
+    idle: true,
     movie: null,
     isLoading: false,
     error: null,
@@ -31,6 +33,7 @@ const movieSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchMovieById.pending, (state) => {
+                state.idle = false;
                 state.isLoading = true;
                 state.error = null;
             })

@@ -2,6 +2,8 @@ import type { RootState } from '../store';
 
 export const selectMovie = (state: RootState) => state.movie.movie;
 
+export const selectIdle = (state: RootState) => state.movie.idle;
+
 export const selectIsLoading = (state: RootState) => state.movie.isLoading;
 
 export const selectMovieError = (state: RootState) => state.movie.error;

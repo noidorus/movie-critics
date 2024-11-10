@@ -11,11 +11,11 @@ import DeleteCollectionContent from './components/DeleteCollectionContent/Delete
 import DeleteMovieContent from './components/DeleteMovieContent/DeleteMovieContent';
 
 export default function CollectionPage() {
-    const { collection, loading, error, user, handleCollectionUpdate } = useCollection();
+    const { collection, idle, loading, error, user, handleCollectionUpdate } = useCollection();
     const { hovered, setHovered, visible, dialogTitle, dialogContent, onHide, onShow } =
         useCollectionModal();
 
-    if (loading) {
+    if (loading || idle) {
         return <Loader />;
     }
 

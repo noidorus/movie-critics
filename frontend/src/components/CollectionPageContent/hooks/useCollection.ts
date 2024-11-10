@@ -5,6 +5,7 @@ import {
     selectError,
     selectLoading,
     selectCollectionUpdated,
+    selectIdle
 } from '@/store/Collection/collectionSelectors';
 import { selectUser } from '@/store/Auth/authSelectors';
 import { setCollectionUpdated } from '@/store/Collection/collectionSlice';
@@ -17,6 +18,7 @@ export const useCollection = () => {
     const dispatch = useAppDispatch();
 
     const collection = useAppSelector(selectCollection);
+    const idle = useAppSelector(selectIdle);
     const loading = useAppSelector(selectLoading);
     const error = useAppSelector(selectError);
     const user = useAppSelector(selectUser);
@@ -38,7 +40,7 @@ export const useCollection = () => {
     }, [dispatch]);
 
     return useMemo(
-        () => ({ collection, loading, error, user, handleCollectionUpdate }),
-        [collection, loading, error, user, handleCollectionUpdate],
+        () => ({ collection, idle, loading, error, user, handleCollectionUpdate }),
+        [collection, idle, loading, error, user, handleCollectionUpdate],
     );
 };

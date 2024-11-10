@@ -4,6 +4,7 @@ import { fetchCollections, fetchCollectionsByMe, createCollection } from './coll
 
 interface CollectionsState {
     collections: Collection[];
+    idle: boolean;
     isLoading: boolean;
     error: string | null;
     collectionsUpdated: boolean;
@@ -16,6 +17,7 @@ interface CollectionsState {
 
 const initialState: CollectionsState = {
     collections: [],
+    idle: true,
     isLoading: false,
     error: null,
     collectionsUpdated: false,
@@ -61,6 +63,7 @@ const collectionsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCollections.pending, (state) => {
+                state.idle = false;
                 state.isLoading = true;
                 state.error = null;
             })
@@ -75,6 +78,7 @@ const collectionsSlice = createSlice({
                     : 'Ошибка при получении коллекций. Попробуйте позже';
             })
             .addCase(fetchCollectionsByMe.pending, (state) => {
+                state.idle = false;
                 state.isLoading = true;
                 state.error = null;
             })

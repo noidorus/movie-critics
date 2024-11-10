@@ -3,12 +3,13 @@ import CollectionsPageContent from '@/components/CollectionsPageContent/Collecti
 import { useUserCollections } from './hooks/useUserCollections';
 
 export default function UserCollectionsPage() {
-    const { collections, loading, error } = useUserCollections();
+    const { collections, idle, loading, error } = useUserCollections();
 
     return (
         <DefaultPageLayout activeTab="collections/my">
             <CollectionsPageContent
                 collections={collections}
+                idle={idle}
                 loading={loading}
                 error={error}
                 title="Мои подборки"

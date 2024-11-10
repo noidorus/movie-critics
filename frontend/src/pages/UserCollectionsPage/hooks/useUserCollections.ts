@@ -4,6 +4,7 @@ import {
     selectLoading,
     selectError,
     selectCollectionsUpdated,
+    selectIdle,
 } from '@/store/Collections/collectionsSelectors';
 import { fetchCollectionsByMe } from '@/store/Collections/collectionsThunks';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -13,6 +14,7 @@ export const useUserCollections = () => {
     const dispatch = useAppDispatch();
 
     const collections = useAppSelector(selectCollections);
+    const idle = useAppSelector(selectIdle);
     const loading = useAppSelector(selectLoading);
     const error = useAppSelector(selectError);
     const collectionsUpdated = useAppSelector(selectCollectionsUpdated);
@@ -31,6 +33,7 @@ export const useUserCollections = () => {
     return useMemo(
         () => ({
             collections,
+            idle,
             loading,
             error,
         }),

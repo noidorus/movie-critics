@@ -11,6 +11,7 @@ import AddToCollectionContainer from './components/AddToCollectionContainer/AddT
 export default function MoviePageContent() {
     const {
         movie,
+        idle,
         isLoading,
         error,
         user,
@@ -20,16 +21,12 @@ export default function MoviePageContent() {
         commentsError,
     } = useMoviePageContent();
 
-    if (isLoading) {
+    if (isLoading || idle) {
         return <Loader />;
     }
 
-    if (error) {
-        return <ErrorComponent error={error} />;
-    }
-
-    if (!movie) {
-        return <ErrorComponent error="Такой фильм не найден. Возможно, его снимают сейчас! " />;
+    if (error || !movie) {
+       return <ErrorComponent error={error || "Такой фильм не найден. Возможно, его снимают сейчас!"} />;
     }
 
     return (

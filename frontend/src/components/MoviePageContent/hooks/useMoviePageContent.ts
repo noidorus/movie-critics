@@ -7,6 +7,7 @@ import {
     selectIsLoading,
     selectMovieError,
     selectRatingUpdated,
+    selectIdle
 } from '@/store/Movie/movieSelectors';
 import { setRatingUpdated } from '@/store/Movie/movieSlice';
 import { selectUser } from '@/store/Auth/authSelectors';
@@ -24,6 +25,7 @@ export function useMoviePageContent() {
     const dispatch = useAppDispatch();
 
     const movie = useAppSelector(selectMovie);
+    const idle = useAppSelector(selectIdle);
     const isLoading = useAppSelector(selectIsLoading);
     const error = useAppSelector(selectMovieError);
     const user = useAppSelector(selectUser);
@@ -65,6 +67,7 @@ export function useMoviePageContent() {
     return useMemo(
         () => ({
             movie,
+            idle,
             isLoading,
             error,
             user,

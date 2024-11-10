@@ -10,6 +10,7 @@ import {
 
 interface CollectionState {
     collection: Collection | null;
+    idle: boolean;
     isLoading: boolean;
     error: string | null;
     collectionUpdated: boolean;
@@ -19,6 +20,7 @@ interface CollectionState {
 
 const initialState: CollectionState = {
     collection: null,
+    idle: true,
     isLoading: false,
     error: null,
     collectionUpdated: false,
@@ -40,6 +42,7 @@ const collectionSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCollection.pending, (state) => {
+                state.idle = false;
                 state.isLoading = true;
                 state.error = null;
             })

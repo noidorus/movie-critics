@@ -9,6 +9,7 @@ import CreateCollectionDialog from './components/CreateCollectionDialog/CreateCo
 
 type Props = {
     collections: Collection[];
+    idle: boolean;
     loading: boolean;
     error: string | null;
     title: string;
@@ -17,6 +18,7 @@ type Props = {
 
 export default function CollectionsPageContent({
     collections,
+    idle,
     loading,
     error,
     title,
@@ -24,7 +26,7 @@ export default function CollectionsPageContent({
 }: Props) {
     const { visible, setVisible, onHide } = useModal();
 
-    if (loading) {
+    if (loading || idle) {
         return <Loader />;
     }
 
