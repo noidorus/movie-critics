@@ -4,6 +4,7 @@ import moviesReducer from './Movies/moviesSlice';
 import movieReducer from './Movie/movieSlice';
 import collectionsReducer from './Collections/collectionsSlice';
 import collectionReducer from './Collection/collectionSlice';
+import commentsReducer from './Comments/commentsSlice';
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         movie: movieReducer,
         collections: collectionsReducer,
         collection: collectionReducer,
+        comments: commentsReducer,
     },
 });
 
