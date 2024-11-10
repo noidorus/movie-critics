@@ -27,6 +27,7 @@ export default function MovieRateDialog({
             onHide={onHide}
             header="Оценить фильм"
             closable
+            draggable={false}
             className={styles.dialog}
         >
             <div className={styles.dialogContent}>

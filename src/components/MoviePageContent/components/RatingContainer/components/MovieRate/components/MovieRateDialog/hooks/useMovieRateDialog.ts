@@ -16,7 +16,9 @@ export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void) 
     }, []);
 
     const handleRateMovie = useCallback(async () => {
-        if (selectedRating === null) {return;}
+        if (selectedRating === null) {
+            return;
+        }
 
         const rateData: RateRequestData = {
             rating: selectedRating,
