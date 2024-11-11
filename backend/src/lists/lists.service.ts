@@ -15,13 +15,15 @@ export class ListsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getLists(): Promise<ShortInfoListWithAuthorAndFilms[]> {
-    return await this.prisma.listFilms.findMany({
+    const lists = await this.prisma.listFilms.findMany({
       where: { private: false },
       include: {
         films: { select: { id: true, posterUrlPreview: true } },
         author: { select: { username: true } },
       },
     });
+
+    return lists.sort((a, b) => a.id - b.id);
   }
 
   async getMyLists(authorId: number): Promise<ShortInfoListWithAuthorAndFilms[]> {

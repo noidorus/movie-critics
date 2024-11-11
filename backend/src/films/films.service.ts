@@ -74,10 +74,12 @@ export class FilmsService {
 
   async getCommentsByFilmId(filmId: number): Promise<CommentEntity[]> {
     try {
-      return await this.prisma.comment.findMany({
+      const comments = await this.prisma.comment.findMany({
         where: { filmId },
         include: { author: { select: { username: true, id: true } } },
       });
+
+      return comments.sort((a, b) => a.id - b.id);
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
