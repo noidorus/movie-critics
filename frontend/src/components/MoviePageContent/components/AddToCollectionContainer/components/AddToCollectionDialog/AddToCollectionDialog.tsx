@@ -2,6 +2,8 @@ import { Dialog } from 'primereact/dialog';
 import { Checkbox, CheckboxChangeEvent } from 'primereact/checkbox';
 import { useCollections } from './hooks/useCollections';
 import styles from './addToCollectionDialog.module.css';
+import CreateCollectionContent from '@/components/CreateCollectionContent/CreateCollectionContent';
+import { useFormVisibility } from './hooks/useFormVisibility';
 
 type Props = {
     visible: boolean;
@@ -11,6 +13,7 @@ type Props = {
 
 export default function AddToCollectionDialog({ visible, onHide, movieId }: Props) {
     const { collections, onChange, errorCollectionId, error } = useCollections();
+    const { formVisible, toggleFormVisibility } = useFormVisibility();
 
     return (
         <Dialog header="Добавить в подборку" visible={visible} onHide={onHide} draggable={false}>
@@ -41,6 +44,17 @@ export default function AddToCollectionDialog({ visible, onHide, movieId }: Prop
                         </div>
                     );
                 })}
+            </div>
+            <div className={styles.createCollection}>
+                <div className={styles.collection}>
+                    <Checkbox
+                       inputId="createCollection"
+                       checked={formVisible}
+                       onChange={(e: CheckboxChangeEvent) => {toggleFormVisibility(e.checked || false)}}
+                    />
+                    <label>Создать подборку</label>
+                </div>
+                <CreateCollectionContent onHide={onHide} visible={formVisible} movieId={movieId} />
             </div>
         </Dialog>
     );

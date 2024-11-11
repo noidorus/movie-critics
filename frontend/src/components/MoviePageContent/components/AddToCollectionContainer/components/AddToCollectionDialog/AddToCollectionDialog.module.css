@@ -13,3 +13,7 @@
 .error {
     color: #f00;
 }
+
+.createCollection {
+    margin-block-start: 10px;
+}
