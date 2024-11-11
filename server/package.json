@@ -22,7 +22,6 @@
     "start:migrate:prod": "dotenv -e env/.env.sample -- npx prisma migrate deploy && yarn run start:prod"
   },
   "dependencies": {
-    "@google-cloud/storage": "^7.13.0",
     "@nestjs/axios": "^3.0.3",
     "@nestjs/cache-manager": "^2.2.2",
     "@nestjs/common": "^10.0.0",
@@ -41,7 +40,6 @@
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.7",
     "dotenv-cli": "^7.4.2",
-    "firebase-admin": "^12.6.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
