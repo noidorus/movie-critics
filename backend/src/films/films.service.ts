@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prismaDB/prisma.service';
-import { FilmWithRealtions, VideoTypesArr } from './film.interfaces';
-import { FiltersEntity, FilmsEntity, FilmWithExtrasEntity, FilmNoRatingsEntity } from './entities';
+import { FilmsEntity, FilmWithExtrasEntity, FilmNoRatingsEntity } from './entities';
 import { Rating } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
 import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
@@ -16,7 +15,7 @@ export class FilmsService {
 
   async getFilms(page: number, limit: number): Promise<FilmsEntity> {
     try {
-      const items: FilmWithRealtions[] = await this.prisma.film.findMany({
+      const items = await this.prisma.film.findMany({
         take: limit,
         skip: (page - 1) * limit,
         include: { genres: true, countries: true, ratings: true },
@@ -37,7 +36,7 @@ export class FilmsService {
 
   async getFilmById(id: number): Promise<FilmWithExtrasEntity> {
     try {
-      const film: FilmWithRealtions = await this.prisma.film.findUnique({
+      const film = await this.prisma.film.findUnique({
         where: { id },
         include: { genres: true, countries: true, ratings: true },
       });
@@ -52,21 +51,6 @@ export class FilmsService {
       });
     } catch {
       throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
-    }
-  }
-
-  async getFilters(): Promise<FiltersEntity> {
-    try {
-      const types: VideoTypesArr = ['VIDEO', 'FILM', 'MINI_SERIES', 'TV_SERIES', 'TV_SHOW'];
-      const filters = {
-        genres: await this.prisma.genre.findMany(),
-        countries: await this.prisma.country.findMany(),
-        types,
-      };
-
-      return new FiltersEntity(filters);
-    } catch {
-      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -90,7 +74,10 @@ export class FilmsService {
 
   async getCommentsByFilmId(filmId: number): Promise<CommentEntity[]> {
     try {
-      return await this.prisma.comment.findMany({ where: { filmId } });
+      return await this.prisma.comment.findMany({
+        where: { filmId },
+        include: { author: { select: { username: true, id: true } } },
+      });
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }

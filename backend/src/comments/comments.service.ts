@@ -10,8 +10,10 @@ export class CommentsService {
 
   async create(authorId: number, dto: CreateCommentDTO): Promise<CommentEntity> {
     try {
-      const comment = await this.prisma.comment.create({ data: { ...dto, authorId } });
-      return new CommentEntity(comment);
+      return await this.prisma.comment.create({
+        data: { ...dto, authorId },
+        include: { author: { select: { username: true, id: true } } },
+      });
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -32,11 +34,11 @@ export class CommentsService {
 
   async edit(authorId: number, id: number, dto: EditCommentDTO): Promise<CommentEntity> {
     try {
-      const comment = await this.prisma.comment.update({
+      return await this.prisma.comment.update({
         where: { id, authorId },
         data: { ...dto },
+        include: { author: { select: { username: true, id: true } } },
       });
-      return new CommentEntity(comment);
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (err.code === 'P2025') {
