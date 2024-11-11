@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Country, Film, Genre, Rating, VideoType } from '@prisma/client';
+import { Country, Film, Genre, VideoType } from '@prisma/client';
 import { Exclude, Transform } from 'class-transformer';
 
 export class FilmEntity implements Film {
@@ -65,9 +65,6 @@ export class FilmEntity implements Film {
   @ApiProperty({ example: [{ name: 'семейный' }, { name: 'детский' }] })
   @Transform(({ value }) => value.map(({ name }: Genre) => ({ name })))
   genres: Genre[];
-
-  @ApiProperty({ example: [{ id: 1, userRating: 6, userId: 1, filmId: 1 }] })
-  ratings: Rating[];
 
   @ApiProperty({ example: 8 })
   avgRating: number;

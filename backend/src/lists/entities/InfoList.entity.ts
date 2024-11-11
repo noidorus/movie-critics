@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ListEntity } from './list.entity';
-import { FilmInListEntity } from 'src/films/entities';
+import { ShortInfoFilmEntity } from 'src/films/entities';
 
 export class ListWithAuthorEntity extends ListEntity {
-  @ApiProperty({ example: 'user123' })
+  @ApiProperty({ example: { username: 'user123' } })
   author: { username: string };
 }
 
@@ -21,6 +21,6 @@ export class ShortInfoListWithAuthorAndFilms extends ListWithAuthorEntity {
 }
 
 export class InfoListWithAuthorAndFilms extends ListWithAuthorEntity {
-  @ApiProperty({ type: FilmInListEntity })
-  films: FilmInListEntity[];
+  @ApiProperty({ type: ShortInfoFilmEntity })
+  films: ShortInfoFilmEntity[];
 }

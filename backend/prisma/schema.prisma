@@ -12,6 +12,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
   id           Int         @id @default(autoincrement())
   email        String      @unique
@@ -60,6 +61,8 @@ model Comment {
   authorId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@map(name: "comments")
 }
 
 model ListFilms {

@@ -10,7 +10,7 @@ import {
   ShortInfoListWithAuthorAndFilms,
 } from './entities';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
-import { FilmInListEntity } from 'src/films/entities';
+import { ShortInfoFilmEntity } from 'src/films/entities';
 
 @ApiTags('Lists')
 @Controller('lists')
@@ -54,12 +54,12 @@ export class ListsController {
   @UseGuards(JwtAuthGuard)
   @Post(':id/films/:filmId')
   @ApiOperation({ summary: 'Add film to list, available only for authorized users' })
-  @ApiOkResponse({ description: 'Film added to list' })
+  @ApiOkResponse({ description: 'Film added to list', type: ShortInfoFilmEntity })
   addFilmToList(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
     @Param('filmId', PositiveNumberValidationPipe) filmId: number,
-  ): Promise<FilmInListEntity> {
+  ): Promise<ShortInfoFilmEntity> {
     return this.listsService.addFilmToList(req.user.id, id, filmId);
   }
 

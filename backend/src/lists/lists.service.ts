@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prismaDB/prisma.service';
 import { CreateListDTO } from './dto';
 import { Prisma } from '@prisma/client';
 import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
-import { FilmInListEntity } from 'src/films/entities/';
+import { ShortInfoFilmEntity } from 'src/films/entities/';
 import {
   InfoListWithAuthorAndFilms,
   ListEntity,
@@ -56,7 +56,7 @@ export class ListsService {
     return {
       ...list,
       films: list.films.map(
-        (film) => new FilmInListEntity({ ...film, avgRating: calculateAvgRating(film.ratings) }),
+        (film) => new ShortInfoFilmEntity({ ...film, avgRating: calculateAvgRating(film.ratings) }),
       ),
     };
   }
@@ -92,7 +92,7 @@ export class ListsService {
     }
   }
 
-  async addFilmToList(authorId: number, id: number, filmId: number): Promise<FilmInListEntity> {
+  async addFilmToList(authorId: number, id: number, filmId: number): Promise<ShortInfoFilmEntity> {
     try {
       await this.prisma.listFilms.update({
         where: { id, authorId },
@@ -101,7 +101,7 @@ export class ListsService {
       });
 
       const film = await this.prisma.film.findUnique({ where: { id: filmId } });
-      return new FilmInListEntity(film);
+      return new ShortInfoFilmEntity(film);
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         switch (err.code) {
