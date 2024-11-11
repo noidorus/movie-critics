@@ -51,6 +51,7 @@ const collectionsSlice = createSlice({
             state.actionError = null;
         },
         validateCollectionName: (state) => {
+            state.actionError = null;
             if (!state.collectionName.trim()) {
                 state.formError = 'Введите название подборки';
             } else if (state.collectionName.length > 30) {
