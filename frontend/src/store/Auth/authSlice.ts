@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import zod from 'zod';
 import { AuthError, LoginResponseData } from '@/DTO/AuthDTO';
-import { loginUser, registerUser, checkAuth, logout, refreshAccessToken } from './authThunks';
+import { loginUser, registerUser, checkAuth, logoutUser, refreshAccessToken } from './authThunks';
 import { User } from '@/types/UserType';
 import { authSchema } from './validationSchema';
 
@@ -124,15 +124,15 @@ const authSlice = createSlice({
                 state.user = null;
                 localStorage.removeItem('user');
             })
-            .addCase(logout.pending, (state) => {
+            .addCase(logoutUser.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(logout.fulfilled, (state) => {
+            .addCase(logoutUser.fulfilled, (state) => {
                 state.user = null;
                 state.isLoading = false;
                 localStorage.removeItem('user');
             })
-            .addCase(logout.rejected, (state, action: PayloadAction<AuthError | undefined>) => {
+            .addCase(logoutUser.rejected, (state, action: PayloadAction<AuthError | undefined>) => {
                 state.error = action.payload || {
                     message: 'Ошибка при выходе',
                     status: 500,

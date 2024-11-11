@@ -96,7 +96,7 @@ export const checkAuth = createAsyncThunk<User, void, { rejectValue: AuthError }
     },
 );
 
-export const logout = createAsyncThunk<void, void, { rejectValue: AuthError }>(
+export const logoutUser = createAsyncThunk<void, void, { rejectValue: AuthError }>(
     'logout',
     async (_, { rejectWithValue }) => {
         try {

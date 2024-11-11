@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { logout } from '@/store/Auth/authThunks';
+import { logoutUser } from '@/store/Auth/authThunks';
 import { selectUser } from '@/store/Auth/authSelectors';
 import styles from './Header.module.css';
 
@@ -19,7 +19,7 @@ export default function Header({ activeTab }: HeaderProps) {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleLogout = useCallback(async () => {
-        await dispatch(logout());
+        await dispatch(logoutUser());
     }, [dispatch]);
 
     return (
