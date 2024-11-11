@@ -1,12 +1,11 @@
 FROM node:20-alpine
 WORKDIR /usr/src/app
 
-COPY server/package.json server/yarn.lock ./
+COPY backend/package.json backend/yarn.lock ./
 RUN yarn install --only=production --frozen-lockfile
 
-COPY server ./
+COPY backend ./
 RUN npx prisma generate && yarn build
-# COPY server/prisma/filmsSeed.json dist/prisma/
 
 RUN apk add --no-cache bash
 RUN chmod +x ./wait-for-it.sh ./docker-entrypoint.sh

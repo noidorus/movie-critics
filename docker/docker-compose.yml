@@ -6,7 +6,7 @@ services:
     ports:
       - "3001:3001"
     env_file:
-      - ../server/env/.env.sample
+      - ../backend/env/.env.sample
     depends_on:
       - postgres
 
@@ -15,7 +15,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - ../server/env/.env.sample
+      - ../backend/env/.env.sample
 
 # docker compose -f ./docker/docker-compose.yml -p docker up -d
 # docker ps
