@@ -4,7 +4,7 @@ import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { lastValueFrom, map, catchError, of } from 'rxjs';
 import { TypedConfigService } from 'src/config/typed-config.service';
-import { OmdbFilmData, TransformedOmdbFilmData } from './omdb.interface';
+import { OmdbFilmData, OmdbFilmDataSummary } from './omdb.interface';
 @Injectable()
 export class OmdbService {
   private readonly url: string;
@@ -17,14 +17,14 @@ export class OmdbService {
     this.url = `https://www.omdbapi.com/?apikey=${this.configService.get('omdbApiKey')}`;
   }
 
-  async getFilmByTitle(title: string | null): Promise<TransformedOmdbFilmData> {
-    const info: TransformedOmdbFilmData = { plot: null, awards: null, boxOffice: null };
+  async getFilmByTitle(title: string | null): Promise<OmdbFilmDataSummary> {
+    const info: OmdbFilmDataSummary = { plot: null, awards: null, boxOffice: null, actors: null };
 
     if (!title) {
       return info;
     }
 
-    const cachedFilm = await this.cacheManager.get<TransformedOmdbFilmData>(`omdb:${title}`);
+    const cachedFilm = await this.cacheManager.get<OmdbFilmDataSummary>(`omdb:${title}`);
     if (cachedFilm) {
       return cachedFilm;
     }
@@ -35,7 +35,7 @@ export class OmdbService {
           info.plot = this.validateValue(data.Plot);
           info.awards = this.validateValue(data.Awards);
           info.boxOffice = this.validateValue(data.BoxOffice);
-
+          info.actors = this.validateValue(data.Actors);
           return info;
         }),
         catchError(() => {
