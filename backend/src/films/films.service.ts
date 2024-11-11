@@ -1,6 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prismaDB/prisma.service';
-import { FilmsEntity, FilmWithExtrasEntity, FilmNoRatingsEntity } from './entities';
+import {
+  FilmsEntity,
+  FilmWithExtrasEntity,
+  FilmNoRatingsEntity,
+  ShortInfoFilmEntity,
+} from './entities';
 import { Rating } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
 import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
@@ -27,7 +32,9 @@ export class FilmsService {
         page,
         totalPages: Math.ceil(totalItems / limit),
         totalItems,
-        items: items.map((item) => new FilmNoRatingsEntity(item)),
+        items: items.map((item) => {
+          return new FilmNoRatingsEntity({ ...item, avgRating: calculateAvgRating(item.ratings) });
+        }),
       });
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
@@ -80,6 +87,26 @@ export class FilmsService {
       });
 
       return comments.sort((a, b) => a.id - b.id);
+    } catch {
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async search(query: string): Promise<ShortInfoFilmEntity[]> {
+    try {
+      const films = await this.prisma.film.findMany({
+        where: {
+          OR: [
+            { nameRu: { contains: query, mode: 'insensitive' } },
+            { nameOriginal: { contains: query, mode: 'insensitive' } },
+          ],
+        },
+        include: { genres: true, countries: true, ratings: true },
+      });
+
+      return films.map((film) => {
+        return new ShortInfoFilmEntity({ ...film, avgRating: calculateAvgRating(film.ratings) });
+      });
     } catch {
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }

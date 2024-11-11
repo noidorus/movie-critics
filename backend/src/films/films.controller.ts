@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nest
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FilmsService } from './films.service';
 import { FilmsQueryDTO, RateFilmBodyDTO } from './dto';
-import { FilmsEntity, FilmWithExtrasEntity, RatingEntity } from './entities';
+import { FilmsEntity, FilmWithExtrasEntity, RatingEntity, ShortInfoFilmEntity } from './entities';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { RequestWithUser } from 'src/auth/interfaces';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
@@ -19,6 +19,13 @@ export class FilmsController {
   async getFilms(@Query() query: FilmsQueryDTO) {
     const { page = 1, limit = 10 } = query;
     return await this.filmsService.getFilms(+page, +limit);
+  }
+
+  @Get('search')
+  @ApiOperation({ summary: 'Search films by name' })
+  @ApiOkResponse({ status: 200, type: [ShortInfoFilmEntity] })
+  async search(@Query('name') name: string): Promise<ShortInfoFilmEntity[]> {
+    return await this.filmsService.search(name);
   }
 
   @Get(':id')
