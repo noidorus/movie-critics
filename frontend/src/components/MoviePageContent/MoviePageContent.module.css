@@ -2,7 +2,7 @@
     inline-size: 1280px;
     margin: 0 auto;
     padding: 15px;
-    background-color: #f8f9fa;
+    background-color: var(--light-background-color);
     display: grid;
     grid-template-columns: 1fr auto auto;
     grid-template-rows: auto auto 1fr;

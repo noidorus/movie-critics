@@ -11,7 +11,7 @@
 }
 
 .error {
-    color: #f00;
+    color: var(--error-color);
 }
 
 .createCollection {

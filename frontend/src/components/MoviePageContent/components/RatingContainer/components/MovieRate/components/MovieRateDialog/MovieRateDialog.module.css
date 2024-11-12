@@ -27,15 +27,16 @@
     min-width: 40px;
     padding: 0.5rem;
     font-size: 14px;
+    background-color: var(--action-button-main-color);
 }
 
 .selected {
-    background-color: #007adf;
-    color: #f9f9f9;
+    background-color: var(--action-button-active-color);
+    color: var(--text-light-color);
 }
 
 .errorMessage {
-    color: #f00;
+    color: var(--error-color);
     margin-top: 10px;
     text-align: center;
 }

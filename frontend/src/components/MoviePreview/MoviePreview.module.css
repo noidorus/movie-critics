@@ -1,9 +1,9 @@
 .movie {
     list-style: none;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--border-light);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
@@ -12,13 +12,13 @@
 
 .movie:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--box-shadow-hover);
 }
 
 .poster {
     width: 100%;
     object-fit: cover;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border-light);
     height: 300px;
     aspect-ratio: 2 / 3;
 }
@@ -30,7 +30,7 @@
     font-weight: 600;
     margin: 10px 0;
     padding: 10px;
-    color: #f9f9f9;
+    color: var(--text-light-color);
     text-decoration: none;
 }
 

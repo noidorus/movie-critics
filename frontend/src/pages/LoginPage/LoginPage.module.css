@@ -6,9 +6,9 @@
     padding-block: 24px;
     align-items: center;
     max-width: 800px;
-    border: 1px solid #000;
+    border: 1px solid var(--border-dark);
     border-radius: 6px;
-    background-color: #c0c0c0;
+    background-color: var(--wrapper-color);
 }
 
 .title {
@@ -23,7 +23,7 @@
     justify-content: center;
     margin-block: 8px;
     border-radius: 5px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--border-light);
     padding-inline-start: 10px;
     padding-inline-end: 10px;
     padding-block: 8px;
@@ -31,7 +31,7 @@
 }
 
 .button:hover {
-    background-color: #8d8a8a;
+    background-color: var(--submit-button-hover);
 }
 
 @media (max-width: 800px) {

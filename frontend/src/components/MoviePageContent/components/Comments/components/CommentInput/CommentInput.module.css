@@ -2,14 +2,11 @@
     max-width: 100%;
     margin: 0 auto;
     padding: 15px;
-    background-color: #f4f6f8;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .title {
     font-size: 1.3em;
-    color: #333;
     margin-bottom: 10px;
     text-align: center;
 }
@@ -21,7 +18,7 @@
 }
 
 .error {
-    color: #e74c3c;
+    color: var(--error-color);
     font-size: 0.9em;
     margin-bottom: 5px;
 }

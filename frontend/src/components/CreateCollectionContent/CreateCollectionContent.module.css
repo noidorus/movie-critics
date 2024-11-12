@@ -13,7 +13,7 @@
 }
 
 .button {
-    background-color: #87aeea;
+    background-color: var(--action-button-main-color);
     padding: 10.5px 17.5px;
     border-radius: 6px;
     font-family: Inter, sans-serif;
@@ -21,12 +21,12 @@
     font-weight: 400;
     line-height: 19.36px;
     text-align: left;
-    color: #202832;
+    color: var(--action-buttom-main-text-color);
     text-decoration: none;
-    border: 1px solid #396bd0;
+    border: 1px solid var(--border-accent);
 }
 
 .error {
     font-size: 18px;
-    color: #f00;
+    color: var(--error-color)
 }

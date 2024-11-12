@@ -4,9 +4,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1c212a;
+    background-color: var(--header-color);
     border-radius: 6px;
-    border-bottom: 1px solid #6c6e72;
+    border-bottom: 1px solid var(--border-light);
     max-height: 73px;
 }
 
@@ -22,7 +22,7 @@
     font-size: 24px;
     font-weight: 500;
     line-height: 29.05px;
-    color: #8e96a0;
+    color: var(--header-text-color);
     margin-right: 10px;
 }
 
@@ -46,7 +46,7 @@
 .button {
     display: flex;
     align-items: center;
-    background-color: #121417;
+    background-color: var(--header-button-main-color);
     padding: 10.5px 17.5px;
     border-radius: 6px;
     font-family: Inter, sans-serif;
@@ -54,18 +54,18 @@
     font-weight: 400;
     line-height: 19.36px;
     text-align: left;
-    color: #8e96a0;
+    color: var(--header-text-color);
     text-decoration: none;
-    border: 1px solid #396bd0;
+    border: 1px solid var(--border-accent);
 }
 
 .button:hover {
-    background-color: #e0e6ed;
+    background-color: var(--header-button-hover-color);
 }
 
 .buttonChecked,
 .buttonChecked:hover {
-    background-color: #a855f733;
+    background-color: var(--header-button-active-color);
     cursor: default;
 }
 
@@ -77,7 +77,7 @@
     .buttons {
         display: none;
         flex-direction: column;
-        background-color: #1c212a;
+        background-color: var(--header-color);
         position: absolute;
         top: 60px;
         right: 14px;
@@ -104,7 +104,7 @@
         align-items: center;
         justify-content: center;
         background-color: transparent;
-        color: #8e96a0;
+        color: var(--header-text-color);
         font-size: 24px;
         margin-left: auto;
     }

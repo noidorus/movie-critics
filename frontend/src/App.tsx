@@ -15,6 +15,7 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './App.css';
+import './variables.css';
 
 export default function App() {
     const user = useAppSelector(selectUser);
@@ -36,7 +37,7 @@ export default function App() {
             () => {
                 dispatch(refreshAccessToken());
             },
-            1000 * 60 * 5,
+            1000 * 30,
         );
 
         return () => clearInterval(refreshTokenInterval);
