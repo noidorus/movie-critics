@@ -47,7 +47,7 @@ export default function CreateCollectionContent({onHide, visible, movieId}: Prop
                             name="privacy"
                             value={true}
                             onChange={(e) => setIsPrivate(e.value)}
-                            checked={isPrivate === true}
+                            checked={isPrivate}
                         />
                         <label htmlFor="privateYes">Приватная</label>
                     </div>
@@ -57,7 +57,7 @@ export default function CreateCollectionContent({onHide, visible, movieId}: Prop
                             name="privacy"
                             value={false}
                             onChange={(e) => setIsPrivate(e.value)}
-                            checked={isPrivate === false}
+                            checked={!isPrivate}
                         />
                         <label htmlFor="privateNo">Публичная</label>
                     </div>
