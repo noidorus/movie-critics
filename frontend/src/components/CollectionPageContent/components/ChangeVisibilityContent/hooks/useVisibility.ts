@@ -24,7 +24,7 @@ export const useVisibility = ({ id, visibility, onHide, onUpdate }: Props) => {
                 onHide();
                 onUpdate();
             });
-    }, [dispatch, id, onHide, onUpdate]);
+    }, [dispatch, id, onHide, onUpdate, visibility]);
 
     return useMemo(
         () => ({ loading, error, handleToggleVisibility }),
