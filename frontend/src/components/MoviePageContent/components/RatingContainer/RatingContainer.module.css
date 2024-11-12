@@ -21,22 +21,7 @@
     font-weight: 600;
 }
 
-@media (max-width: 1280px) {
-    .content {
-        inline-size: 95vw;
-    }
-
-    .poster {
-        width: 25%;
-    }
-}
-
 @media (max-width: 1024px) {
-    .content {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-    }
-
     .ratingContainer {
         justify-self: start;
         align-self: center;

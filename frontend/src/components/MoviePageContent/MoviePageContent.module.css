@@ -1,5 +1,5 @@
 .content {
-    inline-size: 1280px;
+    max-inline-size: 95vw;
     margin: 0 auto;
     padding: 15px;
     background-color: var(--light-background-color);
@@ -35,7 +35,7 @@
 
 @media (max-width: 1280px) {
     .content {
-        inline-size: 95vw;
+        max-inline-size: 95vw;
     }
 }
 

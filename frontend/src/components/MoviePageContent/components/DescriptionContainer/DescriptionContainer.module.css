@@ -5,7 +5,7 @@
 }
 
 .poster {
-    width: 20%;
+    inline-size: 20%;
     object-fit: cover;
     aspect-ratio: 2 / 3;
 }
@@ -28,7 +28,7 @@
 
 @media (max-width: 1280px) {
     .poster {
-        width: 25%;
+        inline-size: 25%;
     }
 }
 
@@ -44,16 +44,12 @@
         flex-direction: row;
         gap: 10px;
     }
-
-    .poster {
-        width: 20%;
-    }
 }
 
 @media (max-width: 768px) {
     .poster {
-        width: 200px;
-        height: 300px;
+        inline-size: 200px;
+        block-size: 300px;
     }
 }
 
@@ -64,7 +60,7 @@
     }
 
     .poster {
-        width: 100%;
-        height: auto;
+        inline-size: 100%;
+        block-size: auto;
     }
 }

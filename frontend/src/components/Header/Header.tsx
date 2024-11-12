@@ -24,7 +24,6 @@ export default function Header({ activeTab }: HeaderProps) {
 
     return (
         <div className={styles.header}>
-            <div className={styles.navigation}>
                 <p className={styles.logo}>MOVIE CRITICS</p>
                 <Button className={styles.menuButton} onClick={toggleMenu}>
                     <span className="pi pi-bars"></span>
@@ -70,7 +69,6 @@ export default function Header({ activeTab }: HeaderProps) {
                         )}
                     </div>
                 </div>
-            </div>
         </div>
     );
 }

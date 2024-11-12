@@ -16,10 +16,10 @@
 }
 
 .poster {
-    width: 100%;
+    inline-size: 100%;
     object-fit: cover;
     border-bottom: 1px solid var(--border-light);
-    height: 300px;
+    block-size: 300px;
     aspect-ratio: 2 / 3;
 }
 

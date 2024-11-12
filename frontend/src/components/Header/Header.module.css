@@ -1,19 +1,11 @@
 .header {
-    padding-inline: 14px;
-    padding-block: 17px;
+    padding: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--header-color);
     border-radius: 6px;
     border-bottom: 1px solid var(--border-light);
-    max-height: 73px;
-}
-
-.navigation {
-    display: flex;
-    align-items: center;
-    width: 100%;
     position: relative;
 }
 
@@ -79,10 +71,9 @@
         flex-direction: column;
         background-color: var(--header-color);
         position: absolute;
-        top: 60px;
+        top: 80px;
         right: 14px;
-        width: 200px;
-        padding: 10px;
+        padding: 10px 40px;
         border-radius: 6px;
         gap: 10px;
         z-index: 2;
@@ -110,7 +101,8 @@
     }
 
     .button {
-        width: 140px;
+        max-inline-size: 140px;
+        padding-inline: 70px;
         justify-content: center;
         text-wrap: nowrap;
         box-sizing: border-box;

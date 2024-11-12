@@ -17,6 +17,7 @@
 }
 
 .images {
+    min-block-size: 90px;
     display: flex;
     justify-content: center;
     gap: 4px;
@@ -24,8 +25,8 @@
 }
 
 .poster {
-    width: 60px;
-    height: 90px;
+    inline-size: 60px;
+    block-size: 90px;
     object-fit: cover;
     border-radius: 5px;
 }

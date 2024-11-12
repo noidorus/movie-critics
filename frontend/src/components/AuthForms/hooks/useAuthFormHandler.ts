@@ -49,11 +49,7 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
     );
 
     useEffect(() => {
-        if (!shouldSubmit) {
-            return;
-        }
-
-        if (!isFormValid) {
+        if (!shouldSubmit || !isFormValid) {
             return;
         }
 
@@ -61,7 +57,7 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
             dispatch(loginUser({ username: login, password }));
         } else {
             dispatch(registerUser({ username: login, email, password }))
-                .then((result) => unwrapResult(result))
+                .then(unwrapResult)
                 .then(() => dispatch(loginUser({ username: login, password })));
         }
         setShouldSubmit(false);

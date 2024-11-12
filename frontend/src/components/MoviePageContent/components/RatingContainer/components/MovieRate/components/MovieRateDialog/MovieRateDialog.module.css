@@ -1,6 +1,5 @@
 .dialog {
-    width: 600px;
-    max-width: 90%;
+    max-inline-size: 90%;
 }
 
 .dialogContent {
@@ -24,8 +23,8 @@
 
 .ratingButton {
     margin: 0;
-    min-width: 40px;
-    padding: 0.5rem;
+    min-inline-size: 40px;
+    padding: 8px;
     font-size: 14px;
     background-color: var(--action-button-main-color);
 }
@@ -43,12 +42,12 @@
 
 .submitButton {
     margin-top: 20px;
-    width: 100%;
+    min-inline-size: 100%;
 }
 
 @media (max-width: 768px) {
     .dialog {
-        width: 80%;
+        max-inline-size: 80%;
     }
 
     .ratingOptions {
@@ -56,8 +55,6 @@
     }
 
     .ratingButton {
-        width: 35px;
-        padding: 0.3rem;
         font-size: 12px;
     }
 }

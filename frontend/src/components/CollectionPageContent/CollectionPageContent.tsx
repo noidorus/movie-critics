@@ -41,6 +41,7 @@ export default function CollectionPage() {
                                     <DeleteCollectionContent onHideModal={onHideModal} id={collection.id} />,
                                 )
                             }
+                            label=" "
                         />
                         {collection.private ? (
                             <Button
@@ -58,6 +59,7 @@ export default function CollectionPage() {
                                 }
                                 onMouseEnter={() => setHovered(true)}
                                 onMouseLeave={() => setHovered(false)}
+                                label=" "
                             />
                         ) : (
                             <Button
@@ -75,6 +77,7 @@ export default function CollectionPage() {
                                 }
                                 onMouseEnter={() => setHovered(true)}
                                 onMouseLeave={() => setHovered(false)}
+                                label=" "
                             />
                         )}
                     </div>

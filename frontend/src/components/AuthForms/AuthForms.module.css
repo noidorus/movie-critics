@@ -18,24 +18,23 @@
 }
 
 .input {
-    inline-size: 350px;
     min-block-size: 40px;
     border-radius: 5px;
     border: 1px solid var(--border-light);
     padding-inline-start: 10px;
+    padding-inline-end: 170px;
     font-size: 20px;
 }
 
 .button {
-    width: 250px;
+    max-inline-size: 250px;
     font-size: 20px;
     text-align: center;
     justify-content: center;
     margin-block: 8px;
     border-radius: 5px;
     border: 1px solid var(--border-light);
-    padding-inline-start: 10px;
-    padding-inline-end: 10px;
+    padding-inline: 100px;
     padding-block: 8px;
 }
 
@@ -50,6 +49,6 @@
 
 @media (max-width: 550px) {
     .input {
-        inline-size: 250px;
+        padding-inline-end: 50px;
     }
 }

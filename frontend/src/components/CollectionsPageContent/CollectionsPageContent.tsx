@@ -42,6 +42,7 @@ export default function CollectionsPageContent({
                     <Button
                         className={`${styles.button} pi pi-plus`}
                         onClick={() => setVisible(true)}
+                        label=" "
                     />
                 )}
             </div>
