@@ -26,11 +26,9 @@ export default function Header({ activeTab }: HeaderProps) {
         <div className={styles.header}>
             <div className={styles.navigation}>
                 <p className={styles.logo}>MOVIE CRITICS</p>
-
                 <Button className={styles.menuButton} onClick={toggleMenu}>
                     <span className="pi pi-bars"></span>
                 </Button>
-
                 <div className={`${styles.buttons} ${isMenuOpen ? styles.open : ''}`}>
                     <div className={styles.leftButtons}>
                         <Link
@@ -52,7 +50,6 @@ export default function Header({ activeTab }: HeaderProps) {
                             <span>Подборки</span>
                         </Link>
                     </div>
-
                     <div className={styles.rightButtons}>
                         {user ? (
                             <>

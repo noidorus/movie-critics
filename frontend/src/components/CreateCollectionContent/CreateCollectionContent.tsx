@@ -40,7 +40,6 @@ export default function CreateCollectionContent({onHide, visible, movieId}: Prop
                     />
                     {formError && <p className={styles.error}>{formError}</p>}
                 </div>
-
                 <div className={styles.radio}>
                     <div>
                         <RadioButton
@@ -63,7 +62,6 @@ export default function CreateCollectionContent({onHide, visible, movieId}: Prop
                         <label htmlFor="privateNo">Публичная</label>
                     </div>
                 </div>
-
                 <Button
                     type="submit"
                     label={createLoading || addMovieLoading ? 'Загрузка...' : 'Создать'}
