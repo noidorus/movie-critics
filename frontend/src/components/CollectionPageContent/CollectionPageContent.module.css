@@ -36,7 +36,7 @@
 }
 
 .emptyList {
-    margin: 20px;
+    padding: 20px;
     font-size: 1.6rem;
     font-size: 400;
     color: var(--text-light-color);
