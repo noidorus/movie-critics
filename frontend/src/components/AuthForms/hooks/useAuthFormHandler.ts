@@ -48,20 +48,24 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
         [dispatch, isLogin],
     );
 
-    //посмотреть на эффект еще раз позже, попробовать избавиться от одного из условий
     useEffect(() => {
-        if (shouldSubmit) {
-            if (isFormValid) {
-                if (isLogin) {
-                    dispatch(loginUser({ username: login, password }));
-                } else {
-                    dispatch(registerUser({ username: login, email, password }))
-                        .then((result) => unwrapResult(result))
-                        .then(() => dispatch(loginUser({ username: login, password })));
-                }
-            }
-            setShouldSubmit(false);
+        if (!shouldSubmit) {
+            return;
         }
+
+        if (!isFormValid) {
+            return;
+        }
+
+        if (isLogin) {
+            dispatch(loginUser({ username: login, password }));
+        } else {
+            dispatch(registerUser({ username: login, email, password }))
+                .then((result) => unwrapResult(result))
+                .then(() => dispatch(loginUser({ username: login, password })));
+        }
+        setShouldSubmit(false);
+
     }, [isFormValid, shouldSubmit, isLogin, dispatch, login, email, password, errors]);
 
     return useMemo(

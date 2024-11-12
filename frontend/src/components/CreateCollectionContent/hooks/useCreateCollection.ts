@@ -44,27 +44,32 @@ export const useCreateCollection = (onHide: () => void, movieId?: number) => {
     );
 
     useEffect(() => {
-        if (shouldSubmit) {
-            if (!formError) {
-                const collectionData: CreateCollectionRequestData = {
-                    name: collectionName,
-                    private: isPrivate,
-                };
-    
-                dispatch(createCollection(collectionData))
-                    .unwrap()
-                    .then((newCollection) => {
-                        if (movieId) {
-                            dispatch(addMovieToCollection({ id: newCollection.id, filmId: movieId }))
-                                .unwrap()
-                                .then(() => onHide());
-                        } else {
-                            onHide();
-                        }
-                    })
-            }
-            setShouldSubmit(false);
+        if (!shouldSubmit) {
+            return;
         }
+
+        if (formError) {
+            return;
+        }
+
+        const collectionData: CreateCollectionRequestData = {
+            name: collectionName,
+            private: isPrivate,
+        };
+
+        dispatch(createCollection(collectionData))
+            .unwrap()
+            .then((newCollection) => {
+                if (movieId) {
+                    dispatch(addMovieToCollection({ collectionId: newCollection.id, filmId: movieId }))
+                        .unwrap()
+                        .then(() => onHide());
+                } else {
+                    onHide();
+                }
+            })
+            
+        setShouldSubmit(false);
     }, [shouldSubmit, formError, collectionName, isPrivate, movieId, dispatch, onHide]);
 
     const handleChangeName = useCallback(
