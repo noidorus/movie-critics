@@ -52,7 +52,7 @@ export default function AddToCollectionDialog({ visible, onHide, movieId }: Prop
                        checked={formVisible}
                        onChange={(e: CheckboxChangeEvent) => {toggleFormVisibility(e.checked || false)}}
                     />
-                    <label>Создать подборку</label>
+                    <label htmlFor="createCollection">Создать подборку</label>
                 </div>
                 <CreateCollectionContent onHide={onHide} visible={formVisible} movieId={movieId} />
             </div>
