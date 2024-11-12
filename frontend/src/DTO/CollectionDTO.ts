@@ -4,6 +4,6 @@ export type visibilityRequestData = {
 };
 
 export type manageMovieRequestData = {
-    id: number;
+    collectionId: number;
     filmId: number;
 };

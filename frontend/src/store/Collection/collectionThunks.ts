@@ -92,7 +92,7 @@ export const deleteMovieFromCollection = createAsyncThunk<
 >('collection/deleteMovieFromCollection', async (deleteMovieData, { rejectWithValue }) => {
     try {
         const response = await fetch(
-            `${API_URL}/${deleteMovieData.id}/films/${deleteMovieData.filmId}`,
+            `${API_URL}/${deleteMovieData.collectionId}/films/${deleteMovieData.filmId}`,
             {
                 method: 'DELETE',
                 credentials: 'include',
@@ -121,7 +121,7 @@ export const addMovieToCollection = createAsyncThunk<
 >('collection/addMovieToCollection', async (deleteMovieData, { rejectWithValue }) => {
     try {
         const response = await fetch(
-            `${API_URL}/${deleteMovieData.id}/films/${deleteMovieData.filmId}`,
+            `${API_URL}/${deleteMovieData.collectionId}/films/${deleteMovieData.filmId}`,
             {
                 method: 'POST',
                 credentials: 'include',

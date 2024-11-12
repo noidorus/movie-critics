@@ -99,7 +99,7 @@ export default function CollectionPage() {
                                                 <DeleteMovieContent
                                                     onHide={onHide}
                                                     onUpdate={handleCollectionUpdate}
-                                                    id={collection.id}
+                                                    collectionId={collection.id}
                                                     filmId={movie.id}
                                                 />,
                                             )

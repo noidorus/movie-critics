@@ -19,14 +19,14 @@ export const useCollections = () => {
     const [errorCollectionId, setErrorCollectionId] = useState<number | null>(null);
 
     const removeFromCollection = (collectionId: number, movieId: number) => {
-        const data: manageMovieRequestData = { id: collectionId, filmId: movieId };
+        const data: manageMovieRequestData = { collectionId, filmId: movieId };
         dispatch(deleteMovieFromCollection(data))
             .unwrap()
             .catch(() => setErrorCollectionId(collectionId));
     };
 
     const addToCollection = (collectionId: number, movieId: number) => {
-        const data: manageMovieRequestData = { id: collectionId, filmId: movieId };
+        const data: manageMovieRequestData = { collectionId, filmId: movieId };
         dispatch(addMovieToCollection(data))
             .unwrap()
             .catch(() => setErrorCollectionId(collectionId));

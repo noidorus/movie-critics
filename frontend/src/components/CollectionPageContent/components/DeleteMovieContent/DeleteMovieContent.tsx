@@ -5,12 +5,12 @@ import styles from './DeleteMovieContent.module.css';
 type Props = {
     onHide: () => void;
     onUpdate: () => void;
-    id: number;
+    collectionId: number;
     filmId: number;
 };
 
-export default function DeleteMovieContent({ onHide, onUpdate, id, filmId }: Props) {
-    const { onDeleteMovie, loading, error } = useDelete({ id, filmId, onHide, onUpdate });
+export default function DeleteMovieContent({ onHide, onUpdate, collectionId, filmId }: Props) {
+    const { onDeleteMovie, loading, error } = useDelete({ collectionId, filmId, onHide, onUpdate });
 
     return (
         <div>
