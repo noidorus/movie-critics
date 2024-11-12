@@ -19,7 +19,7 @@ export type RegisterResponseData = {
     message: string;
 };
 
-export interface AuthError {
+export type AuthError = {
     message: string;
     status: number;
 }
