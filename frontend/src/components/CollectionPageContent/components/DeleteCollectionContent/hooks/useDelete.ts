@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = {
     id: number;
-    onHide: () => void;
+    onHideModal: () => void;
 };
 
-export const useDelete = ({ id, onHide }: Props) => {
+export const useDelete = ({ id, onHideModal }: Props) => {
     const dispatch = useAppDispatch();
     const loading = useAppSelector(selectActionLoading);
     const error = useAppSelector(selectActionError);
@@ -20,9 +20,9 @@ export const useDelete = ({ id, onHide }: Props) => {
             .unwrap()
             .then(() => {
                 navigate('/collections/my');
-                onHide();
+                onHideModal();
             });
-    }, [dispatch, id, onHide]);
+    }, [dispatch, id, onHideModal]);
 
     return useMemo(
         () => ({ loading, error, onDeleteCollection }),

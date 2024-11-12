@@ -3,12 +3,12 @@ import { useDelete } from './hooks/useDelete';
 import styles from './DeleteCollectionContent.module.css';
 
 type Props = {
-    onHide: () => void;
+    onHideModal: () => void;
     id: number;
 };
 
-export default function DeleteCollectionContent({ onHide, id }: Props) {
-    const { onDeleteCollection, loading, error } = useDelete({ id, onHide });
+export default function DeleteCollectionContent({ onHideModal, id }: Props) {
+    const { onDeleteCollection, loading, error } = useDelete({ id, onHideModal });
 
     return (
         <div>
@@ -16,15 +16,11 @@ export default function DeleteCollectionContent({ onHide, id }: Props) {
                 <Button
                     label="Отмена"
                     className={styles.button}
-                    onClick={() => {
-                        onHide();
-                    }}
+                    onClick={onHideModal}
                 />
                 <Button
                     className={styles.button}
-                    onClick={() => {
-                        onDeleteCollection();
-                    }}
+                    onClick={onDeleteCollection}
                 >
                     {loading ? 'Загрузка...' : 'Подтвердить'}
                 </Button>

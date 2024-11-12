@@ -3,14 +3,14 @@ import { useVisibility } from './hooks/useVisibility';
 import styles from './ChangeVisibilityContent.module.css';
 
 type Props = {
-    onHide: () => void;
+    onHideModal: () => void;
     onUpdate: () => void;
     collectionId: number;
     visibility: boolean;
 };
 
 export default function ChangeVisibilityContent({
-    onHide,
+    onHideModal,
     collectionId,
     visibility,
     onUpdate,
@@ -18,7 +18,7 @@ export default function ChangeVisibilityContent({
     const { handleToggleVisibility, loading, error } = useVisibility({
         id: collectionId,
         visibility,
-        onHide,
+        onHideModal,
         onUpdate,
     });
 
@@ -28,15 +28,11 @@ export default function ChangeVisibilityContent({
                 <Button
                     label="Отмена"
                     className={styles.button}
-                    onClick={() => {
-                        onHide();
-                    }}
+                    onClick={onHideModal}
                 />
                 <Button
                     className={styles.button}
-                    onClick={() => {
-                        handleToggleVisibility();
-                    }}
+                    onClick={ handleToggleVisibility}
                 >
                     {loading ? 'Загрузка...' : 'Подтвердить'}
                 </Button>

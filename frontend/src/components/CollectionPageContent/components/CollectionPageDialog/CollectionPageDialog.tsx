@@ -2,14 +2,14 @@ import { Dialog } from 'primereact/dialog';
 
 type Props = {
     visible: boolean;
-    onHide: () => void;
+    onHideModal: () => void;
     title: string;
     children: React.ReactNode;
 };
 
-export default function CollectionPageDialog({ visible, onHide, title, children }: Props) {
+export default function CollectionPageDialog({ visible, onHideModal, title, children }: Props) {
     return (
-        <Dialog header={title} onHide={onHide} visible={visible} draggable={false}>
+        <Dialog header={title} onHide={onHideModal} visible={visible} draggable={false}>
             {children}
         </Dialog>
     );

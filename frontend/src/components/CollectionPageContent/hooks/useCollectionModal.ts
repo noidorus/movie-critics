@@ -9,13 +9,13 @@ export const useCollectionModal = () => {
     const [dialogContent, setDialogContent] = useState<React.ReactNode>(null);
     const dispatch = useAppDispatch();
 
-    const onHide = () => {
+    const onHideModal = () => {
         setDialogTitle('');
         setDialogContent(null);
         setVisible(false);
     };
 
-    const onShow = (title: string, content: React.ReactNode) => {
+    const onShowModal = (title: string, content: React.ReactNode) => {
         setDialogTitle(title);
         dispatch(clearActionError());
         setDialogContent(content);
@@ -23,7 +23,7 @@ export const useCollectionModal = () => {
     };
 
     return useMemo(
-        () => ({ hovered, setHovered, visible, dialogTitle, dialogContent, onHide, onShow }),
-        [hovered, setHovered, visible, dialogTitle, dialogContent, onHide, onShow],
+        () => ({ hovered, setHovered, visible, dialogTitle, dialogContent, onHideModal, onShowModal }),
+        [hovered, setHovered, visible, dialogTitle, dialogContent, onHideModal, onShowModal],
     );
 };

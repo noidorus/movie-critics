@@ -12,7 +12,7 @@ import DeleteMovieContent from './components/DeleteMovieContent/DeleteMovieConte
 
 export default function CollectionPage() {
     const { collection, idle, loading, error, user, handleCollectionUpdate } = useCollection();
-    const { hovered, setHovered, visible, dialogTitle, dialogContent, onHide, onShow } =
+    const { hovered, setHovered, visible, dialogTitle, dialogContent, onHideModal, onShowModal } =
         useCollectionModal();
 
     if (loading || idle) {
@@ -36,9 +36,9 @@ export default function CollectionPage() {
                         <Button
                             className={`${styles.button} pi pi-trash`}
                             onClick={() =>
-                                onShow(
+                                onShowModal(
                                     'Удалить подборку',
-                                    <DeleteCollectionContent onHide={onHide} id={collection.id} />,
+                                    <DeleteCollectionContent onHideModal={onHideModal} id={collection.id} />,
                                 )
                             }
                         />
@@ -46,10 +46,10 @@ export default function CollectionPage() {
                             <Button
                                 className={`${styles.button} pi ${hovered ? 'pi-lock-open' : 'pi-lock'}`}
                                 onClick={() =>
-                                    onShow(
+                                    onShowModal(
                                         'Сделать подборку публичной?',
                                         <ChangeVisibilityContent
-                                            onHide={onHide}
+                                            onHideModal={onHideModal}
                                             onUpdate={handleCollectionUpdate}
                                             collectionId={collection.id}
                                             visibility={collection.private}
@@ -63,10 +63,10 @@ export default function CollectionPage() {
                             <Button
                                 className={`${styles.button} pi ${hovered ? 'pi-lock' : 'pi-lock-open'}`}
                                 onClick={() =>
-                                    onShow(
+                                    onShowModal(
                                         'Сделать подборку приватной?',
                                         <ChangeVisibilityContent
-                                            onHide={onHide}
+                                            onHideModal={onHideModal}
                                             onUpdate={handleCollectionUpdate}
                                             collectionId={collection.id}
                                             visibility={collection.private}
@@ -94,10 +94,10 @@ export default function CollectionPage() {
                                         icon="pi pi-trash"
                                         className=" p-button-danger"
                                         onClick={() =>
-                                            onShow(
+                                            onShowModal(
                                                 'Удалить фильм?',
                                                 <DeleteMovieContent
-                                                    onHide={onHide}
+                                                    onHideModal={onHideModal}
                                                     onUpdate={handleCollectionUpdate}
                                                     collectionId={collection.id}
                                                     filmId={movie.id}
@@ -111,7 +111,7 @@ export default function CollectionPage() {
                     ))}
                 </ul>
             )}
-            <CollectionPageDialog visible={visible} onHide={onHide} title={dialogTitle}>
+            <CollectionPageDialog visible={visible} onHideModal={onHideModal} title={dialogTitle}>
                 {dialogContent}
             </CollectionPageDialog>
         </div>

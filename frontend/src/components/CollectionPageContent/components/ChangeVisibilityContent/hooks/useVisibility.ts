@@ -7,11 +7,11 @@ import { visibilityRequestData } from '@/DTO/CollectionDTO';
 type Props = {
     id: number;
     visibility: boolean;
-    onHide: () => void;
+    onHideModal: () => void;
     onUpdate: () => void;
 };
 
-export const useVisibility = ({ id, visibility, onHide, onUpdate }: Props) => {
+export const useVisibility = ({ id, visibility, onHideModal, onUpdate }: Props) => {
     const dispatch = useAppDispatch();
     const loading = useAppSelector(selectActionLoading);
     const error = useAppSelector(selectActionError);
@@ -21,10 +21,10 @@ export const useVisibility = ({ id, visibility, onHide, onUpdate }: Props) => {
         dispatch(changeVisibility(data))
             .unwrap()
             .then(() => {
-                onHide();
+                onHideModal();
                 onUpdate();
             });
-    }, [dispatch, id, onHide, onUpdate, visibility]);
+    }, [dispatch, id, onHideModal, onUpdate, visibility]);
 
     return useMemo(
         () => ({ loading, error, handleToggleVisibility }),

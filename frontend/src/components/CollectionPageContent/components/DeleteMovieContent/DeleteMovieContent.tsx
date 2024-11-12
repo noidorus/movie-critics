@@ -3,14 +3,14 @@ import { useDelete } from './hooks/useDelete';
 import styles from './DeleteMovieContent.module.css';
 
 type Props = {
-    onHide: () => void;
+    onHideModal: () => void;
     onUpdate: () => void;
     collectionId: number;
     filmId: number;
 };
 
-export default function DeleteMovieContent({ onHide, onUpdate, collectionId, filmId }: Props) {
-    const { onDeleteMovie, loading, error } = useDelete({ collectionId, filmId, onHide, onUpdate });
+export default function DeleteMovieContent({ onHideModal, onUpdate, collectionId, filmId }: Props) {
+    const { onDeleteMovie, loading, error } = useDelete({ collectionId, filmId, onHideModal, onUpdate });
 
     return (
         <div>
@@ -18,15 +18,11 @@ export default function DeleteMovieContent({ onHide, onUpdate, collectionId, fil
                 <Button
                     label="Отмена"
                     className={styles.button}
-                    onClick={() => {
-                        onHide();
-                    }}
+                    onClick={onHideModal}
                 />
                 <Button
                     className={styles.button}
-                    onClick={() => {
-                        onDeleteMovie();
-                    }}
+                    onClick={onDeleteMovie}
                 >
                     {loading ? 'Загрузка...' : 'Подтвердить'}
                 </Button>

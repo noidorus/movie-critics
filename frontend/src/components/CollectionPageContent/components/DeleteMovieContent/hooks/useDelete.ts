@@ -7,11 +7,11 @@ import { manageMovieRequestData } from '@/DTO/CollectionDTO';
 type Props = {
     collectionId: number;
     filmId: number;
-    onHide: () => void;
+    onHideModal: () => void;
     onUpdate: () => void;
 };
 
-export const useDelete = ({ collectionId, filmId, onHide, onUpdate }: Props) => {
+export const useDelete = ({ collectionId, filmId, onHideModal, onUpdate }: Props) => {
     const dispatch = useAppDispatch();
     const loading = useAppSelector(selectActionLoading);
     const error = useAppSelector(selectActionError);
@@ -21,10 +21,10 @@ export const useDelete = ({ collectionId, filmId, onHide, onUpdate }: Props) => 
         dispatch(deleteMovieFromCollection(data))
             .unwrap()
             .then(() => {
-                onHide();
+                onHideModal();
                 onUpdate();
             });
-    }, [dispatch, collectionId, onHide]);
+    }, [dispatch, collectionId, onHideModal]);
 
     return useMemo(() => ({ loading, error, onDeleteMovie }), [loading, error, onDeleteMovie]);
 };
