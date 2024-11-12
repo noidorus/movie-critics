@@ -24,7 +24,7 @@ export default function Comments({ filmId, comments, loading, error, user }: Pro
 
     return (
         <section className={styles.commentsSection}>
-            <h3 className={styles.title}>Комментарии</h3>
+            <h2 className={styles.title}>Комментарии</h2>
             {user && <CommentInput filmId={filmId} />}
             {comments.length === 0 ? (
                 <p className={styles.noComments}>Пока нет комментариев.</p>

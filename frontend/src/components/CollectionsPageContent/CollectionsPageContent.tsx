@@ -37,7 +37,7 @@ export default function CollectionsPageContent({
     return (
         <>
             <div className={styles.titleContainer}>
-                <p className={styles.title}>{title}</p>
+                <h2 className={styles.title}>{title}</h2>
                 {user && (
                     <Button
                         className={`${styles.button} pi pi-plus`}

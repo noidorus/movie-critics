@@ -17,7 +17,7 @@ export default function MoviesPageContent() {
 
     return (
         <>
-            <p className={styles.title}>Фильмы</p>
+            <h2 className={styles.title}>Фильмы</h2>
             <ul className={styles.list}>
                 {movies.map((movie) => (
                     <MoviePreview key={movie.id} movie={movie} />
