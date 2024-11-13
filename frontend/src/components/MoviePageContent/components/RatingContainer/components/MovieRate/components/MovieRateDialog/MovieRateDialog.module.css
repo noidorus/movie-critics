@@ -1,0 +1,60 @@
+.dialog {
+    max-inline-size: 90%;
+}
+
+.dialogContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.ratingOptions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.ratingButton {
+    margin: 0;
+    min-inline-size: 40px;
+    padding: 8px;
+    font-size: 14px;
+    background-color: var(--action-button-main-color);
+}
+
+.selected {
+    background-color: var(--action-button-active-color);
+    color: var(--text-light-color);
+}
+
+.errorMessage {
+    color: var(--error-color);
+    margin-top: 10px;
+    text-align: center;
+}
+
+.submitButton {
+    margin-top: 20px;
+    min-inline-size: 100%;
+}
+
+@media (max-width: 768px) {
+    .dialog {
+        max-inline-size: 80%;
+    }
+
+    .ratingOptions {
+        gap: 4px;
+    }
+
+    .ratingButton {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,27 @@
+.yourRatingContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-block-end: 10px;
+    align-items: center;
+}
+
+.title {
+    font-weight: 600;
+}
+
+.value {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.rateButton {
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.rateButton:hover {
+    background-color: var(--action-button-hover-color);
+}

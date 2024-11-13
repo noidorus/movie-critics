@@ -1,0 +1,10 @@
+.button {
+    max-block-size: 65px;
+    max-inline-size: 100px;
+    border-radius: 5px;
+    border: 1px solid var(--border-light);
+    padding-inline: 10px;
+    padding-block: 1px;
+    text-decoration: none;
+    color: var(--text-light-color);
+}

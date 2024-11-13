@@ -1,0 +1,28 @@
+.commentInputContainer {
+    min-inline-size: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.title {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.textarea {
+    min-inline-size: 100%;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+.error {
+    color: var(--error-color);
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.submitButton {
+    min-inline-size: 100%;
+}

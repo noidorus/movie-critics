@@ -1,0 +1,29 @@
+.titleContainer {
+    margin: 20px 0 0 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--text-light-color);
+}
+
+.button {
+    border-radius: 5px;
+    border: 1px solid var(--border-light);
+    padding-inline: 12px;
+    padding-block: 12px;
+    text-decoration: none;
+    color: var(--text-light-color);
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 20px 0 0 20px;
+}

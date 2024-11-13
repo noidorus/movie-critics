@@ -1,0 +1,110 @@
+.header {
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--header-color);
+    border-radius: 6px;
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+}
+
+.logo {
+    font-family: Inter, sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 29.05px;
+    color: var(--header-text-color);
+    margin-right: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.leftButtons {
+    display: flex;
+    gap: 7px;
+}
+
+.rightButtons {
+    display: flex;
+    gap: 7px;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    background-color: var(--header-button-main-color);
+    padding: 10px 17px;
+    border-radius: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+    color: var(--header-text-color);
+    text-decoration: none;
+    border: 1px solid var(--border-accent);
+}
+
+.button:hover {
+    background-color: var(--header-button-hover-color);
+}
+
+.buttonChecked,
+.buttonChecked:hover {
+    background-color: var(--header-button-active-color);
+    cursor: default;
+}
+
+.menuButton {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .buttons {
+        display: none;
+        flex-direction: column;
+        background-color: var(--header-color);
+        position: absolute;
+        top: 80px;
+        right: 14px;
+        padding: 10px 40px;
+        border-radius: 6px;
+        gap: 10px;
+        z-index: 2;
+    }
+
+    .buttons.open {
+        display: flex;
+    }
+
+    .leftButtons,
+    .rightButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menuButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        color: var(--header-text-color);
+        font-size: 24px;
+        margin-left: auto;
+    }
+
+    .button {
+        max-inline-size: 140px;
+        padding-inline: 70px;
+        justify-content: center;
+        text-wrap: nowrap;
+        box-sizing: border-box;
+    }
+}

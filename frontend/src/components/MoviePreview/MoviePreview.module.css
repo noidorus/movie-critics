@@ -1,0 +1,51 @@
+.movie {
+    list-style: none;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    position: relative;
+}
+
+.movie:hover {
+    transform: scale(1.05);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.poster {
+    inline-size: 100%;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-light);
+    block-size: 300px;
+    aspect-ratio: 2 / 3;
+}
+
+.title {
+    display: block;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 10px 0;
+    padding: 10px;
+    color: var(--text-light-color);
+    text-decoration: none;
+}
+
+.title:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.deleteButton {
+    position: absolute;
+    display: none;
+    top: 10px;
+    right: 10px;
+}
+
+.movie:hover .deleteButton {
+    display: block;
+}

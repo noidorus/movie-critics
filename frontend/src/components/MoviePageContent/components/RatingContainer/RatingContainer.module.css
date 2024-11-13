@@ -1,0 +1,36 @@
+.ratingContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.avgRatingContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-block-end: 10px;
+    align-items: center;
+}
+
+.avgRatingTitle {
+    font-weight: 600;
+}
+
+.avgRatingValue {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    .ratingContainer {
+        justify-self: start;
+        align-self: center;
+        order: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .avgRatingTitle {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,32 @@
+.input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    gap: 3px;
+}
+
+.radio {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+    gap: 10px;
+}
+
+.button {
+    background-color: var(--action-button-main-color);
+    padding: 10px 17px;
+    border-radius: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+    color: var(--action-buttom-main-text-color);
+    text-decoration: none;
+    border: 1px solid var(--border-accent);
+}
+
+.error {
+    font-size: 18px;
+    color: var(--error-color);
+}

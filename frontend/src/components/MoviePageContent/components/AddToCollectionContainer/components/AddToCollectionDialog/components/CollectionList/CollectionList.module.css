@@ -1,0 +1,15 @@
+.collections {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.collection {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+}
+
+.error {
+    color: var(--error-color);
+}
