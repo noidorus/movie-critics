@@ -1,4 +1,4 @@
-import { JwtConfig } from 'src/auth/auth.intrfaces';
+import { JwtConfig } from 'src/modules/auth/auth.intrfaces';
 
 export interface EnvConfig {
   jwt: JwtConfig;

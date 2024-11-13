@@ -9,7 +9,7 @@ import {
 import { Rating } from '@prisma/client';
 import { OmdbService } from '../omdb/omdb.service';
 import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
-import { CommentEntity } from 'src/comments/comment.entity';
+import { CommentEntity } from 'src/modules/comments/comment.entity';
 
 @Injectable()
 export class FilmsService {
