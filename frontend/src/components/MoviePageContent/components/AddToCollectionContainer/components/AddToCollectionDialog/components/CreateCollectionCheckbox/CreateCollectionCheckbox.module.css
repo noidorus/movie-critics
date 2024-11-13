@@ -1,0 +1,5 @@
+.collection {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+}
