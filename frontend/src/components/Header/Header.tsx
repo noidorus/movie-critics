@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logoutUser } from '@/store/Auth/authThunks';
 import { selectUser } from '@/store/Auth/authSelectors';
+import classNames from 'classnames';
 import styles from './Header.module.css';
 
 type HeaderProps = {
@@ -26,25 +27,25 @@ export default function Header({ activeTab }: HeaderProps) {
         <div className={styles.header}>
                 <p className={styles.logo}>MOVIE CRITICS</p>
                 <Button className={styles.menuButton} onClick={toggleMenu}>
-                    <span className="pi pi-bars"></span>
+                    <span className={classNames('pi', 'pi-bars')}></span>
                 </Button>
-                <div className={`${styles.buttons} ${isMenuOpen ? styles.open : ''}`}>
+                <div className={classNames(styles.buttons, { [styles.open]: isMenuOpen })}>
                     <div className={styles.leftButtons}>
                         <Link
                             to="/movies"
-                            className={`${styles.button} ${activeTab === 'movies' ? styles.buttonChecked : ''}`}
+                            className={classNames(styles.button, { [styles.buttonChecked]: activeTab === 'movies' })}
                         >
                             <span>Фильмы</span>
                         </Link>
                         <Link
                             to="/rating"
-                            className={`${styles.button} ${activeTab === 'rating' ? styles.buttonChecked : ''}`}
+                            className={classNames(styles.button, { [styles.buttonChecked]: activeTab === 'rating' })}
                         >
                             <span>Рейтинг</span>
                         </Link>
                         <Link
                             to="/collections"
-                            className={`${styles.button} ${activeTab === 'collections' ? styles.buttonChecked : ''}`}
+                            className={classNames(styles.button, { [styles.buttonChecked]: activeTab === 'collections' })}
                         >
                             <span>Подборки</span>
                         </Link>
@@ -54,7 +55,7 @@ export default function Header({ activeTab }: HeaderProps) {
                             <>
                                 <Link
                                     to="/collections/my"
-                                    className={`${styles.button} ${activeTab === 'collections/my' ? styles.buttonChecked : ''}`}
+                                    className={classNames(styles.button, { [styles.buttonChecked]: activeTab === 'collections/my' })}
                                 >
                                     <span>Мои подборки</span>
                                 </Link>

@@ -1,4 +1,5 @@
 import { Button } from 'primereact/button';
+import classNames from 'classnames'; 
 import styles from './CollectionTitle.module.css';
 import { Collection } from '@/types/CollectionType';
 
@@ -21,12 +22,17 @@ export default function CollectionTitle ({
             {userId === collection.authorId && (
                 <div className={styles.buttons}>
                     <Button
-                        className={`${styles.button} pi pi-trash`}
+                        className={classNames(styles.button, 'pi', 'pi-trash')}
                         onClick={onDeleteCollection}
                         label=" "
                     />
                     <Button
-                        className={`${styles.button} pi ${collection.private ? 'pi-lock' : 'pi-lock-open'}` }
+                        className={classNames(styles.button, 'pi', collection.private ? 'pi-lock' : 'pi-lock-open', 
+                            {
+                                'pi-lock': collection.private,
+                                'pi-lock-open': !collection.private
+                            }
+                        )}
                         onClick={onToggleVisibility}
                         label=" "
                     />

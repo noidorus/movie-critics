@@ -1,11 +1,12 @@
+import { Button } from 'primereact/button';
 import { Collection } from '@/types/CollectionType';
+import { useModal } from './hooks/useModal';
+import classNames from 'classnames';
 import ErrorComponent from '@/components/ErrorComponent/ErrorComponent';
 import Loader from '@/components/Loader/Loader';
 import CollectionPreview from './components/CollectionPreview/CollectionPreview';
-import styles from './CollectionsPageContent.module.css';
-import { Button } from 'primereact/button';
-import { useModal } from './hooks/useModal';
 import CreateCollectionDialog from './components/CreateCollectionDialog/CreateCollectionDialog';
+import styles from './CollectionsPageContent.module.css';
 
 type Props = {
     collections: Collection[];
@@ -40,7 +41,7 @@ export default function CollectionsPageContent({
                 <h2 className={styles.title}>{title}</h2>
                 {user && (
                     <Button
-                        className={`${styles.button} pi pi-plus`}
+                        className={classNames(styles.button, 'pi', 'pi-plus')}
                         onClick={() => setVisible(true)}
                         label=" "
                     />

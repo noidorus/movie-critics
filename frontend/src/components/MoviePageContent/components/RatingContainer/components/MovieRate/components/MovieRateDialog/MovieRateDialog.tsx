@@ -1,7 +1,8 @@
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
-import styles from './MovieRateDialog.module.css';
 import { useMovieRateDialog } from './hooks/useMovieRateDialog';
+import classNames from 'classnames';
+import styles from './MovieRateDialog.module.css';
 
 type MovieRateDialogProps = {
     visible: boolean;
@@ -40,7 +41,7 @@ export default function MovieRateDialog({
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
                         <Button
                             key={value}
-                            className={`${styles.ratingButton} ${selectedRating === value ? styles.selected : ''}`}
+                            className={classNames(styles.ratingButton, { [styles.selected]: selectedRating === value })}
                             label={String(value)}
                             onClick={() => setSelectedRating(value)}
                         />
