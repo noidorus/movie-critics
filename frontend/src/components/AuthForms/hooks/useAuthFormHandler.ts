@@ -1,4 +1,3 @@
-import { unwrapResult } from '@reduxjs/toolkit';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { clearAuthError, setField, validateForm } from '../../../store/Auth/authSlice';
@@ -52,17 +51,23 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
         if (!shouldSubmit || !isFormValid) {
             return;
         }
-
-        if (isLogin) {
-            dispatch(loginUser({ username: login, password }));
-        } else {
-            dispatch(registerUser({ username: login, email, password }))
-                .then(unwrapResult)
-                .then(() => dispatch(loginUser({ username: login, password })));
-        }
-        setShouldSubmit(false);
-
+    
+        const submitForm = async () => {
+            try {
+                if (isLogin) {
+                    await dispatch(loginUser({ username: login, password })).unwrap();
+                } else {
+                    await dispatch(registerUser({ username: login, email, password })).unwrap();
+                    await dispatch(loginUser({ username: login, password })).unwrap();
+                }
+            } finally {
+                setShouldSubmit(false);
+            }
+        };
+    
+        submitForm();
     }, [isFormValid, shouldSubmit, isLogin, dispatch, login, email, password, errors]);
+    
 
     return useMemo(
         () => ({
