@@ -1,16 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ListsService } from './lists.service';
-import { RequestWithNullableUser, RequestWithUser } from 'src/modules/auth/auth.intrfaces';
-import { JwtAuthGuard, NullableJwtAuthGuard } from 'src/modules/auth/guards';
+import { RequestWithNullableUser, RequestWithUser } from '../auth/auth.intrfaces';
+import { JwtAuthGuard, NullableJwtAuthGuard } from '../auth/guards';
 import { CreateListDTO, ChangeListVisibilityDTO } from './dto';
-import {
-  InfoListWithAuthorAndFilms,
-  ListEntity,
-  ShortInfoListWithAuthorAndFilms,
-} from './entities';
+import { ListWithAuthorAndFilms, ListEntity, ListWithAuthorAndShortFilms } from './entities';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
-import { ShortInfoFilmEntity } from 'src/films/entities';
+import { ShortInfoFilmEntity } from '../films/entities';
 
 @ApiTags('Lists')
 @Controller('lists')
@@ -18,28 +14,28 @@ export class ListsController {
   constructor(private readonly listsService: ListsService) {}
 
   @Get()
-  @ApiOkResponse({ type: [ShortInfoListWithAuthorAndFilms] })
+  @ApiOkResponse({ type: [ListWithAuthorAndShortFilms] })
   @ApiOperation({ summary: 'Get all public lists' })
-  getLists(): Promise<ShortInfoListWithAuthorAndFilms[]> {
+  getLists(): Promise<ListWithAuthorAndShortFilms[]> {
     return this.listsService.getLists();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('my')
-  @ApiOkResponse({ type: [ShortInfoListWithAuthorAndFilms] })
+  @ApiOkResponse({ type: [ListWithAuthorAndShortFilms] })
   @ApiOperation({ summary: 'Get my lists, available only for authorized users' })
-  getMyLists(@Req() req: RequestWithUser): Promise<ShortInfoListWithAuthorAndFilms[]> {
+  getMyLists(@Req() req: RequestWithUser): Promise<ListWithAuthorAndShortFilms[]> {
     return this.listsService.getMyLists(req.user.id);
   }
 
   @UseGuards(NullableJwtAuthGuard)
   @Get(':id')
-  @ApiOkResponse({ type: InfoListWithAuthorAndFilms })
+  @ApiOkResponse({ type: ListWithAuthorAndFilms })
   @ApiOperation({ summary: 'Get list by id' })
   getListById(
     @Req() req: RequestWithNullableUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
-  ): Promise<InfoListWithAuthorAndFilms> {
+  ): Promise<ListWithAuthorAndFilms> {
     return this.listsService.getListById(id, req.user?.id);
   }
 

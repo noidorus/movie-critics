@@ -3,10 +3,10 @@ import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FilmsService } from './films.service';
 import { FilmsQueryDTO, RateFilmBodyDTO } from './dto';
 import { FilmsEntity, FilmWithExtrasEntity, RatingEntity, ShortInfoFilmEntity } from './entities';
-import { JwtAuthGuard } from 'src/modules/auth/guards';
-import { RequestWithUser } from 'src/modules/auth/auth.intrfaces';
+import { JwtAuthGuard } from '../auth/guards';
+import { RequestWithUser } from '../auth/auth.intrfaces';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
-import { CommentEntity } from 'src/modules/comments/comment.entity';
+import { CommentEntity } from '../comments/comment.entity';
 
 @ApiTags('Films')
 @Controller('films')

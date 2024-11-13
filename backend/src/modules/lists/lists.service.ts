@@ -3,18 +3,14 @@ import { PrismaService } from 'src/prismaDB/prisma.service';
 import { CreateListDTO } from './dto';
 import { Prisma } from '@prisma/client';
 import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
-import { ShortInfoFilmEntity } from 'src/films/entities/';
-import {
-  InfoListWithAuthorAndFilms,
-  ListEntity,
-  ShortInfoListWithAuthorAndFilms,
-} from './entities';
+import { ShortInfoFilmEntity } from '../films/entities/';
+import { ListWithAuthorAndFilms, ListEntity, ListWithAuthorAndShortFilms } from './entities';
 
 @Injectable()
 export class ListsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getLists(): Promise<ShortInfoListWithAuthorAndFilms[]> {
+  async getLists(): Promise<ListWithAuthorAndShortFilms[]> {
     const lists = await this.prisma.listFilms.findMany({
       where: { private: false },
       include: {
@@ -26,7 +22,7 @@ export class ListsService {
     return lists.sort((a, b) => a.id - b.id);
   }
 
-  async getMyLists(authorId: number): Promise<ShortInfoListWithAuthorAndFilms[]> {
+  async getMyLists(authorId: number): Promise<ListWithAuthorAndShortFilms[]> {
     try {
       return await this.prisma.listFilms.findMany({
         where: { authorId },
@@ -40,7 +36,7 @@ export class ListsService {
     }
   }
 
-  async getListById(id: number, authorId?: number): Promise<InfoListWithAuthorAndFilms> {
+  async getListById(id: number, authorId?: number): Promise<ListWithAuthorAndFilms> {
     const list = await this.prisma.listFilms.findUnique({
       where: { id },
       include: {

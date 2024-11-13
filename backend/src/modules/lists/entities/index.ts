@@ -1,4 +1,4 @@
 import { ListEntity } from './list.entity';
-import { ShortInfoListWithAuthorAndFilms, InfoListWithAuthorAndFilms } from './InfoList.entity';
+import { ListWithAuthorAndShortFilms, ListWithAuthorAndFilms } from './InfoList.entity';
 
-export { ShortInfoListWithAuthorAndFilms, InfoListWithAuthorAndFilms, ListEntity };
+export { ListWithAuthorAndShortFilms, ListWithAuthorAndFilms, ListEntity };

@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
-import { CreateCommentDTO, EditCommentDTO } from './dto';
-import { JwtAuthGuard } from 'src/modules/auth/guards';
-import { RequestWithUser } from 'src/modules/auth/auth.intrfaces';
-import { CommentsService } from './comments.service';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
+import { CreateCommentDTO, EditCommentDTO } from './dto';
+import { JwtAuthGuard } from '../auth/guards';
+import { RequestWithUser } from '../auth/auth.intrfaces';
+import { CommentsService } from './comments.service';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CommentEntity } from './comment.entity';
 
