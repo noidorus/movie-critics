@@ -4,6 +4,7 @@ import { Comment } from '@/types/CommentType';
 import styles from './Comments.module.css';
 import { User } from '@/types/UserType';
 import CommentInput from './components/CommentInput/СommentInput';
+import React from 'react';
 
 type Props = {
     filmId: number;
@@ -13,7 +14,7 @@ type Props = {
     user: User | null;
 };
 
-export default function Comments({ filmId, comments, loading, error, user }: Props) {
+function Comments({ filmId, comments, loading, error, user }: Props) {
     if (loading) {
         return <Loader />;
     }
@@ -42,3 +43,5 @@ export default function Comments({ filmId, comments, loading, error, user }: Pro
         </section>
     );
 }
+
+export default React.memo(Comments);

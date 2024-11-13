@@ -1,5 +1,6 @@
 import { Movie } from '@/types/MovieType';
 import styles from './TitleContainer.module.css';
+import React from 'react';
 
 type Props = {
     movie: Movie;
@@ -26,7 +27,7 @@ const getLengthLabel = (type: string, length: number | undefined) => {
     return type === 'TV_SERIES' ? `${length} серий` : `${length} мин`;
 };
 
-export default function TitleContainer({ movie }: Props) {
+function TitleContainer({ movie }: Props) {
     return (
         <div className={styles.titleContainer}>
             {movie.nameRu ? (
@@ -47,3 +48,6 @@ export default function TitleContainer({ movie }: Props) {
         </div>
     );
 }
+
+
+export default React.memo(TitleContainer);

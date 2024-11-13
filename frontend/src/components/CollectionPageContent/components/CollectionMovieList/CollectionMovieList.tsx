@@ -2,6 +2,7 @@ import MoviePreview from '@/components/MoviePreview/MoviePreview';
 import { Button } from 'primereact/button';
 import { Movie } from '@/types/MovieType';
 import styles from './CollectionMovieList.module.css';
+import React from 'react';
 
 interface Props {
     films: Movie[];
@@ -9,7 +10,7 @@ interface Props {
     onDeleteMovie: (movieId: number) => void;
 }
 
-export default function CollectionMovieList ({ films, userId, onDeleteMovie }: Props) {
+function CollectionMovieList ({ films, userId, onDeleteMovie }: Props) {
     if (films.length === 0) {
         return <p className={styles.emptyList}>Подборка пока пуста</p>;
     }
@@ -34,3 +35,5 @@ export default function CollectionMovieList ({ films, userId, onDeleteMovie }: P
         </ul>
     );
 };
+
+export default React.memo(CollectionMovieList);

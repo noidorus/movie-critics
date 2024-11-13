@@ -1,13 +1,14 @@
 import { Checkbox } from 'primereact/checkbox';
 import { CheckboxChangeEvent } from 'primereact/checkbox';
 import styles from './CreateCollectionCheckbox.module.css';
+import React from 'react';
 
 type Props = {
     formVisible: boolean;
     toggleFormVisibility: (visible: boolean) => void;
 };
 
-const CreateCollectionCheckbox = ({ formVisible, toggleFormVisibility }: Props) => {
+function CreateCollectionCheckbox({ formVisible, toggleFormVisibility }: Props) {
     return (
         <div className={styles.collection}>
             <Checkbox
@@ -20,4 +21,4 @@ const CreateCollectionCheckbox = ({ formVisible, toggleFormVisibility }: Props) 
     );
 };
 
-export default CreateCollectionCheckbox;
+export default React.memo(CreateCollectionCheckbox);

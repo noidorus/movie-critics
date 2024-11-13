@@ -3,6 +3,7 @@ import { Button } from 'primereact/button';
 import { useMovieRateDialog } from './hooks/useMovieRateDialog';
 import classNames from 'classnames';
 import styles from './MovieRateDialog.module.css';
+import React from 'react';
 
 type MovieRateDialogProps = {
     visible: boolean;
@@ -12,7 +13,7 @@ type MovieRateDialogProps = {
     onRatingUpdate: () => void;
 };
 
-export default function MovieRateDialog({
+function MovieRateDialog({
     visible,
     onHide,
     movieId,
@@ -58,3 +59,5 @@ export default function MovieRateDialog({
         </Dialog>
     );
 }
+
+export default React.memo(MovieRateDialog);

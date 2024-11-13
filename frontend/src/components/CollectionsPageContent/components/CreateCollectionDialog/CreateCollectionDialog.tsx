@@ -1,12 +1,13 @@
 import { Dialog } from 'primereact/dialog';
 import CreateCollectionContent from '@/components/CreateCollectionContent/CreateCollectionContent';
+import React from 'react';
 
 type Props = {
     visible: boolean;
     onHide: () => void;
 };
 
-export default function CreateCollectionDialog({ visible, onHide }: Props) {
+function CreateCollectionDialog({ visible, onHide }: Props) {
 
     return (
         <Dialog header="Создать подборку" visible={visible} onHide={onHide} draggable={false}>
@@ -14,3 +15,5 @@ export default function CreateCollectionDialog({ visible, onHide }: Props) {
         </Dialog>
     );
 }
+
+export default React.memo(CreateCollectionDialog);

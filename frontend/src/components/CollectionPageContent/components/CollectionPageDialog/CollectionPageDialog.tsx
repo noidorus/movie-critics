@@ -1,6 +1,7 @@
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import styles from './CollectionPageDialog.module.css';
+import React from 'react';
 
 type Props = {
     visible: boolean;
@@ -11,7 +12,7 @@ type Props = {
     error: string | null;
 };
 
-export default function CollectionPageDialog({ visible, onHideModal, title, handleAction, loading, error }: Props) {
+function CollectionPageDialog({ visible, onHideModal, title, handleAction, loading, error }: Props) {
     return (
         <Dialog header={title} onHide={onHideModal} visible={visible} draggable={false}>
             <div className={styles.buttons}>
@@ -31,3 +32,5 @@ export default function CollectionPageDialog({ visible, onHideModal, title, hand
         </Dialog>
     );
 }
+
+export default React.memo(CollectionPageDialog);

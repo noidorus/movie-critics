@@ -5,6 +5,7 @@ import CreateCollectionContent from '@/components/CreateCollectionContent/Create
 import CreateCollectionCheckbox from './components/CreateCollectionCheckbox/CreateCollectionCheckbox';
 import CollectionList from './components/CollectionList/CollectionList';
 import styles from './addToCollectionDialog.module.css';
+import React from 'react';
 
 type Props = {
     visible: boolean;
@@ -12,7 +13,7 @@ type Props = {
     movieId: number;
 };
 
-export default function AddToCollectionDialog({ visible, onHide, movieId }: Props) {
+function AddToCollectionDialog({ visible, onHide, movieId }: Props) {
     const { collections, onChange, errorCollectionId, error } = useCollections();
     const { formVisible, toggleFormVisibility } = useFormVisibility();
 
@@ -35,3 +36,6 @@ export default function AddToCollectionDialog({ visible, onHide, movieId }: Prop
         </Dialog>
     );
 }
+
+
+export default React.memo(AddToCollectionDialog);

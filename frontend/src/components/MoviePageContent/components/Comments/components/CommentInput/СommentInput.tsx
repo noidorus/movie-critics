@@ -2,12 +2,13 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import styles from './CommentInput.module.css';
 import { useInput } from './hooks/useInput';
+import React from 'react';
 
 type Props = {
     filmId: number;
 };
 
-export default function CommentInput({ filmId }: Props) {
+function CommentInput({ filmId }: Props) {
     const { commentText, setCommentText, handleSubmit, loading, error } = useInput(filmId);
 
     return (
@@ -32,3 +33,5 @@ export default function CommentInput({ filmId }: Props) {
         </div>
     );
 }
+
+export default React.memo(CommentInput);

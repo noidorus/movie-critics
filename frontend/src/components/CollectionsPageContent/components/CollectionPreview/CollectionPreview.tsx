@@ -1,11 +1,12 @@
 import { Collection } from '@/types/CollectionType';
 import styles from './CollectionPreview.module.css';
+import React from 'react';
 
 type Props = {
     collection: Collection;
 };
 
-export default function CollectionPreview({ collection }: Props) {
+function CollectionPreview({ collection }: Props) {
     const previewMovies = collection.films ? collection.films.slice(0, 3) : [];
 
     return (
@@ -27,3 +28,5 @@ export default function CollectionPreview({ collection }: Props) {
         </li>
     );
 }
+
+export default React.memo(CollectionPreview);

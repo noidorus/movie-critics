@@ -3,6 +3,7 @@ import { Rating } from '@/types/MovieType';
 import MovieRateDialog from './components/MovieRateDialog/MovieRateDialog';
 import { useMovieRate } from './hooks/useMovieRate';
 import styles from './MovieRate.module.css';
+import React from 'react';
 
 type MovieRateProps = {
     userId: number;
@@ -11,7 +12,7 @@ type MovieRateProps = {
     onRatingUpdate: () => void;
 };
 
-export default function MovieRate({ userId, movieId, ratings, onRatingUpdate }: MovieRateProps) {
+function MovieRate({ userId, movieId, ratings, onRatingUpdate }: MovieRateProps) {
     if (!ratings) {
         return <div>Загрузка...</div>;
     }
@@ -45,3 +46,5 @@ export default function MovieRate({ userId, movieId, ratings, onRatingUpdate }: 
         </div>
     );
 }
+
+export default React.memo(MovieRate);

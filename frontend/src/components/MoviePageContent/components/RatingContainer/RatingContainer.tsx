@@ -2,6 +2,7 @@ import { Movie } from '@/types/MovieType';
 import { User } from '@/types/UserType';
 import styles from './RatingContainer.module.css';
 import MovieRate from './components/MovieRate/MovieRate';
+import React from 'react';
 
 type Props = {
     user: User | null;
@@ -9,7 +10,7 @@ type Props = {
     onRatingUpdate: () => void;
 };
 
-export default function RatingContainer({ movie, user, onRatingUpdate }: Props) {
+function RatingContainer({ movie, user, onRatingUpdate }: Props) {
     return (
         <div className={styles.ratingContainer}>
             {user && (
@@ -35,3 +36,5 @@ export default function RatingContainer({ movie, user, onRatingUpdate }: Props) 
         </div>
     );
 }
+
+export default React.memo(RatingContainer);

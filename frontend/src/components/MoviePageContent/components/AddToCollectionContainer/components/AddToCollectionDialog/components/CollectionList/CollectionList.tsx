@@ -3,6 +3,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { CheckboxChangeEvent } from 'primereact/checkbox';
 import styles from './CollectionList.module.css';
 import { Collection } from '@/types/CollectionType';
+import React from 'react';
 
 type CollectionListProps = {
     collections: Collection[];
@@ -12,7 +13,7 @@ type CollectionListProps = {
     error: string | null;
 };
 
-const CollectionList = ({ collections, movieId, onChange, errorCollectionId, error }: CollectionListProps) => {
+function CollectionList({ collections, movieId, onChange, errorCollectionId, error }: CollectionListProps) {
     return (
         <div className={styles.collections}>
             {collections.length === 0 && <p>У вас пока нет подборок</p>}
@@ -45,4 +46,4 @@ const CollectionList = ({ collections, movieId, onChange, errorCollectionId, err
     );
 };
 
-export default CollectionList;
+export default React.memo(CollectionList);

@@ -2,6 +2,7 @@ import { Button } from 'primereact/button';
 import classNames from 'classnames'; 
 import styles from './CollectionTitle.module.css';
 import { Collection } from '@/types/CollectionType';
+import React from 'react';
 
 interface Props {
     collection: Collection;
@@ -10,7 +11,7 @@ interface Props {
     onToggleVisibility: () => void;
 }
 
-export default function CollectionTitle ({
+function CollectionTitle ({
     collection,
     userId,
     onDeleteCollection,
@@ -41,3 +42,5 @@ export default function CollectionTitle ({
         </div>
     );
 };
+
+export default React.memo(CollectionTitle);

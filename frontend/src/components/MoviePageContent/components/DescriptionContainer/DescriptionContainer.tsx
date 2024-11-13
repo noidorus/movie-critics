@@ -1,11 +1,12 @@
 import { Movie } from '@/types/MovieType';
 import styles from './DescriptionContainer.module.css';
+import React from 'react';
 
 type Props = {
     movie: Movie;
 };
 
-export default function DescriptionContainer({ movie }: Props) {
+function DescriptionContainer({ movie }: Props) {
     return (
         <div className={styles.descriptionContainer}>
             <img
@@ -28,3 +29,5 @@ export default function DescriptionContainer({ movie }: Props) {
         </div>
     );
 }
+
+export default React.memo(DescriptionContainer);

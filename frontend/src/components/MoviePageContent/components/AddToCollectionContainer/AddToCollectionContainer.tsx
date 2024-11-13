@@ -2,12 +2,13 @@ import { Button } from 'primereact/button';
 import styles from './AddToCollectionContainer.module.css';
 import { useDialog } from './hooks/useDialog';
 import AddToCollectionDialog from './components/AddToCollectionDialog/AddToCollectionDialog';
+import React from 'react';
 
 type Props = {
     movieId: number;
 };
 
-export default function AddToCollectionContainer({ movieId }: Props) {
+function AddToCollectionContainer({ movieId }: Props) {
     const { visible, setVisible, onHide } = useDialog();
 
     return (
@@ -19,3 +20,5 @@ export default function AddToCollectionContainer({ movieId }: Props) {
         </>
     );
 }
+
+export default React.memo(AddToCollectionContainer);
