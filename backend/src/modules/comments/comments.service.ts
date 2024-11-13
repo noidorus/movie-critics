@@ -23,10 +23,8 @@ export class CommentsService {
     try {
       await this.prisma.comment.delete({ where: { authorId, id } });
     } catch (err) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        if (err.code === 'P2025') {
-          throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
-        }
+      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2025') {
+        throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
       }
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -40,10 +38,8 @@ export class CommentsService {
         include: { author: { select: { username: true, id: true } } },
       });
     } catch (err) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        if (err.code === 'P2025') {
-          throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
-        }
+      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2025') {
+        throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
       }
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
