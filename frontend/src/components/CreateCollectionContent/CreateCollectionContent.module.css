@@ -1,14 +1,14 @@
 .input {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
     gap: 3px;
 }
 
 .radio {
     display: flex;
     flex-direction: row;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
     gap: 10px;
 }
 

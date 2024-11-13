@@ -33,7 +33,7 @@
 
 .title {
     display: block;
-    font-size: 1.2rem;
+    font-size: 19px;
     font-weight: 600;
     color: var(--text-light-color);
     margin: 10px 0;
@@ -46,7 +46,7 @@
 }
 
 .author {
-    font-size: 0.9rem;
+    font-size: 14;
     color: var(--text-grey-color);
     margin-bottom: 10px;
 }
