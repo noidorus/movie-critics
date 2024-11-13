@@ -1,5 +1,5 @@
 export type visibilityRequestData = {
-    id: number;
+    collectionId: number;
     private: boolean;
 };
 

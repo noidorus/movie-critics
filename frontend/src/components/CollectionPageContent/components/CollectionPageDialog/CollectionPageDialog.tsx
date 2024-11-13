@@ -1,16 +1,33 @@
+import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import styles from './CollectionPageDialog.module.css';
 
 type Props = {
     visible: boolean;
     onHideModal: () => void;
     title: string;
-    children: React.ReactNode;
+    handleAction: () => void;
+    loading: boolean;
+    error: string | null;
 };
 
-export default function CollectionPageDialog({ visible, onHideModal, title, children }: Props) {
+export default function CollectionPageDialog({ visible, onHideModal, title, handleAction, loading, error }: Props) {
     return (
         <Dialog header={title} onHide={onHideModal} visible={visible} draggable={false}>
-            {children}
+            <div className={styles.buttons}>
+                <Button
+                    label="Отмена"
+                    className={styles.button}
+                    onClick={onHideModal}
+                />
+                <Button
+                    className={styles.button}
+                    onClick={handleAction}
+                >
+                    {loading ? 'Загрузка...' : 'Подтвердить'}
+                </Button>
+            </div>
+            {error && <p className={styles.error}>Ошибка: {error}</p>}
         </Dialog>
     );
 }

@@ -35,7 +35,7 @@ export const changeVisibility = createAsyncThunk<
     { rejectValue: Error }
 >('collection/changeVisibility', async (visibilityData, { rejectWithValue }) => {
     try {
-        const response = await fetch(`${API_URL}/${visibilityData.id}/visibility`, {
+        const response = await fetch(`${API_URL}/${visibilityData.collectionId}/visibility`, {
             method: 'PATCH',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
