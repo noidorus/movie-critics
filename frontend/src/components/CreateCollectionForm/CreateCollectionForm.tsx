@@ -2,7 +2,7 @@ import { InputText } from 'primereact/inputtext';
 import { useCreateCollection } from './hooks/useCreateCollection';
 import { RadioButton } from 'primereact/radiobutton';
 import { Button } from 'primereact/button';
-import styles from './CreateCollectionContent.module.css';
+import styles from './CreateCollectionForm.module.css';
 
 export type Props = {
     onHide: () => void;
@@ -10,7 +10,7 @@ export type Props = {
     movieId?: number;
 };
 
-export default function CreateCollectionContent({ onHide, visible, movieId }: Props) {
+export default function CreateCollectionForm({ onHide, visible, movieId }: Props) {
     const {
         collectionName,
         setCollectionName,

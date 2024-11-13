@@ -1,5 +1,5 @@
 import { Dialog } from 'primereact/dialog';
-import CreateCollectionContent from '@/components/CreateCollectionContent/CreateCollectionContent';
+import CreateCollectionForm from '@/components/CreateCollectionForm/CreateCollectionForm';
 import React from 'react';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 function CreateCollectionDialog({ visible, onHide }: Props) {
     return (
         <Dialog header="Создать подборку" visible={visible} onHide={onHide} draggable={false}>
-            <CreateCollectionContent onHide={onHide} visible={visible} />
+            <CreateCollectionForm onHide={onHide} visible={visible} />
         </Dialog>
     );
 }

@@ -25,7 +25,7 @@ export default function RegisterForm() {
                     value={login}
                     onChange={(e) => handleFieldChange('login', e.target.value)}
                     id="login"
-                    placeholder="Никнейм"
+                    placeholder="Имя"
                     className={styles.input}
                 />
                 {errors.login && <p className={styles.error}>{errors.login}</p>}

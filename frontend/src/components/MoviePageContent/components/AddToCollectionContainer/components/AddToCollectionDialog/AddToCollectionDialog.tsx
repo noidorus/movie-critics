@@ -1,7 +1,7 @@
 import { Dialog } from 'primereact/dialog';
 import { useCollections } from './hooks/useCollections';
 import { useFormVisibility } from './hooks/useFormVisibility';
-import CreateCollectionContent from '@/components/CreateCollectionContent/CreateCollectionContent';
+import CreateCollectionForm from '@/components/CreateCollectionForm/CreateCollectionForm';
 import CreateCollectionCheckbox from './components/CreateCollectionCheckbox/CreateCollectionCheckbox';
 import CollectionList from './components/CollectionList/CollectionList';
 import styles from './addToCollectionDialog.module.css';
@@ -31,7 +31,7 @@ function AddToCollectionDialog({ visible, onHide, movieId }: Props) {
                     formVisible={formVisible}
                     toggleFormVisibility={toggleFormVisibility}
                 />
-                <CreateCollectionContent onHide={onHide} visible={formVisible} movieId={movieId} />
+                <CreateCollectionForm onHide={onHide} visible={formVisible} movieId={movieId} />
             </div>
         </Dialog>
     );
