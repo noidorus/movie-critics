@@ -35,8 +35,7 @@ export default [
       sourceType: 'module',
 
       parserOptions: {
-        project: 'tsconfig.json',
-        tsconfigRootDir: '/Users/noidorus/TBank-Fintech/practice/course-work-MovieCritics/backend',
+        project: './tsconfig.json',
       },
     },
 
