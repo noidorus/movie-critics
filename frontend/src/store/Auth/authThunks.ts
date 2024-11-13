@@ -58,13 +58,17 @@ export const registerUser = createAsyncThunk<
         });
 
         if (!response.ok) {
-            throw { message: 'Пользователь уже существует', status: response.status } as AuthError;
+            return rejectWithValue({ message: 'Пользователь уже существует', status: response.status });
         }
 
-        const data: RegisterResponseData = await response.json();
+        const text = await response.text();
+        const data: RegisterResponseData = text ? JSON.parse(text) : {};
+
         return data;
     } catch (error: unknown) {
-        if (error instanceof TypeError) {
+        if (error instanceof SyntaxError) {
+            return rejectWithValue({ message: 'Некорректный ответ от сервера', status: 500 });
+        } else if (error instanceof TypeError) {
             return rejectWithValue({ message: 'Ошибка сервера. Попробуйте позже.', status: 500 });
         }
         const authError = error as AuthError;
