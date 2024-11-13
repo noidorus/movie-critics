@@ -13,10 +13,10 @@ install_backend:
   stage: install
   script:
     - echo "Installing backend dependencies"
-    - cd ${BACK_DIR} && yarn install --frozen-lockfile
+    - cd $BACK_DIR && yarn install --frozen-lockfile
   artifacts:
     paths:
-      - ${BACK_DIR}/node_modules
+      - $BACK_DIR/node_modules
 
 prettier-check_backend:
   stage: validate
@@ -24,7 +24,7 @@ prettier-check_backend:
     - install_backend
   script:
     - echo "Prettier checking backend"
-    - cd ${BACK_DIR} && yarn prettier:check
+    - cd $BACK_DIR && yarn prettier:check
 
 lint-test_backend:
   stage: validate
@@ -32,7 +32,7 @@ lint-test_backend:
     - install_backend
   script:
     - echo "Linting  backend"
-    - cd ${BACK_DIR} && yarn lint
+    - cd $BACK_DIR && yarn lint
 
 build_backend:
   stage: build
@@ -40,7 +40,4 @@ build_backend:
     - install_backend
   script:
     - echo "Building backend"
-    - cd ${BACK_DIR} && yarn build
-  artifacts:
-    paths:
-      - ${BACK_DIR}/dist
+    - cd $BACK_DIR && yarn build
