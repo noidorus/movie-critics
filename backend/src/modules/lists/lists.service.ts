@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prismaDB/prisma.service';
 import { CreateListDTO } from './dto';
 import { Prisma } from '@prisma/client';
-import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
+import { calculateAvgRating } from 'src/utils/calculateAvgRating';
 import { ShortInfoFilmEntity } from '../films/entities/';
 import { ListWithAuthorAndFilms, ListEntity, ListWithAuthorAndShortFilms } from './entities';
 

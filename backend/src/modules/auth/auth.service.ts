@@ -44,6 +44,7 @@ export class AuthService {
 
       return user;
     } catch {
+      // Redefining the error because the status code in user.service are different
       throw new HttpException('Invalid credentials', HttpStatus.FORBIDDEN);
     }
   }

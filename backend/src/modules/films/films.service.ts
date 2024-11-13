@@ -8,7 +8,7 @@ import {
 } from './entities';
 import { Rating } from '@prisma/client';
 import { OmdbService } from 'src/omdb/omdb.service';
-import { calculateAvgRating } from 'src/utils/calcutaAvgRating';
+import { calculateAvgRating } from 'src/utils/calculateAvgRating';
 import { CommentEntity } from '../comments/comment.entity';
 
 @Injectable()
