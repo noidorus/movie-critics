@@ -1,16 +1,18 @@
 import { EnvConfig } from './config.interface';
 
 export default (): EnvConfig => ({
+  clientUrl: process.env.CLIENT_URL,
+  port: +process.env.PORT,
   jwt: {
-    name: process.env.JWT_NAME || 'jwt',
-    secret: process.env.JWT_SECRET || 'secret',
-    expHours: +process.env.JWT_EXP_HOURS || 0.5,
+    name: process.env.JWT_NAME,
+    secret: process.env.JWT_SECRET,
+    expHours: +process.env.JWT_EXP_HOURS,
   },
   refreshJwt: {
-    name: process.env.REFRESH_JWT_NAME || 'refresh_jwt',
-    secret: process.env.REFRESH_JWT_SECRET || 'secret',
-    expHours: +process.env.REFRESH_JWT_EXP_HOURS || 24,
+    name: process.env.REFRESH_JWT_NAME,
+    secret: process.env.REFRESH_JWT_SECRET,
+    expHours: +process.env.REFRESH_JWT_EXP_HOURS,
   },
-  omdbApiKey: process.env.OMDB_API_KEY,
+  omdbApiUrl: process.env.OMDB_API_URL_WITH_KEY,
   databaseUrl: process.env.DATABASE_URL,
 });

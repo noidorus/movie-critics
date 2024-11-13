@@ -3,29 +3,29 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { CLIENT_URI } from './constants';
+import { TypedConfigService } from './config/typed-config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api');
-  app.enableCors({
-    origin: CLIENT_URI,
-    credentials: true,
-  });
+
+  const configService = app.get(TypedConfigService);
+
+  app.enableCors({ origin: configService.get('clientUrl'), credentials: true });
   app.use(cookieParser());
   app.enableShutdownHooks();
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.setGlobalPrefix('api');
 
-  const config = new DocumentBuilder()
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('Movie Critics API')
     .setDescription('The movie critics API description')
     .setVersion('1.0')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3001, () => {
+  await app.listen(configService.get('port'), () => {
     console.log('Server listening on', 'http://localhost:3001');
   });
 }

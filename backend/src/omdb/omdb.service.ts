@@ -5,6 +5,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { lastValueFrom, map, catchError, of } from 'rxjs';
 import { TypedConfigService } from 'src/config/typed-config.service';
 import { OmdbFilmData, OmdbFilmDataSummary } from './omdb.interface';
+
 @Injectable()
 export class OmdbService {
   private readonly url: string;
@@ -14,7 +15,7 @@ export class OmdbService {
     private readonly httpService: HttpService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
-    this.url = `https://www.omdbapi.com/?apikey=${this.configService.get('omdbApiKey')}`;
+    this.url = this.configService.get('omdbApiUrl');
   }
 
   async getFilmByTitle(title: string | null): Promise<OmdbFilmDataSummary> {
@@ -36,9 +37,9 @@ export class OmdbService {
           info.awards = this.validateValue(data.Awards);
           info.boxOffice = this.validateValue(data.BoxOffice);
           info.actors = this.validateValue(data.Actors);
-          return info;
         }),
         catchError(() => {
+          // TODO: add logger and setry
           return of(info);
         }),
       ),
