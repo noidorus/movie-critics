@@ -9,9 +9,14 @@ import CollectionTitle from './components/CollectionTitle/CollectionTitle';
 
 export default function CollectionPage() {
     const { collection, idle, loading, error, user, handleCollectionUpdate } = useCollection();
-    const { visible, dialogTitle, action, onHideModal, onShowModal } =
-        useCollectionModal();
-    const { actionLoading, actionError, handleToggleVisibilityClick, handleDeleteCollectionClick, handleDeleteMovieClick } = useAction({ onHideModal, onUpdate: handleCollectionUpdate, onShowModal });
+    const { visible, dialogTitle, action, onHideModal, onShowModal } = useCollectionModal();
+    const {
+        actionLoading,
+        actionError,
+        handleToggleVisibilityClick,
+        handleDeleteCollectionClick,
+        handleDeleteMovieClick,
+    } = useAction({ onHideModal, onUpdate: handleCollectionUpdate, onShowModal });
 
     if (loading || idle) {
         return <Loader />;
@@ -33,7 +38,11 @@ export default function CollectionPage() {
                 onDeleteCollection={() => handleDeleteCollectionClick(collection.id)}
                 onToggleVisibility={() => handleToggleVisibilityClick(collection)}
             />
-            <CollectionMovieList films={collection.films} userId={user?.id} onDeleteMovie={(movieId: number) => handleDeleteMovieClick(collection.id, movieId)} />
+            <CollectionMovieList
+                films={collection.films}
+                userId={user?.id}
+                onDeleteMovie={(movieId: number) => handleDeleteMovieClick(collection.id, movieId)}
+            />
             <CollectionPageDialog
                 visible={visible}
                 onHideModal={onHideModal}

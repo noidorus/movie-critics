@@ -10,7 +10,7 @@ interface Props {
     onDeleteMovie: (movieId: number) => void;
 }
 
-function CollectionMovieList ({ films, userId, onDeleteMovie }: Props) {
+function CollectionMovieList({ films, userId, onDeleteMovie }: Props) {
     if (films.length === 0) {
         return <p className={styles.emptyList}>Подборка пока пуста</p>;
     }
@@ -34,6 +34,6 @@ function CollectionMovieList ({ films, userId, onDeleteMovie }: Props) {
             ))}
         </ul>
     );
-};
+}
 
 export default React.memo(CollectionMovieList);

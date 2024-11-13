@@ -19,6 +19,6 @@ function CreateCollectionCheckbox({ formVisible, toggleFormVisibility }: Props) 
             <label htmlFor="createCollection">Создать подборку</label>
         </div>
     );
-};
+}
 
 export default React.memo(CreateCollectionCheckbox);

@@ -9,8 +9,7 @@ type HeaderProps = {
 };
 
 export default function Header({ activeTab }: HeaderProps) {
-
-    const {leftLinks, rightLinks, isMenuOpen, toggleMenu} = useHeader();
+    const { leftLinks, rightLinks, isMenuOpen, toggleMenu } = useHeader();
 
     return (
         <div className={styles.header}>
@@ -20,11 +19,13 @@ export default function Header({ activeTab }: HeaderProps) {
             </Button>
             <div className={classNames(styles.buttons, { [styles.open]: isMenuOpen })}>
                 <div className={styles.leftButtons}>
-                    {leftLinks.map(link => (
+                    {leftLinks.map((link) => (
                         <Link
                             key={link.key}
                             to={link.to}
-                            className={classNames(styles.button, { [styles.buttonChecked]: activeTab === link.key })}
+                            className={classNames(styles.button, {
+                                [styles.buttonChecked]: activeTab === link.key,
+                            })}
                         >
                             <span>{link.label}</span>
                         </Link>

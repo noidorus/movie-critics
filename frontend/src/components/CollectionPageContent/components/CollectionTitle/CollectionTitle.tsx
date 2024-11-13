@@ -1,5 +1,5 @@
 import { Button } from 'primereact/button';
-import classNames from 'classnames'; 
+import classNames from 'classnames';
 import styles from './CollectionTitle.module.css';
 import { Collection } from '@/types/CollectionType';
 import React from 'react';
@@ -11,12 +11,7 @@ interface Props {
     onToggleVisibility: () => void;
 }
 
-function CollectionTitle ({
-    collection,
-    userId,
-    onDeleteCollection,
-    onToggleVisibility,
-}: Props) {
+function CollectionTitle({ collection, userId, onDeleteCollection, onToggleVisibility }: Props) {
     return (
         <div className={styles.titleContainer}>
             <h2 className={styles.title}>{collection.name}</h2>
@@ -28,11 +23,14 @@ function CollectionTitle ({
                         label=" "
                     />
                     <Button
-                        className={classNames(styles.button, 'pi', collection.private ? 'pi-lock' : 'pi-lock-open', 
+                        className={classNames(
+                            styles.button,
+                            'pi',
+                            collection.private ? 'pi-lock' : 'pi-lock-open',
                             {
                                 'pi-lock': collection.private,
-                                'pi-lock-open': !collection.private
-                            }
+                                'pi-lock-open': !collection.private,
+                            },
                         )}
                         onClick={onToggleVisibility}
                         label=" "
@@ -41,6 +39,6 @@ function CollectionTitle ({
             )}
         </div>
     );
-};
+}
 
 export default React.memo(CollectionTitle);

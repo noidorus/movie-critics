@@ -8,7 +8,7 @@ export const useHeader = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
+
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleLogout = useCallback(async () => {
@@ -28,5 +28,8 @@ export const useHeader = () => {
           ]
         : [{ to: '/login', label: 'Войти' }];
 
-    return(useMemo(() => ({ leftLinks, rightLinks, isMenuOpen, toggleMenu }), [leftLinks, rightLinks, isMenuOpen, toggleMenu]));
-}
+    return useMemo(
+        () => ({ leftLinks, rightLinks, isMenuOpen, toggleMenu }),
+        [leftLinks, rightLinks, isMenuOpen, toggleMenu],
+    );
+};

@@ -8,7 +8,6 @@ type Props = {
 };
 
 function CreateCollectionDialog({ visible, onHide }: Props) {
-
     return (
         <Dialog header="Создать подборку" visible={visible} onHide={onHide} draggable={false}>
             <CreateCollectionContent onHide={onHide} visible={visible} />

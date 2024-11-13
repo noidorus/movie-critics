@@ -47,29 +47,30 @@ export const useCreateCollection = (onHide: () => void, movieId?: number) => {
         if (!shouldSubmit || formError) {
             return;
         }
-    
+
         const submitCollection = async () => {
             const collectionData: CreateCollectionRequestData = {
                 name: collectionName,
                 private: isPrivate,
             };
-    
+
             try {
                 const newCollection = await dispatch(createCollection(collectionData)).unwrap();
-    
+
                 if (movieId) {
-                    await dispatch(addMovieToCollection({ collectionId: newCollection.id, filmId: movieId })).unwrap();
+                    await dispatch(
+                        addMovieToCollection({ collectionId: newCollection.id, filmId: movieId }),
+                    ).unwrap();
                 }
-    
+
                 onHide();
             } finally {
                 setShouldSubmit(false);
             }
         };
-    
+
         submitCollection();
     }, [shouldSubmit, formError, collectionName, isPrivate, movieId, dispatch, onHide]);
-    
 
     const handleChangeName = useCallback(
         (name: string) => dispatch(setCollectionName(name)),

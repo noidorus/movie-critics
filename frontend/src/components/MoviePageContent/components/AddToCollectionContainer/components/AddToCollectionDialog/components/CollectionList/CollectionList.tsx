@@ -1,4 +1,3 @@
-// CollectionList.tsx
 import { Checkbox } from 'primereact/checkbox';
 import { CheckboxChangeEvent } from 'primereact/checkbox';
 import styles from './CollectionList.module.css';
@@ -13,7 +12,13 @@ type CollectionListProps = {
     error: string | null;
 };
 
-function CollectionList({ collections, movieId, onChange, errorCollectionId, error }: CollectionListProps) {
+function CollectionList({
+    collections,
+    movieId,
+    onChange,
+    errorCollectionId,
+    error,
+}: CollectionListProps) {
     return (
         <div className={styles.collections}>
             {collections.length === 0 && <p>У вас пока нет подборок</p>}
@@ -30,9 +35,7 @@ function CollectionList({ collections, movieId, onChange, errorCollectionId, err
                                     onChange(collection.id, movieId, e.checked || false)
                                 }
                             />
-                            <label htmlFor={`collection-${collection.id}`}>
-                                {collection.name}
-                            </label>
+                            <label htmlFor={`collection-${collection.id}`}>{collection.name}</label>
                         </div>
                         {errorCollectionId === collection.id && (
                             <span className={styles.error}>
@@ -44,6 +47,6 @@ function CollectionList({ collections, movieId, onChange, errorCollectionId, err
             })}
         </div>
     );
-};
+}
 
 export default React.memo(CollectionList);

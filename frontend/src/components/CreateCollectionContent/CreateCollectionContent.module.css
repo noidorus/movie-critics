@@ -28,5 +28,5 @@
 
 .error {
     font-size: 18px;
-    color: var(--error-color)
+    color: var(--error-color);
 }

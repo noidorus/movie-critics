@@ -13,13 +13,13 @@ function CollectionPreview({ collection }: Props) {
         <li className={styles.collection}>
             <div className={styles.images}>
                 {previewMovies.map((movie) => (
-                        <img
-                            key={movie.id}
-                            src={movie.posterUrlPreview}
-                            alt={`Постер фильма с id ${movie.id}`}
-                            className={styles.poster}
-                        />
-                    ))}
+                    <img
+                        key={movie.id}
+                        src={movie.posterUrlPreview}
+                        alt={`Постер фильма с id ${movie.id}`}
+                        className={styles.poster}
+                    />
+                ))}
             </div>
             <a href={`/collections/${collection.id}`} className={styles.title}>
                 {collection.name}

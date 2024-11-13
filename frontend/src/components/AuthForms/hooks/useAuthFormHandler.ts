@@ -51,7 +51,7 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
         if (!shouldSubmit || !isFormValid) {
             return;
         }
-    
+
         const submitForm = async () => {
             try {
                 if (isLogin) {
@@ -64,10 +64,9 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
                 setShouldSubmit(false);
             }
         };
-    
+
         submitForm();
     }, [isFormValid, shouldSubmit, isLogin, dispatch, login, email, password, errors]);
-    
 
     return useMemo(
         () => ({

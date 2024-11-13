@@ -37,5 +37,4 @@ function AddToCollectionDialog({ visible, onHide, movieId }: Props) {
     );
 }
 
-
 export default React.memo(AddToCollectionDialog);

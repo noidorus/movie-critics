@@ -49,5 +49,4 @@ function TitleContainer({ movie }: Props) {
     );
 }
 
-
 export default React.memo(TitleContainer);

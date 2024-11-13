@@ -22,4 +22,4 @@ export type RegisterResponseData = {
 export type AuthError = {
     message: string;
     status: number;
-}
+};

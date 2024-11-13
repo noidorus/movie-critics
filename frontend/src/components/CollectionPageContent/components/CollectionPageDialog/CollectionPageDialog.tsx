@@ -12,19 +12,19 @@ type Props = {
     error: string | null;
 };
 
-function CollectionPageDialog({ visible, onHideModal, title, handleAction, loading, error }: Props) {
+function CollectionPageDialog({
+    visible,
+    onHideModal,
+    title,
+    handleAction,
+    loading,
+    error,
+}: Props) {
     return (
         <Dialog header={title} onHide={onHideModal} visible={visible} draggable={false}>
             <div className={styles.buttons}>
-                <Button
-                    label="Отмена"
-                    className={styles.button}
-                    onClick={onHideModal}
-                />
-                <Button
-                    className={styles.button}
-                    onClick={handleAction}
-                >
+                <Button label="Отмена" className={styles.button} onClick={onHideModal} />
+                <Button className={styles.button} onClick={handleAction}>
                     {loading ? 'Загрузка...' : 'Подтвердить'}
                 </Button>
             </div>
