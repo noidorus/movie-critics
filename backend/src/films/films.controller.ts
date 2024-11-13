@@ -4,7 +4,7 @@ import { FilmsService } from './films.service';
 import { FilmsQueryDTO, RateFilmBodyDTO } from './dto';
 import { FilmsEntity, FilmWithExtrasEntity, RatingEntity, ShortInfoFilmEntity } from './entities';
 import { JwtAuthGuard } from 'src/auth/guards';
-import { RequestWithUser } from 'src/auth/interfaces';
+import { RequestWithUser } from 'src/auth/auth.intrfaces';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
 import { CommentEntity } from 'src/comments/comment.entity';
 

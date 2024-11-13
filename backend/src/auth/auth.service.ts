@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { UserService } from 'src/user/user.service';
 import { RegisterDTO } from './dto';
-import { JwtConfig, JwtPayload, JwtCookie } from './interfaces';
+import { JwtConfig, JwtPayload, JwtCookie } from './auth.intrfaces';
 import { TypedConfigService } from 'src/config/typed-config.service';
 
 @Injectable()

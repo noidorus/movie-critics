@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ListsService } from './lists.service';
-import { RequestWithNullableUser, RequestWithUser } from 'src/auth/interfaces';
+import { RequestWithNullableUser, RequestWithUser } from 'src/auth/auth.intrfaces';
 import { JwtAuthGuard, NullableJwtAuthGuard } from 'src/auth/guards';
 import { CreateListDTO, ChangeListVisibilityDTO } from './dto';
 import {

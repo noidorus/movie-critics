@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import { User } from '@prisma/client';
 import { AuthService } from '../auth.service';
-import { JwtPayload } from '../interfaces';
+import { JwtPayload } from '../auth.intrfaces';
 import { TypedConfigService } from 'src/config/typed-config.service';
 
 @Injectable()
