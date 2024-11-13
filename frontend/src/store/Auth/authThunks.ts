@@ -58,7 +58,10 @@ export const registerUser = createAsyncThunk<
         });
 
         if (!response.ok) {
-            return rejectWithValue({ message: 'Пользователь уже существует', status: response.status });
+            return rejectWithValue({
+                message: 'Пользователь уже существует',
+                status: response.status,
+            });
         }
 
         const text = await response.text();
