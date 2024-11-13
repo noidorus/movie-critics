@@ -141,7 +141,6 @@ export const refreshAccessToken = createAsyncThunk<User, void, { rejectValue: Au
             }
 
             const data = await response.json();
-            console.log(data);
             return data;
         } catch (error: unknown) {
             const authError = error as AuthError;
