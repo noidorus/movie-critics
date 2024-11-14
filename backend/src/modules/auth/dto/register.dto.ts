@@ -1,20 +1,34 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsEmail, Matches, MinLength, MaxLength } from 'class-validator';
+import { IsEmail, Matches } from 'class-validator';
 
 export class RegisterDTO {
-  @ApiProperty({ minLength: 6, maxLength: 20, description: 'Aa-Zz, 0-9, 6-20 characters' })
-  @IsNotEmpty()
-  @MinLength(6)
-  @MaxLength(20)
+  @ApiProperty({
+    type: String,
+    example: 'user123',
+    minLength: 6,
+    maxLength: 30,
+    required: true,
+    pattern: '/^[0-9A-Za-z]{6,20}$/',
+  })
   @Matches(/^[0-9A-Za-z]{6,20}$/)
   username: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({
+    type: String,
+    example: 'email@example.com',
+    required: true,
+    pattern: '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}$/',
+  })
   @IsEmail()
+  @Matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)
   email: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({
+    type: String,
+    example: 'Password-123',
+    required: true,
+    pattern: '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
+  })
+  @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
   password: string;
 }

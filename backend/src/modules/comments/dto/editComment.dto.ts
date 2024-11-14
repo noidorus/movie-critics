@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 
 export class EditCommentDTO {
-  @ApiProperty({ example: 'text', required: true, description: 'Comment text' })
+  @ApiProperty({ type: String, example: 'text', required: true })
   @IsString()
-  @IsNotEmpty()
+  @Length(1, 400)
   text: string;
 }

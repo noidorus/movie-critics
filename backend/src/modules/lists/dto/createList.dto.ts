@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateListDTO {
-  @IsNotEmpty()
-  @IsString()
   @ApiProperty({ example: 'My list', required: true, description: 'List name' })
+  @Length(1, 30)
+  @IsString()
   name: string;
 
+  @ApiProperty({ example: true, default: false, required: false, description: 'List description' })
   @IsOptional()
   @IsBoolean()
-  @ApiProperty({ example: true, default: false, required: false, description: 'List description' })
   private?: boolean;
 }
