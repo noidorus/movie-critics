@@ -1,5 +1,5 @@
-import DefaultPageLayout from '@/components/DefaultPageLayout/DefaultPageLayout';
-import CollectionPageContent from '@/components/CollectionPageContent/CollectionPageContent';
+import DefaultPageLayout from '@/shared/DefaultPageLayout/DefaultPageLayout';
+import CollectionPageContent from '@/widgets/CollectionPageContent/CollectionPageContent';
 
 export default function CollectionPage() {
     return (

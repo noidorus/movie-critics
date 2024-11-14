@@ -5,10 +5,10 @@ import {
     selectError,
     selectCollectionsUpdated,
     selectIdle,
-} from '@/store/Collections/collectionsSelectors';
-import { fetchCollectionsByMe } from '@/store/Collections/collectionsThunks';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { setCollectionsUpdated } from '@/store/Collections/collectionsSlice';
+} from '@/app/store/Collections/collectionsSelectors';
+import { fetchCollectionsByMe } from '@/app/store/Collections/collectionsThunks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { setCollectionsUpdated } from '@/app/store/Collections/collectionsSlice';
 
 export const useUserCollections = () => {
     const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import RegisterForm from '@/components/AuthForms/RegisterForm/RegisterForm';
+import RegisterForm from '@/widgets/AuthForms/ui/RegisterForm/RegisterForm';
 import classNames from 'classnames';
 import styles from './RegisterPage.module.css';
 
