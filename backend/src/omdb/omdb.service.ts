@@ -5,6 +5,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { lastValueFrom, map } from 'rxjs';
 import { TypedConfigService } from 'src/config/typed-config.service';
 import { OmdbData, OmdbDataSummary } from './omdb.interface';
+import * as Sentry from '@sentry/nestjs';
 
 @Injectable()
 export class OmdbService {
@@ -38,7 +39,7 @@ export class OmdbService {
     try {
       const data = await lastValueFrom(
         this.httpService
-          .get<OmdbData>(`${this.url}&t=${title}&plot=full`)
+          .get<OmdbData>(`ddd${this.url}&t=${title}&plot=full`)
           .pipe(map(({ data }) => data)),
       );
 
@@ -52,8 +53,9 @@ export class OmdbService {
       await this.cacheManager.set(title, info);
 
       return info;
-    } catch {
-      // TODO: add logger and setry
+    } catch (err) {
+      // TODO: add logger
+      Sentry.captureException(err);
       return defaultInfo;
     }
   }

@@ -4,11 +4,15 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { TypedConfigService } from './config/typed-config.service';
+import { initSentry, SentryInterceptor } from './sentry';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(TypedConfigService);
+
+  initSentry(configService.get('sentryDsn'));
+  app.useGlobalInterceptors(new SentryInterceptor());
 
   app.enableCors({ origin: configService.get('clientUrl'), credentials: true });
   app.use(cookieParser());

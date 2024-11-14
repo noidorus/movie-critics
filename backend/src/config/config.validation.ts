@@ -9,6 +9,9 @@ class EnvironmentVariables {
   CLIENT_URL: string;
 
   @IsString()
+  SENTRY_DSN: string;
+
+  @IsString()
   DATABASE_URL: string;
 
   @IsString()
