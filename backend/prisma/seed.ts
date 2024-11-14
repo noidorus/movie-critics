@@ -91,24 +91,6 @@ const filmsSeed: SeedFilm[] = [
     slogan: null,
   },
   {
-    kpId: '1043713',
-    year: 2017,
-    description:
-      'Рассказ о предполагаемом недвижимом имуществе председателя Правительства Российской Федерации Дмитрия Медведева.',
-    filmLength: 49,
-    countries: ['Россия'],
-    shortDescription: null,
-    type: 'FILM',
-    nameRu: 'Он вам не Димон',
-    nameOriginal: null,
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1043713.jpg?alt=media&token=da1dd99b-3b74-49b5-9ded-2bce3e689d6e',
-    genres: ['документальный'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1043713.jpg?alt=media&token=ff88236d-368c-4d5d-ba7d-3ccbf2e84344',
-    slogan: null,
-  },
-  {
     kpId: '1048695',
     year: 2017,
     description:
@@ -308,23 +290,6 @@ const filmsSeed: SeedFilm[] = [
     genres: ['документальный'],
     posterUrlPreview:
       'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1235081.jpg?alt=media&token=d598c36b-4e7f-48e1-bb6d-0a4b2415fd50',
-    slogan: null,
-  },
-  {
-    kpId: '1252447',
-    year: 1999,
-    description: null,
-    filmLength: 105,
-    countries: ['США'],
-    shortDescription: null,
-    type: 'VIDEO',
-    nameRu: 'Лорды раздевалки',
-    nameOriginal: 'Lords of the Lockerroom',
-    posterUrl:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp%2F1252447.jpg?alt=media&token=9b11da32-4fbe-41ee-91cd-c5679c0342a3',
-    genres: ['спорт', 'для взрослых'],
-    posterUrlPreview:
-      'https://firebasestorage.googleapis.com/v0/b/movie-critics-49c99.appspot.com/o/posters%2Fkp_small%2F1252447.jpg?alt=media&token=36866d31-8b0c-451c-92e1-d1807861ef6b',
     slogan: null,
   },
   {
