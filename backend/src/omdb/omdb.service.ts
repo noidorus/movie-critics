@@ -39,7 +39,7 @@ export class OmdbService {
     try {
       const data = await lastValueFrom(
         this.httpService
-          .get<OmdbData>(`ddd${this.url}&t=${title}&plot=full`)
+          .get<OmdbData>(`${this.url}&t=${title}&plot=full`)
           .pipe(map(({ data }) => data)),
       );
 
