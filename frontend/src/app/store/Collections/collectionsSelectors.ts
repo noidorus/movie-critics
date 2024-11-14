@@ -1,4 +1,4 @@
-import type { RootState } from '../../store';
+import type { RootState } from '../store';
 
 export const selectCollections = (state: RootState) => state.collections.collections;
 

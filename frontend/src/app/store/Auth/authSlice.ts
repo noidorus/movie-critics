@@ -9,6 +9,7 @@ interface AuthState {
     user: User | null;
     error: AuthError | null;
     isLoading: boolean;
+    isRefreshLoading: boolean;
     formFields: {
         login: string;
         email: string;
@@ -26,6 +27,7 @@ const initialState: AuthState = {
     user: JSON.parse(localStorage.getItem('user') as string) || null,
     error: null,
     isLoading: false,
+    isRefreshLoading: false,
     formFields: {
         login: '',
         email: '',
@@ -140,15 +142,15 @@ const authSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(refreshAccessToken.pending, (state) => {
-                state.isLoading = true;
+                state.isRefreshLoading = true;
                 state.error = null;
             })
             .addCase(refreshAccessToken.fulfilled, (state, action: PayloadAction<User>) => {
-                state.isLoading = false;
+                state.isRefreshLoading = false;
                 state.user = action.payload;
             })
             .addCase(refreshAccessToken.rejected, (state) => {
-                state.isLoading = false;
+                state.isRefreshLoading = false;
                 state.user = null;
                 localStorage.removeItem('user');
             });
