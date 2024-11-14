@@ -1,5 +1,5 @@
-import DefaultPageLayout from '@/components/DefaultPageLayout/DefaultPageLayout';
-import MoviePageContent from '@/components/MoviePageContent/MoviePageContent';
+import DefaultPageLayout from '@/shared/DefaultPageLayout/DefaultPageLayout';
+import MoviePageContent from '@/widgets/MoviePageContent/MoviePageContent';
 
 export default function MoviePage() {
     return (

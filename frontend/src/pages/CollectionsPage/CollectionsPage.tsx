@@ -1,5 +1,5 @@
-import DefaultPageLayout from '@/components/DefaultPageLayout/DefaultPageLayout';
-import CollectionsPageContent from '@/components/CollectionsPageContent/CollectionsPageContent';
+import DefaultPageLayout from '@/shared/DefaultPageLayout/DefaultPageLayout';
+import CollectionsPageContent from '@/widgets/CollectionsPageContent/CollectionsPageContent';
 import { useCollections } from './hooks/useCollections';
 
 export default function CollectionsPage() {
