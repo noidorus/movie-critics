@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'Tonight'; 
+    src: url('./Tonight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Undeveloped';
+    src: url('./Undeveloped.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ACFilmstrip';
+    src: url('./ACFilmstrip.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'mexcellent3d';
+    src: url('./mexcellent3d.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'mexcellentrg';
+    src: url('./mexcellentrg.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

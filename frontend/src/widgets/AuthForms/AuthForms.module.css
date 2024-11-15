@@ -15,15 +15,28 @@
 .label {
     font-size: 22px;
     font-weight: 500;
+    color: var(--text-color);
 }
 
 .input {
     min-block-size: 40px;
     border-radius: 5px;
-    border: 1px solid var(--border-light);
+    border: 1px solid transparent;
     padding-inline-start: 10px;
     padding-inline-end: 170px;
     font-size: 20px;
+    color: var(--text-color);
+    background-color: var(--input-color);
+}
+
+.input::placeholder {
+    color: var(--text-color);
+}
+
+.input:focus {
+    border: 1px solid var(--input-border-color);
+    outline: none;
+    box-shadow: var(--purple-box-shadow);
 }
 
 .button {
@@ -33,13 +46,15 @@
     justify-content: center;
     margin-block: 8px;
     border-radius: 5px;
-    border: 1px solid var(--border-light);
+    color: var(--text-color);
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border-color);
     padding-inline: 100px;
     padding-block: 8px;
 }
 
 .button:hover {
-    background-color: var(--submit-button-hover);
+    background-color: var(--button-hover-color);
 }
 
 .error {

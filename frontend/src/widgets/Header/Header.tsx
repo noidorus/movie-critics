@@ -36,7 +36,9 @@ export default function Header({ activeTab }: HeaderProps) {
                         <Link
                             key={index}
                             to={link.to}
-                            className={styles.button}
+                            className={classNames(styles.button, {
+                                [styles.buttonChecked]: activeTab === link.key,
+                            })}
                             onClick={link.onClick}
                         >
                             <span>{link.label}</span>
