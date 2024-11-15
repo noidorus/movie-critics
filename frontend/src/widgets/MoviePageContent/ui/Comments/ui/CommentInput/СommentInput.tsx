@@ -3,6 +3,7 @@ import { Button } from 'primereact/button';
 import styles from './CommentInput.module.css';
 import { useInput } from './hooks/useInput';
 import React from 'react';
+import classNames from 'classnames';
 
 type Props = {
     filmId: number;
@@ -13,7 +14,6 @@ function CommentInput({ filmId }: Props) {
 
     return (
         <div className={styles.commentInputContainer}>
-            <h3 className={styles.title}>Оставить комментарий</h3>
             <InputTextarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
@@ -23,13 +23,25 @@ function CommentInput({ filmId }: Props) {
                 disabled={loading}
             />
             {error && <p className={styles.error}>{error}</p>}
+            <div className={styles.sendContainer}>
             <Button
                 label="Отправить"
                 onClick={handleSubmit}
                 loading={loading}
                 className={styles.submitButton}
-                disabled={loading || !commentText}
+                disabled={loading || !commentText || commentText.length > 400}
             />
+            <p>
+                <span className={styles.counter}>
+                    <span className={classNames({
+                        [styles.counterValueError]: commentText.length > 400 || !commentText,
+                    })}>
+                    {commentText.length}
+                    </span>
+                    /400
+                </span>
+            </p>
+            </div>
         </div>
     );
 }

@@ -1,13 +1,14 @@
 .commentsSection {
+    padding-block-start: 20px;
     max-inline-size: 100%;
-    padding: 20px;
     border-radius: 8px;
 }
 
 .title {
     font-size: 1.5em;
     margin-bottom: 10px;
-    text-align: center;
+    text-align: left;
+    color: var(--text-color);
 }
 
 .noComments {
@@ -25,6 +26,7 @@
     padding: 15px;
     margin: 10px 0;
     transition: box-shadow 0.3s ease;
+    color: var(--text-color)
 }
 
 .comment:hover {
@@ -33,7 +35,7 @@
 
 .author {
     font-size: 1.1em;
-    color: var(--text-accent-color);
+    color: var(--text-color);
     font-weight: 600;
     margin-bottom: 5px;
 }
@@ -44,10 +46,6 @@
 }
 
 @media (max-width: 768px) {
-    .commentsSection {
-        padding: 15px;
-    }
-
     .title {
         font-size: 1.3em;
     }
@@ -62,10 +60,6 @@
 }
 
 @media (max-width: 480px) {
-    .commentsSection {
-        padding: 10px;
-    }
-
     .title {
         font-size: 1.2em;
     }

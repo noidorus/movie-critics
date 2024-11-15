@@ -4,6 +4,7 @@ import MovieRateDialog from './ui/MovieRateDialog/MovieRateDialog';
 import { useMovieRate } from './hooks/useMovieRate';
 import styles from './MovieRate.module.css';
 import React from 'react';
+import classNames from 'classnames';
 
 type MovieRateProps = {
     userId: number;
@@ -25,11 +26,16 @@ function MovieRate({ userId, movieId, ratings, onRatingUpdate }: MovieRateProps)
             <p className={styles.title}>Ваша оценка</p>
             {userRating ? (
                 <Button className={styles.rateButton} onClick={openDialog} disabled={ratingLoading}>
-                    <span className={styles.value}>{userRating}</span>/10
+                    <span className={styles.value}>
+                        <span className={classNames('pi', 'pi-star-fill', styles.star)}>
+                        </span>
+                        {userRating}
+                    </span>/10
                 </Button>
             ) : (
                 <Button className={styles.rateButton} onClick={openDialog} disabled={ratingLoading}>
-                    Оценить
+                    <span className={classNames('pi', 'pi-star', styles.star)}></span>
+                    <span className={styles.text}>Оценить</span>
                 </Button>
             )}
 

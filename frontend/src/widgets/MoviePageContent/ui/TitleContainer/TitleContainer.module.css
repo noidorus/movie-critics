@@ -6,13 +6,14 @@
 .title {
     font-size: 36px;
     font-weight: 800;
+    color: var(--text-color);
 }
 
 .originalTitle {
     font-size: 18px;
     font-weight: 400;
-    color: var(--text-grey-color);
-    margin-bottom: 10px;
+    color: var(--text-color);
+    margin-bottom: 30px;
 }
 
 .info {
@@ -21,6 +22,7 @@
     font-size: 18px;
     font-weight: 400;
     gap: 5px;
+    color: var(--text-color);
 }
 
 .info p {

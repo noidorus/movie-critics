@@ -1,14 +1,24 @@
 :root {
     --error-color: #f00;
-    --main-background-color: #2c3440;
-    --light-background-color: #f8f9fa;
-    --white-color: #fff;
-    --wrapper-color: #c0c0c0;
-    --header-text-color: #8e96a0;
-    --header-color: #1c212a;
-    --header-button-main-color: #121417;
-    --header-button-hover-color: #e0e6ed;
-    --header-button-active-color: #a855f733;
+    --main-background-color: #222629;
+    --secondary-background-color: #474b4f;
+    --text-color: #fff;
+    --input-color: #6b6e70;
+    --input-border-color: #caa3ef;
+    --input-box-shadow-color: 0px 6px 12px rgba(202, 163, 239, 1);
+    --button-color: #924ed1;
+    --button-hover-color: #813eb6;
+    --button-border-color: #2a005d;
+    --link-color: #caa3ef;
+    --link-color-hover: #5600b2;
+    --icon-color: #f9f9f9;
+    --icon-hover-color: #caa3ef;
+    --icon-focus-color: #5600b2;
+    --header-color: #141617;
+    --header-button-main-color: #924ed1;
+    --header-button-hover-color: #5600b2;
+    --header-button-active-color: #39007c;
+    --header-button-border-color: #2a005d;
     --text-light-color: #f9f9f9;
     --border-light: #e0e0e0;
     --border-dark: #000;
@@ -18,8 +28,9 @@
     --action-button-active-color: #5782c1;
     --action-button-hover-color: #aeb6bd;
     --action-buttom-main-text-color: #202832;
-    --text-grey-color: #6c757d;
+    --text-grey-color: #bec4c9;
     --text-accent-color: #396bd0;
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     --box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.2);
+    --purple-box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
 }

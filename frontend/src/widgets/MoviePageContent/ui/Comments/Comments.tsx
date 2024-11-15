@@ -35,7 +35,7 @@ function Comments({ filmId, comments, loading, error, user }: Props) {
                     .reverse()
                     .map((comment) => (
                         <div key={comment.id} className={styles.comment}>
-                            <h4 className={styles.author}>{comment.authorId}</h4>
+                            <h4 className={styles.author}>{comment.author.username}</h4>
                             <p className={styles.text}>{comment.text}</p>
                         </div>
                     ))

@@ -1,3 +1,7 @@
 .createCollection {
     margin-block-start: 10px;
 }
+
+.header {
+    background-color: red;
+}

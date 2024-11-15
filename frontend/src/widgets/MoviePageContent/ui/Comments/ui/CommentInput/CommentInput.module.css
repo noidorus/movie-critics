@@ -1,14 +1,7 @@
 .commentInputContainer {
     min-inline-size: 100%;
     margin: 0 auto;
-    padding: 15px;
     border-radius: 8px;
-}
-
-.title {
-    font-size: 1.3em;
-    margin-bottom: 10px;
-    text-align: center;
 }
 
 .textarea {
@@ -17,12 +10,53 @@
     resize: vertical;
 }
 
+.textarea:focus {
+    outline: none;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--purple-box-shadow);
+}
+
 .error {
     color: var(--error-color);
     font-size: 0.9em;
     margin-bottom: 5px;
 }
 
+.sendContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .submitButton {
-    min-inline-size: 100%;
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border-color);
+    color: var(--text-color);
+}
+
+.submitButton:hover {
+    background-color: var(--button-hover-color);
+    transition: background-color 0.5s ease;
+}
+
+.submitButton:focus {
+    outline: none;
+    border: 1px solid var(--button-border-color);
+    box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
+}
+
+.counter {
+    color: var(--text-color);
+}
+
+.counterValueError {
+    color: var(--text-grey-color);
+
+}
+
+@media (max-width: 768px){
+    .submitButton {
+        max-inline-size: 40%;
+    }
 }

@@ -3,6 +3,7 @@ import { User } from '@/app/types/UserType';
 import styles from './RatingContainer.module.css';
 import MovieRate from './ui/MovieRate/MovieRate';
 import React from 'react';
+import classNames from 'classnames';
 
 type Props = {
     user: User | null;
@@ -11,6 +12,8 @@ type Props = {
 };
 
 function RatingContainer({ movie, user, onRatingUpdate }: Props) {
+    const avgRating = movie.avgRating || 0;
+
     return (
         <div className={styles.ratingContainer}>
             {user && (
@@ -23,15 +26,13 @@ function RatingContainer({ movie, user, onRatingUpdate }: Props) {
             )}
             <div className={styles.avgRatingContainer}>
                 <p className={styles.avgRatingTitle}>Общая оценка </p>
-                {movie.avgRating ? (
-                    <p className={styles.avgRating}>
-                        <span className={styles.avgRatingValue}>{movie.avgRating}</span>/10
-                    </p>
-                ) : (
-                    <p className={styles.avgRating}>
-                        <span className={styles.avgRatingValue}>0</span>/10
-                    </p>
-                )}
+                <p className={styles.avgRating}>
+                        <span className={styles.avgRatingValue}>
+                            <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
+                            {avgRating}
+                        </span>
+                        /10
+                </p>
             </div>
         </div>
     );
