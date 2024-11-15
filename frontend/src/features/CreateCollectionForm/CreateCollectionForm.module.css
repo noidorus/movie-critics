@@ -1,3 +1,7 @@
+.label {
+    color: var(--text-color);
+}
+
 .input {
     display: flex;
     flex-direction: column;
@@ -5,11 +9,46 @@
     gap: 3px;
 }
 
+.inputText {
+    background-color: var(--input-color);
+    color: var(--text-color);
+}
+
+.inputText {
+    border: 1px solid var(--border-color);
+}
+
+.inputText::placeholder {
+    color: var(--text-color);
+}
+
+.inputText:focus {
+    outline: none;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--purple-box-shadow);
+}
+
+.counter {
+    color: var(--text-color);
+    display: flex;
+    justify-content: end;
+}
+
+.counterValueError {
+    color: var(--text-grey-color);
+
+}
+
 .radio {
     display: flex;
     flex-direction: row;
     margin-bottom: 16px;
     gap: 10px;
+}
+
+.radioLabel {
+    color: var(--text-color);
+    padding-inline-start: 5px;
 }
 
 .button {
@@ -29,4 +68,25 @@
 .error {
     font-size: 18px;
     color: var(--error-color);
+}
+
+.radioLabel .p-radiobutton-box {
+    border-color: var(--checkbox-color);
+} 
+
+.submitButton {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border-color);
+    color: var(--text-color);
+}
+
+.submitButton:hover {
+    background-color: var(--button-hover-color);
+    transition: background-color 0.5s ease;
+}
+
+.submitButton:focus {
+    outline: none;
+    border: 1px solid var(--button-border-color);
+    box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
 }

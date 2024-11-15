@@ -2,6 +2,8 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import styles from './CollectionPageDialog.module.css';
 import React from 'react';
+import { useToastNotifications } from './hooks/useToastNotifications';
+import { Toast } from 'primereact/toast';
 
 type Props = {
     visible: boolean;
@@ -20,15 +22,17 @@ function CollectionPageDialog({
     loading,
     error,
 }: Props) {
+    const toast = useToastNotifications(error);
+
     return (
-        <Dialog header={title} onHide={onHideModal} visible={visible} draggable={false}>
+        <Dialog header={title} onHide={onHideModal} visible={visible} draggable={false} headerClassName={styles.header} contentClassName={styles.content} className={styles.dialog}>
+            <Toast ref={toast} />
             <div className={styles.buttons}>
                 <Button label="Отмена" className={styles.button} onClick={onHideModal} />
                 <Button className={styles.button} onClick={handleAction}>
                     {loading ? 'Загрузка...' : 'Подтвердить'}
                 </Button>
             </div>
-            {error && <p className={styles.error}>Ошибка: {error}</p>}
         </Dialog>
     );
 }
