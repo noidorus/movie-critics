@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/store/hooks';
 import { fetchMovies } from '../../../app/store/Movies/moviesThunks';
 import {
@@ -23,32 +23,38 @@ export const useMoviesPage = () => {
     const isFetching = useAppSelector(selectIsFetching);
     const initialLoad = useAppSelector(selectInitialLoad);
 
+    const loadMoreRef = useRef(null);
+
     useEffect(() => {
         if (initialLoad) {
             dispatch(fetchMovies(currentPage));
         }
     }, [dispatch, currentPage, initialLoad]);
 
-    const handleScroll = useCallback(() => {
-        const isBottomReached =
-            window.innerHeight + document.documentElement.scrollTop >=
-            document.documentElement.offsetHeight - 1;
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && !isFetching && !isLoading && currentPage < totalPages) {
+                    dispatch(setFetching(true));
+                    dispatch(fetchMovies(currentPage + 1)).then(() => dispatch(setFetching(false)));
+                }
+            },
+            { rootMargin: '250px' }
+        );
 
-        if (!isBottomReached || isFetching || isLoading || currentPage >= totalPages) {
-            return;
+        if (loadMoreRef.current) {
+            observer.observe(loadMoreRef.current);
         }
 
-        dispatch(setFetching(true));
-        dispatch(fetchMovies(currentPage + 1)).then(() => dispatch(setFetching(false)));
+        return () => {
+            if (loadMoreRef.current) {
+                observer.unobserve(loadMoreRef.current);
+            }
+        };
     }, [dispatch, isFetching, isLoading, currentPage, totalPages]);
 
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleScroll]);
-
     return useMemo(
-        () => ({ movies, isLoading, error, isFetching }),
-        [movies, isLoading, error, isFetching],
+        () => ({ movies, isLoading, error, isFetching, loadMoreRef }),
+        [movies, isLoading, error, isFetching]
     );
 };

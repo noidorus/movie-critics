@@ -8,6 +8,7 @@
         transform 0.3s ease,
         box-shadow 0.3s ease;
     position: relative;
+    background-color: var(--secondary-background-color)
 }
 
 .movie:hover {
