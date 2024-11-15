@@ -14,14 +14,9 @@ type CollectionListProps = {
     error: string | null;
 };
 
-function CollectionList({
-    collections,
-    movieId,
-    onChange,
-    error,
-}: CollectionListProps) {
+function CollectionList({ collections, movieId, onChange, error }: CollectionListProps) {
     const toast = useToastNotifications(error);
-    
+
     return (
         <div className={styles.collections}>
             <Toast ref={toast} />

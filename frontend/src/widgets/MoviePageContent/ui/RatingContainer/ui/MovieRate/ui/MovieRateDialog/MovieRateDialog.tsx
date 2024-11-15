@@ -48,7 +48,8 @@ function MovieRateDialog({
                         <Button
                             key={value}
                             className={classNames(styles.ratingButton, {
-                                [styles.selected]: selectedRating !== null && value <= selectedRating, 
+                                [styles.selected]:
+                                    selectedRating !== null && value <= selectedRating,
                             })}
                             onClick={() => setSelectedRating(value)}
                         >

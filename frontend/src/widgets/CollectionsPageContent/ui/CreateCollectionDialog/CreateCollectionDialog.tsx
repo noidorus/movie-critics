@@ -10,7 +10,15 @@ type Props = {
 
 function CreateCollectionDialog({ visible, onHide }: Props) {
     return (
-        <Dialog header="Создать подборку" visible={visible} onHide={onHide} draggable={false} headerClassName={styles.header} contentClassName={styles.content} className={styles.dialog}>
+        <Dialog
+            header="Создать подборку"
+            visible={visible}
+            onHide={onHide}
+            draggable={false}
+            headerClassName={styles.header}
+            contentClassName={styles.content}
+            className={styles.dialog}
+        >
             <CreateCollectionForm onHide={onHide} visible={visible} />
         </Dialog>
     );

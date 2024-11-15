@@ -14,7 +14,7 @@
 .title {
     font-size: 40px;
     margin-block-end: 16px;
-    color: var(--text-color)
+    color: var(--text-color);
 }
 
 .text {

@@ -8,8 +8,12 @@ export default function LoginPage() {
             <div className={styles.wrapper}>
                 <h1 className={styles.title}>С возвращением!</h1>
                 <LoginForm />
-                <p className={styles.text}>Еще нет аккаунта?       
-                    <Link className={styles.link} to="/register"> Зарегистрироваться </Link>
+                <p className={styles.text}>
+                    Еще нет аккаунта?
+                    <Link className={styles.link} to="/register">
+                        {' '}
+                        Зарегистрироваться{' '}
+                    </Link>
                 </p>
             </div>
         </>

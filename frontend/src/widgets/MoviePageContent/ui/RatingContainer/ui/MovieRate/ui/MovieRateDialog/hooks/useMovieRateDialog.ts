@@ -5,7 +5,12 @@ import { setRatingUpdated } from '@/app/store/Movie/movieSlice';
 import { selectRatingLoading, selectRatingError } from '@/app/store/Movie/movieSelectors';
 import { RateRequestData } from '@/app/DTO/MovieDTO';
 
-export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void, visible: boolean, userRating: number | undefined) {
+export function useMovieRateDialog(
+    movieId: number,
+    onRatingUpdate: () => void,
+    visible: boolean,
+    userRating: number | undefined,
+) {
     const dispatch = useAppDispatch();
     const loading = useAppSelector(selectRatingLoading);
     const error = useAppSelector(selectRatingError);
@@ -39,13 +44,15 @@ export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void, 
         }
     }, [visible, userRating, setSelectedRating]);
 
-    const starContent =
-        selectedRating !== null
-            ? selectedRating.toString()
-            : userRating !== undefined
-            ? userRating.toString()
-            : '?';
-    
+    let starContent;
+
+    if (selectedRating !== null) {
+        starContent = selectedRating.toString();
+    } else if (userRating !== undefined) {
+        starContent = userRating.toString();
+    } else {
+        starContent = '?';
+    }
 
     return useMemo(
         () => ({

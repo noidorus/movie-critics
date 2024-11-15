@@ -40,13 +40,8 @@ export default function CollectionsPageContent({
             <div className={styles.titleContainer}>
                 <h2 className={styles.title}>{title}</h2>
                 {user && (
-                    <Button
-                        className={styles.button}
-                        onClick={() => setVisible(true)}
-                        label=" "
-                    >
-                        <span className={classNames(styles.icon, 'pi', 'pi-plus')}>
-                        </span>
+                    <Button className={styles.button} onClick={() => setVisible(true)} label=" ">
+                        <span className={classNames(styles.icon, 'pi', 'pi-plus')}></span>
                     </Button>
                 )}
             </div>

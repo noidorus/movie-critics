@@ -27,10 +27,10 @@ function MovieRate({ userId, movieId, ratings, onRatingUpdate }: MovieRateProps)
             {userRating ? (
                 <Button className={styles.rateButton} onClick={openDialog} disabled={ratingLoading}>
                     <span className={styles.value}>
-                        <span className={classNames('pi', 'pi-star-fill', styles.star)}>
-                        </span>
+                        <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
                         {userRating}
-                    </span>/10
+                    </span>
+                    /10
                 </Button>
             ) : (
                 <Button className={styles.rateButton} onClick={openDialog} disabled={ratingLoading}>

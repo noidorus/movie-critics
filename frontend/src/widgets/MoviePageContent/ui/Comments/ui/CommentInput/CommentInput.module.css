@@ -62,10 +62,9 @@
 
 .counterValueError {
     color: var(--text-grey-color);
-
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
     .submitButton {
         max-inline-size: 40%;
     }

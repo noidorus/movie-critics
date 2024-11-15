@@ -18,11 +18,11 @@
 }
 
 .button .bookmark::before {
-    content: "\e94e";
+    content: '\e94e';
 }
 
 .button:hover .bookmark::before {
-    content: "\e9df";
+    content: '\e9df';
 }
 
 .button:focus {

@@ -25,7 +25,15 @@ function CollectionPageDialog({
     const toast = useToastNotifications(error);
 
     return (
-        <Dialog header={title} onHide={onHideModal} visible={visible} draggable={false} headerClassName={styles.header} contentClassName={styles.content} className={styles.dialog}>
+        <Dialog
+            header={title}
+            onHide={onHideModal}
+            visible={visible}
+            draggable={false}
+            headerClassName={styles.header}
+            contentClassName={styles.content}
+            className={styles.dialog}
+        >
             <Toast ref={toast} />
             <div className={styles.buttons}>
                 <Button label="Отмена" className={styles.button} onClick={onHideModal} />

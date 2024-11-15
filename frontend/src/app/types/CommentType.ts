@@ -5,5 +5,5 @@ export type Comment = {
     author: {
         username: string;
         id: number;
-    }
+    };
 };

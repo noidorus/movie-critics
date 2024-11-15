@@ -19,18 +19,19 @@
     --header-button-hover-color: #5600b2;
     --header-button-active-color: #39007c;
     --header-button-border-color: #2a005d;
-    --text-light-color: #f9f9f9;
     --border-light: #e0e0e0;
-    --border-dark: #000;
-    --border-accent: #396bd0;
-    --submit-button-hover: #8d8a8a;
-    --action-button-main-color: #87aeea;
-    --action-button-active-color: #5782c1;
     --action-button-hover-color: #aeb6bd;
     --action-buttom-main-text-color: #202832;
+    --rating-star-color: #f9f9f9;
+    --rating-star-hover-color: #caa3ef;
+    --rating-star-focus-color: #924ed1;
+    --rating-star-selected-color: #5600b2;
     --text-grey-color: #bec4c9;
-    --text-accent-color: #396bd0;
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     --box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.2);
     --purple-box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
+    --checkbox-color: #924ed1;
+    --checkbox-border-color: #5600b2;
+    --loader-color: #5600b2;
+    --loader-secondary-color: #bec4c9;
 }

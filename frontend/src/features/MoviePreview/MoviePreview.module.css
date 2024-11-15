@@ -8,20 +8,12 @@
         transform 0.3s ease,
         box-shadow 0.3s ease;
     position: relative;
-    background-color: var(--secondary-background-color)
+    background-color: var(--secondary-background-color);
 }
 
 .movie:hover {
     transform: scale(1.05);
     box-shadow: var(--box-shadow-hover);
-}
-
-.posterDeleteWrapper {
-    position: relative;
-    inline-size: 100%;
-    block-size: 300px;
-    aspect-ratio: 2 / 3;
-    overflow: hidden; 
 }
 
 .poster {
@@ -47,7 +39,9 @@
     inset: 0;
     background-color: rgba(0, 0, 0, 0);
     opacity: 0;
-    transition: opacity 0.5s ease, background-color 0.5s ease;
+    transition:
+        opacity 0.5s ease,
+        background-color 0.5s ease;
     z-index: 1;
     pointer-events: none;
 }
@@ -83,16 +77,4 @@
 .title:hover {
     text-decoration: underline;
     cursor: pointer;
-}
-
-.deleteButton {
-    position: absolute;
-    display: none;
-    top: 10px;
-    right: 10px;
-    z-index: 2;
-}
-
-.movie:hover .deleteButton {
-    display: block;
 }

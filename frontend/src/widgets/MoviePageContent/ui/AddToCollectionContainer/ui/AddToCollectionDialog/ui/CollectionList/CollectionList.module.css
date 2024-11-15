@@ -12,10 +12,6 @@
     gap: 5px;
 }
 
-.checkbox {
-    color: red;
-}
-
 .error {
     color: var(--error-color);
 }

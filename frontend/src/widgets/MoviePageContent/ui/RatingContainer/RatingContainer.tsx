@@ -27,11 +27,11 @@ function RatingContainer({ movie, user, onRatingUpdate }: Props) {
             <div className={styles.avgRatingContainer}>
                 <p className={styles.avgRatingTitle}>Общая оценка </p>
                 <p className={styles.avgRating}>
-                        <span className={styles.avgRatingValue}>
-                            <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
-                            {avgRating}
-                        </span>
-                        /10
+                    <span className={styles.avgRatingValue}>
+                        <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
+                        {avgRating}
+                    </span>
+                    /10
                 </p>
             </div>
         </div>

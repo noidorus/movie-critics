@@ -34,7 +34,9 @@
 .rateButton:hover {
     background-color: var(--action-button-hover-color);
     color: var(--text-color);
-    transition: color 0.5s ease, background-color 0.5s ease;
+    transition:
+        color 0.5s ease,
+        background-color 0.5s ease;
 
     .value {
         color: var(--link-color-hover);

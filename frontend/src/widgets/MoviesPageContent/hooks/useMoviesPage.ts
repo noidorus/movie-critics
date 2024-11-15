@@ -39,7 +39,7 @@ export const useMoviesPage = () => {
                     dispatch(fetchMovies(currentPage + 1)).then(() => dispatch(setFetching(false)));
                 }
             },
-            { rootMargin: '250px' }
+            { rootMargin: '250px' },
         );
 
         if (loadMoreRef.current) {
@@ -55,6 +55,6 @@ export const useMoviesPage = () => {
 
     return useMemo(
         () => ({ movies, isLoading, error, isFetching, loadMoreRef }),
-        [movies, isLoading, error, isFetching]
+        [movies, isLoading, error, isFetching],
     );
 };

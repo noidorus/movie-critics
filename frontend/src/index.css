@@ -9,3 +9,32 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.p-checkbox.p-highlight .p-checkbox-box {
+    background: var(--checkbox-color);
+    border: 1px solid var(--checkbox-border-color);
+}
+
+.p-checkbox:not(.p-highlight):not(.p-disabled):hover .p-checkbox-box {
+    border: 1px solid var(--checkbox-border-color);
+}
+
+.p-checkbox:not(.p-highlight):not(.p-disabled):focus .p-checkbox-box {
+    border: 1px solid var(--checkbox-border-color);
+    box-shadow: var(--purple-box-shadow);
+}
+
+.p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover).p-highlight .p-checkbox-box {
+    background: var(--checkbox-color);
+    border: 1px solid var(--checkbox-border-color);
+    box-shadow: var(--purple-box-shadow);
+}
+
+.p-radiobutton.p-highlight .p-radiobutton-box {
+    background: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+}
+
+.p-radiobutton:hover .p-radiobutton-box {
+    border-color: var(--checkbox-color);
+}

@@ -18,7 +18,15 @@ function AddToCollectionDialog({ visible, onHide, movieId }: Props) {
     const { formVisible, toggleFormVisibility } = useFormVisibility();
 
     return (
-        <Dialog header="Добавить в подборку" visible={visible} onHide={onHide} draggable={false} headerClassName={styles.header} contentClassName={styles.content} className={styles.dialog}>
+        <Dialog
+            header="Добавить в подборку"
+            visible={visible}
+            onHide={onHide}
+            draggable={false}
+            headerClassName={styles.header}
+            contentClassName={styles.content}
+            className={styles.dialog}
+        >
             <CollectionList
                 collections={collections}
                 movieId={movieId}

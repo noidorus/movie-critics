@@ -2,6 +2,8 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { useAuthFormHandler } from '../../hooks/useAuthFormHandler';
 import styles from '../../AuthForms.module.css';
+import { useToastNotifications } from '../../hooks/useToastNotifications';
+import { Toast } from 'primereact/toast';
 
 export default function RegisterForm() {
     const {
@@ -14,9 +16,11 @@ export default function RegisterForm() {
         serverError,
         loading,
     } = useAuthFormHandler({ isLogin: false });
+    const toast = useToastNotifications(serverError, errors);
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
+            <Toast ref={toast} />
             <div className={styles.inputWrapper}>
                 <label htmlFor="login" className={styles.label}>
                     Имя пользователя
@@ -28,7 +32,6 @@ export default function RegisterForm() {
                     placeholder="Имя"
                     className={styles.input}
                 />
-                {errors.login && <p className={styles.error}>{errors.login}</p>}
             </div>
             <div className={styles.inputWrapper}>
                 <label htmlFor="email" className={styles.label}>
@@ -41,7 +44,6 @@ export default function RegisterForm() {
                     placeholder="example@example.com"
                     className={styles.input}
                 />
-                {errors.email && <p className={styles.error}>{errors.email}</p>}
             </div>
             <div className={styles.inputWrapper}>
                 <label htmlFor="password" className={styles.label}>
@@ -55,7 +57,6 @@ export default function RegisterForm() {
                     className={styles.input}
                     type="password"
                 />
-                {errors.password && <p className={styles.error}>{errors.password}</p>}
             </div>
             <Button
                 type="submit"
@@ -63,7 +64,6 @@ export default function RegisterForm() {
                 label={loading ? 'Загрузка...' : 'Зарегистрироваться'}
                 disabled={loading}
             />
-            {serverError && <p className={styles.error}>{serverError.message}</p>}
         </form>
     );
 }

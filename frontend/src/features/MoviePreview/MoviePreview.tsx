@@ -11,14 +11,12 @@ interface MoviePreviewProps {
 const MoviePreview: React.FC<MoviePreviewProps> = ({ movie, deleteButton }) => {
     return (
         <li key={movie.id} className={styles.movie}>
-            <div className={classNames(styles.posterWrapper, {
-                [styles.posterDeleteWrapper]: deleteButton
-            })}>
-                <img 
-                    src={movie.posterUrlPreview} 
-                    alt={movie.nameRu} 
-                    className={styles.poster} 
-                />
+            <div
+                className={classNames(styles.posterWrapper, {
+                    [styles.posterDeleteWrapper]: deleteButton,
+                })}
+            >
+                <img src={movie.posterUrlPreview} alt={movie.nameRu} className={styles.poster} />
             </div>
             {deleteButton && <div className={styles.deleteButton}>{deleteButton}</div>}
             <a className={styles.title} href={`/movies/${movie.id}`}>

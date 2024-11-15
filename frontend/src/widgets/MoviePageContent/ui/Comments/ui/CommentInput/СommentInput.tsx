@@ -27,23 +27,26 @@ function CommentInput({ filmId }: Props) {
                 disabled={loading}
             />
             <div className={styles.sendContainer}>
-            <Button
-                label="Отправить"
-                onClick={handleSubmit}
-                loading={loading}
-                className={styles.submitButton}
-                disabled={loading || !commentText || commentText.length > 400}
-            />
-            <p>
-                <span className={styles.counter}>
-                    <span className={classNames({
-                        [styles.counterValueError]: commentText.length > 400 || !commentText,
-                    })}>
-                    {commentText.length}
+                <Button
+                    label="Отправить"
+                    onClick={handleSubmit}
+                    loading={loading}
+                    className={styles.submitButton}
+                    disabled={loading || !commentText || commentText.length > 400}
+                />
+                <p>
+                    <span className={styles.counter}>
+                        <span
+                            className={classNames({
+                                [styles.counterValueError]:
+                                    commentText.length > 400 || !commentText,
+                            })}
+                        >
+                            {commentText.length}
+                        </span>
+                        /400
                     </span>
-                    /400
-                </span>
-            </p>
+                </p>
             </div>
         </div>
     );

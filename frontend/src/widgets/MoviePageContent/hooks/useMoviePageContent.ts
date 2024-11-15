@@ -76,6 +76,15 @@ export function useMoviePageContent() {
             commentsLoading,
             commentsError,
         }),
-        [movie, isLoading, error, user, handleRatingUpdate, comments, commentsLoading, commentsError,],
+        [
+            movie,
+            isLoading,
+            error,
+            user,
+            handleRatingUpdate,
+            comments,
+            commentsLoading,
+            commentsError,
+        ],
     );
 }

@@ -17,24 +17,17 @@ function CollectionTitle({ collection, userId, onDeleteCollection, onToggleVisib
             <h2 className={styles.title}>{collection.name}</h2>
             {userId === collection.authorId && (
                 <div className={styles.buttons}>
-                    <Button
-                        className={classNames(styles.button, 'pi', 'pi-trash')}
-                        onClick={onDeleteCollection}
-                        label=" "
-                    />
-                    <Button
-                        className={classNames(
-                            styles.button,
-                            'pi',
-                            collection.private ? 'pi-lock' : 'pi-lock-open',
-                            {
+                    <Button className={styles.button} onClick={onDeleteCollection} label=" ">
+                        <span className={classNames(styles.icon, 'pi', 'pi-trash')}> </span>
+                    </Button>
+                    <Button className={styles.button} onClick={onToggleVisibility} label=" ">
+                        <span
+                            className={classNames(styles.icon, 'pi', {
                                 'pi-lock': collection.private,
                                 'pi-lock-open': !collection.private,
-                            },
-                        )}
-                        onClick={onToggleVisibility}
-                        label=" "
-                    />
+                            })}
+                        ></span>
+                    </Button>
                 </div>
             )}
         </div>

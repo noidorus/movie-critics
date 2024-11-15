@@ -12,8 +12,8 @@
 
 .loader {
     padding: 25px;
-    border: 5px solid var(--border-light);
-    border-top: 5px solid var(--border-accent);
+    border: 5px solid var(--loader-secondary-color);
+    border-top: 5px solid var(--loader-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
