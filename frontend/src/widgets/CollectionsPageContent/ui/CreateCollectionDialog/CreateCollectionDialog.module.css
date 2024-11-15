@@ -1,0 +1,16 @@
+.dialog {
+    min-inline-size: 30%;
+    min-block-size: 20%;
+}
+
+.header {
+    background-color: var(--secondary-background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content {
+    background-color: var(--secondary-background-color);
+}

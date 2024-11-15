@@ -41,10 +41,13 @@ export default function CollectionsPageContent({
                 <h2 className={styles.title}>{title}</h2>
                 {user && (
                     <Button
-                        className={classNames(styles.button, 'pi', 'pi-plus')}
+                        className={styles.button}
                         onClick={() => setVisible(true)}
                         label=" "
-                    />
+                    >
+                        <span className={classNames(styles.icon, 'pi', 'pi-plus')}>
+                        </span>
+                    </Button>
                 )}
             </div>
             {collections.length ? (
