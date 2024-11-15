@@ -2,6 +2,19 @@
     margin-block-start: 10px;
 }
 
+.dialog {
+    min-inline-size: 30%;
+    min-block-size: 50%;
+}
+
 .header {
-    background-color: red;
+    background-color: var(--secondary-background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content {
+    background-color: var(--secondary-background-color);
 }

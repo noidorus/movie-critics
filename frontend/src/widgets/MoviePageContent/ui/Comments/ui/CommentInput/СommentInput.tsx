@@ -1,9 +1,11 @@
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
-import styles from './CommentInput.module.css';
 import { useInput } from './hooks/useInput';
+import { useToastNotifications } from './hooks/useToastNotifications';
+import { Toast } from 'primereact/toast';
 import React from 'react';
 import classNames from 'classnames';
+import styles from './CommentInput.module.css';
 
 type Props = {
     filmId: number;
@@ -11,9 +13,11 @@ type Props = {
 
 function CommentInput({ filmId }: Props) {
     const { commentText, setCommentText, handleSubmit, loading, error } = useInput(filmId);
+    const toast = useToastNotifications(error);
 
     return (
         <div className={styles.commentInputContainer}>
+            <Toast ref={toast} />
             <InputTextarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
@@ -22,7 +26,6 @@ function CommentInput({ filmId }: Props) {
                 className={styles.textarea}
                 disabled={loading}
             />
-            {error && <p className={styles.error}>{error}</p>}
             <div className={styles.sendContainer}>
             <Button
                 label="Отправить"

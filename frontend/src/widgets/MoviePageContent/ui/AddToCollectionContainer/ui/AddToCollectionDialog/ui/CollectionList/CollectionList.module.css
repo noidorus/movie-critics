@@ -1,13 +1,19 @@
 .collections {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
+    color: var(--text-color);
+    margin-block-end: 20px;
 }
 
 .collection {
     display: flex;
     flex-direction: row;
-    gap: 3px;
+    gap: 5px;
+}
+
+.checkbox {
+    color: red;
 }
 
 .error {

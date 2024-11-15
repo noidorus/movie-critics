@@ -1,5 +1,10 @@
 .collection {
     display: flex;
     flex-direction: row;
-    gap: 3px;
+    gap: 5px;
+    margin-block-end: 10px;
+}
+
+.label {
+    color: var(--text-color);
 }

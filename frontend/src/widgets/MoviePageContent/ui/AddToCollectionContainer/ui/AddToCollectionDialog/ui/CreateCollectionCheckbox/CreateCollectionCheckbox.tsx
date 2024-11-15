@@ -16,7 +16,7 @@ function CreateCollectionCheckbox({ formVisible, toggleFormVisibility }: Props) 
                 checked={formVisible}
                 onChange={(e: CheckboxChangeEvent) => toggleFormVisibility(e.checked || false)}
             />
-            <label htmlFor="createCollection">Создать подборку</label>
+            <label htmlFor="createCollection" className={styles.label}>Создать подборку</label>
         </div>
     );
 }

@@ -5,15 +5,25 @@
 }
 
 .textarea {
+    background-color: var(--input-color);
+    color: var(--text-color);
     min-inline-size: 100%;
     margin-bottom: 10px;
     resize: vertical;
+}
+
+.textarea:hover {
+    border: 1px solid var(--border-light);
 }
 
 .textarea:focus {
     outline: none;
     border: 1px solid var(--border-color);
     box-shadow: var(--purple-box-shadow);
+}
+
+.textarea::placeholder {
+    color: var(--text-color);
 }
 
 .error {

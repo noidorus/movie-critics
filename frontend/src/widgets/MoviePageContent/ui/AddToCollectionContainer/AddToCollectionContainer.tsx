@@ -15,8 +15,8 @@ function AddToCollectionContainer({ movieId }: Props) {
     return (
         <>
             <Button className={styles.button} onClick={() => setVisible(true)}>
-    <span className={classNames('pi', styles.bookmark, 'pi-bookmark')}></span>
-</Button>
+                <span className={classNames('pi', styles.bookmark, 'pi-bookmark')}></span>
+            </Button>
             <AddToCollectionDialog visible={visible} onHide={onHide} movieId={movieId} />
         </>
     );
