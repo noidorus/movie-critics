@@ -24,7 +24,6 @@ export class SentryInterceptor implements NestInterceptor {
       catchError((error) => {
         // Отправляем в Sentry только ошибки с кодом статуса 500 и TypeError
         if (error instanceof HttpException && error.getStatus() === 500) {
-          console.log('error');
           Sentry.captureException(error);
         } else if (error instanceof TypeError) {
           Sentry.captureException(error);
