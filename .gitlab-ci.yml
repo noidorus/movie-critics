@@ -1,0 +1,40 @@
+default:
+  image: node:20
+
+stages:
+  - install
+  - validate
+  - build
+
+install_backend:
+  stage: install
+  script:
+    - echo "Installing backend dependencies"
+    - cd backend && yarn install --frozen-lockfile
+  artifacts:
+    paths:
+      - backend/node_modules
+
+prettier-check_backend:
+  stage: validate
+  dependencies:
+    - install_backend
+  script:
+    - echo "Prettier checking backend"
+    - cd backend && yarn format:check
+
+lint-test_backend:
+  stage: validate
+  dependencies:
+    - install_backend
+  script:
+    - echo "Linting  backend"
+    - cd backend && yarn lint
+
+build_backend:
+  stage: build
+  dependencies:
+    - install_backend
+  script:
+    - echo "Building backend"
+    - cd backend && yarn build

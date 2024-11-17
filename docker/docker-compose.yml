@@ -1,0 +1,91 @@
+services:
+  node-server:
+    build:
+      context: ..
+      dockerfile: docker/server.Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: '0.0.0.0'
+      PORT: '3000'
+    env_file:
+      - ../backend/.env.sample
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+    volumes:
+      - ../logs:/log/app
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+      - loki
+    networks:
+      - app-network
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+  postgres:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../backend/.env.sample
+    networks:
+      - app-network
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ../promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - ../logs:/log/app
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    depends_on:
+      - node-server
+    networks:
+      - app-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    networks:
+      - app-network
+    volumes:
+      - ../prometheus.yml:/etc/prometheus/prometheus.yml
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    networks:
+      - app-network
+    volumes:
+      - loki-storage:/etc/loki
+    command: -config.file=/etc/loki/local-config.yaml
+
+volumes:
+  grafana-storage:
+  loki-storage:
+  postgres:
+
+
+networks:
+  app-network:
+    driver: bridge
+
+# docker compose -f ./docker/docker-compose.yml -p docker up -d
+# docker ps
+# docker exec -it 9a512db803a0 sh
+# node dist/prisma/seed.js
