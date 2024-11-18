@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Toast } from 'primereact/toast';
 
-interface ToastNotificationParams {
+type ToastNotificationParams = {
     severity?: 'success' | 'info' | 'warn' | 'error';
     summary?: string;
     detail: string | null;
