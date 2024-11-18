@@ -20,10 +20,6 @@ build_backend:
     - master
   script:
     - docker compose -f ./docker/docker-compose.prod.yml build
-    - echo $OAuth|docker login \
-      --username oauth \
-      --password-stdin \
-      cr.yandex
-    - docker tag node-server \
-      $DOCKER_IMAGE
+    - echo $OAuth|docker login --username oauth --password-stdin cr.yandex
+    - docker tag node-server $DOCKER_IMAGE
     - docker push $DOCKER_IMAGE
