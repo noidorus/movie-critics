@@ -1,5 +1,7 @@
 services:
   node-server:
+    # image: node-server:latest
+    container_name: node-server
     build:
       context: ..
       dockerfile: docker/server.Dockerfile
