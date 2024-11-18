@@ -4,7 +4,11 @@ default:
 stages:
   - install
   - validate
-  - build
+  - deploy
+
+cache:
+  paths:
+    - '**/node_modules'
 
 install_backend:
   stage: install
@@ -31,10 +35,9 @@ lint-test_backend:
     - echo "Linting  backend"
     - cd backend && yarn lint
 
-build_backend:
-  stage: build
-  dependencies:
-    - install_backend
+delivery_backend:
+  stage: deploy
+  only:
+    - master
   script:
-    - echo "Building backend"
-    - cd backend && yarn build
+    - docker compose -f ./docker/docker-compose.yml -p docker up -d
