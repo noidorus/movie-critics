@@ -1,6 +1,6 @@
 services:
   node-server:
-    # image: node-server:latest
+    image: node-server:latest
     container_name: node-server
     build:
       context: ..
@@ -11,7 +11,8 @@ services:
       HOST: '0.0.0.0'
       PORT: '3000'
     env_file:
-      - ../backend/.env.sample
+      # - ../backend/.env.sample
+      - $env
     networks:
       - app-network
     depends_on:
@@ -38,7 +39,8 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - ../backend/.env.sample
+      # - ../backend/.env.sample
+      - $env
     networks:
       - app-network
     volumes:
