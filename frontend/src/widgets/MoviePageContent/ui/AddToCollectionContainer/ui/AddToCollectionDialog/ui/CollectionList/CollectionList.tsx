@@ -24,7 +24,7 @@ function CollectionList({ collections, movieId, onChange, error }: CollectionLis
     return (
         <div className={styles.collections}>
             <Toast ref={toast} />
-            {collections.length === 0 && <p>У вас пока нет подборок</p>}
+            {!collections.length && <p>У вас пока нет подборок</p>}
             {collections.map((collection) => {
                 const isChecked = collection.films.some((film) => film.id === movieId);
 
