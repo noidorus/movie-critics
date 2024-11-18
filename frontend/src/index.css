@@ -40,7 +40,7 @@ code {
 }
 
 .p-toast .p-toast-message.p-toast-message-error {
-    background: rgba(255, 231, 230, 0.8);
+    background: rgba(255, 231, 230, 0.9);
     border: solid #ff5757;
     border-width: 0 0 0 6px;
     color: #ff5757;
