@@ -1,7 +1,7 @@
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { useInput } from './hooks/useInput';
-import { useToastNotifications } from './hooks/useToastNotifications';
+import { useToastNotifications } from '@/shared/hooks/useToastNotifications';
 import { Toast } from 'primereact/toast';
 import React from 'react';
 import classNames from 'classnames';
@@ -13,7 +13,11 @@ type Props = {
 
 function CommentInput({ filmId }: Props) {
     const { commentText, setCommentText, handleSubmit, loading, error } = useInput(filmId);
-    const toast = useToastNotifications(error);
+    const toast = useToastNotifications(
+        error
+            ? { severity: 'error', summary: 'Ошибка', detail: error }
+            : null
+    );
 
     return (
         <div className={styles.commentInputContainer}>

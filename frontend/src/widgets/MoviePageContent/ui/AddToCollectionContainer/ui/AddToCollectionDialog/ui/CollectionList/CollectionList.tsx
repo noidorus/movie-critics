@@ -1,7 +1,7 @@
 import { Checkbox } from 'primereact/checkbox';
 import { CheckboxChangeEvent } from 'primereact/checkbox';
 import { Collection } from '@/app/types/CollectionType';
-import { useToastNotifications } from './hooks/useToastNotifications';
+import { useToastNotifications } from '@/shared/hooks/useToastNotifications';
 import { Toast } from 'primereact/toast';
 import React from 'react';
 import styles from './CollectionList.module.css';
@@ -15,7 +15,11 @@ type CollectionListProps = {
 };
 
 function CollectionList({ collections, movieId, onChange, error }: CollectionListProps) {
-    const toast = useToastNotifications(error);
+    const toast = useToastNotifications(
+        error
+            ? { severity: 'error', summary: 'Ошибка', detail: error }
+            : null
+    );
 
     return (
         <div className={styles.collections}>

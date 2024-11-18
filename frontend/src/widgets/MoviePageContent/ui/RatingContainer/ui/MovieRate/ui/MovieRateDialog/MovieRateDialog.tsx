@@ -4,7 +4,7 @@ import { useMovieRateDialog } from './hooks/useMovieRateDialog';
 import styles from './MovieRateDialog.module.css';
 import React from 'react';
 import classNames from 'classnames';
-import { useToastNotifications } from './hooks/useToastNotifications';
+import { useToastNotifications } from '@/shared/hooks/useToastNotifications';
 import { Toast } from 'primereact/toast';
 
 type MovieRateDialogProps = {
@@ -24,7 +24,12 @@ function MovieRateDialog({
 }: MovieRateDialogProps) {
     const { selectedRating, setSelectedRating, handleRateMovie, loading, error, starContent } =
         useMovieRateDialog(movieId, onRatingUpdate, visible, userRating);
-    const toast = useToastNotifications(error);
+    const toast = useToastNotifications(
+        error
+            ? { severity: 'error', summary: 'Ошибка при выставлении рейтинга', detail: error }
+            : null
+    );
+        
 
     return (
         <Dialog

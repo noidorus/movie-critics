@@ -2,7 +2,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import styles from './CollectionPageDialog.module.css';
 import React from 'react';
-import { useToastNotifications } from './hooks/useToastNotifications';
+import { useToastNotifications } from '@/shared/hooks/useToastNotifications';
 import { Toast } from 'primereact/toast';
 
 type Props = {
@@ -22,8 +22,11 @@ function CollectionPageDialog({
     loading,
     error,
 }: Props) {
-    const toast = useToastNotifications(error);
-
+    const toast = useToastNotifications(
+        error
+            ? { severity: 'error', summary: 'Ошибка', detail: error }
+            : null
+    );
     return (
         <Dialog
             header={title}
