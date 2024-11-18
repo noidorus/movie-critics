@@ -1,41 +1,26 @@
 stages:
   # - install
   # - validate
-  # - build
-  - deploy
+  - build
+  # - deploy
 
-# cache:
-#   paths:
-#     - '**/node_modules'
+cache:
+  paths:
+    - '**/node_modules'
 
-# install_backend:
-#   stage: install
-#   script:
-#     - echo "Installing backend dependencies"
-#     - cd backend && yarn install --frozen-lockfile
-#   artifacts:
-#     paths:
-#       - backend/node_modules
+variables:
+  DOCKER_IMAGE: 'cr.yandex/$REGISTRY_ID/node-server:latest'
 
-# prettier-check_backend:
-#   stage: validate
-#   dependencies:
-#     - install_backend
-#   script:
-#     - echo "Prettier checking backend"
-#     - cd backend && yarn format:check
-
-# lint-test_backend:
-#   stage: validate
-#   dependencies:
-#     - install_backend
-#   script:
-#     - echo "Linting  backend"
-#     - cd backend && yarn lint
-
-deploy_backend:
-  stage: deploy
+build_backend:
+  stage: build
   only:
     - master
   script:
-    - docker compose -f ./docker/docker-compose.yml -p docker up -d
+    - docker compose -f ./docker/docker-compose.prod.yml build
+    - echo $OAuth|docker login \
+      --username oauth \
+      --password-stdin \
+      cr.yandex
+    - docker tag node-server \
+      $DOCKER_IMAGE
+    - docker push $DOCKER_IMAGE
