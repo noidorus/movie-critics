@@ -1,0 +1,25 @@
+services:
+  node-server:
+    image: node-server:latest
+    container_name: node-server
+    build:
+      context: ..
+      dockerfile: docker/server.Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: '0.0.0.0'
+      PORT: '3000'
+    env_file:
+      - ../backend/.env.production
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+# docker compose -f ./docker/docker-compose.yml -p docker up -d
+# docker ps
+# docker exec -it 9a512db803a0 sh
+# node dist/prisma/seed.js
