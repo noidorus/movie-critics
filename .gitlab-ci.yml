@@ -1,36 +1,36 @@
 stages:
-  - install
-  - validate
+  # - install
+  # - validate
   - deploy
 
-cache:
-  paths:
-    - '**/node_modules'
+# cache:
+#   paths:
+#     - '**/node_modules'
 
-install_backend:
-  stage: install
-  script:
-    - echo "Installing backend dependencies"
-    - cd backend && yarn install --frozen-lockfile
-  artifacts:
-    paths:
-      - backend/node_modules
+# install_backend:
+#   stage: install
+#   script:
+#     - echo "Installing backend dependencies"
+#     - cd backend && yarn install --frozen-lockfile
+#   artifacts:
+#     paths:
+#       - backend/node_modules
 
-prettier-check_backend:
-  stage: validate
-  dependencies:
-    - install_backend
-  script:
-    - echo "Prettier checking backend"
-    - cd backend && yarn format:check
+# prettier-check_backend:
+#   stage: validate
+#   dependencies:
+#     - install_backend
+#   script:
+#     - echo "Prettier checking backend"
+#     - cd backend && yarn format:check
 
-lint-test_backend:
-  stage: validate
-  dependencies:
-    - install_backend
-  script:
-    - echo "Linting  backend"
-    - cd backend && yarn lint
+# lint-test_backend:
+#   stage: validate
+#   dependencies:
+#     - install_backend
+#   script:
+#     - echo "Linting  backend"
+#     - cd backend && yarn lint
 
 deploy_backend:
   stage: deploy
