@@ -57,9 +57,17 @@
     transition: background-color 0.3s ease-in-out;
 }
 
-.button:focus {
+.button:focus,
+.buttonChecked:focus {
+    outline: none;
+    box-shadow: var(--transparent-box-shadow);
+    border: 1px solid transparent;
+}
+
+.button:focus-visible {
     outline: none;
     box-shadow: var(--purple-box-shadow);
+    border: 1px solid var(--border-color);
 }
 
 .buttonChecked,

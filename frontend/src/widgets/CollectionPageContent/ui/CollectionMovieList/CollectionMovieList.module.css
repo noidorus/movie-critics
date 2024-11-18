@@ -30,7 +30,13 @@
 .deleteButton:focus {
     outline: none;
     border: 1px solid transparent;
-    box-shadow: 0px 0px 0px 0px transparent;
+    box-shadow: var(--transparent-box-shadow);
+}
+
+.deleteButton:focus-visible {
+    outline: none;
+    border: 1px solid transparent;
+    box-shadow: var(--transparent-box-shadow);
     color: var(--icon-focus-color);
 }
 

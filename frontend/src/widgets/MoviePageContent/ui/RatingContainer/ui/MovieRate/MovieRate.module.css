@@ -45,6 +45,12 @@
 }
 
 .rateButton:focus {
+    border: 1px solid transparent;
+    outline: none;
+    box-shadow: var(--transparent-box-shadow);
+}
+
+.rateButton:focus-visible {
     border: 1px solid var(--input-border-color);
     outline: none;
     box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
