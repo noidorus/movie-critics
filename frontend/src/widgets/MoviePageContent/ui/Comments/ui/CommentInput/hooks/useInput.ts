@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { postComment } from '@/app/store/Comments/commentsThunks';
 import { postCommentRequestData } from '@/app/DTO/CommentsDTO';
 import { selectActionError, selectActionLoading } from '@/app/store/Comments/commentsSelectors';
@@ -16,9 +16,16 @@ export const useInput = (filmId: number) => {
             text: commentText,
             filmId,
         };
-        setCommentText('');
         dispatch(postComment(commentData));
     };
+
+    useEffect(() => {
+        if (error) {
+            return;
+        }
+
+        setCommentText('');
+    }, [error]);
 
     return {
         commentText,

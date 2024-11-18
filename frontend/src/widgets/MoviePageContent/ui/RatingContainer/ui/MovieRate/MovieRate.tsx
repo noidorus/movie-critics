@@ -11,16 +11,17 @@ type MovieRateProps = {
     movieId: number;
     ratings: Rating[];
     onRatingUpdate: () => void;
+    maxRating: number;
 };
 
-function MovieRate({ userId, movieId, ratings, onRatingUpdate }: MovieRateProps) {
+function MovieRate({ userId, movieId, ratings, onRatingUpdate, maxRating }: MovieRateProps) {
     if (!ratings) {
         return <div>Загрузка...</div>;
     }
 
     const { isDialogVisible, ratingLoading, userRating, openDialog, closeDialog, updateRating } =
         useMovieRate(userId, movieId, ratings);
-
+        
     return (
         <div className={styles.yourRatingContainer}>
             <p className={styles.title}>Ваша оценка</p>
@@ -30,7 +31,7 @@ function MovieRate({ userId, movieId, ratings, onRatingUpdate }: MovieRateProps)
                         <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
                         {userRating}
                     </span>
-                    /10
+                    /{maxRating}
                 </Button>
             ) : (
                 <Button className={styles.rateButton} onClick={openDialog} disabled={ratingLoading}>

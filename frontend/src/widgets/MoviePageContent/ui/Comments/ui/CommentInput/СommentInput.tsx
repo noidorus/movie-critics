@@ -19,6 +19,9 @@ function CommentInput({ filmId }: Props) {
             : null
     );
 
+    const counterValueError = commentText.length > 400 || !commentText;
+    const submitButtonDisabled = counterValueError || loading;
+
     return (
         <div className={styles.commentInputContainer}>
             <Toast ref={toast} />
@@ -36,14 +39,13 @@ function CommentInput({ filmId }: Props) {
                     onClick={handleSubmit}
                     loading={loading}
                     className={styles.submitButton}
-                    disabled={loading || !commentText || commentText.length > 400}
+                    disabled={submitButtonDisabled}
                 />
                 <p>
                     <span className={styles.counter}>
                         <span
                             className={classNames({
-                                [styles.counterValueError]:
-                                    commentText.length > 400 || !commentText,
+                                [styles.counterValueError]: counterValueError,
                             })}
                         >
                             {commentText.length}

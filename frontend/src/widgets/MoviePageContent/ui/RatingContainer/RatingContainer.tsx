@@ -9,9 +9,10 @@ type Props = {
     user: User | null;
     movie: Movie;
     onRatingUpdate: () => void;
+    maxRating: number;
 };
 
-function RatingContainer({ movie, user, onRatingUpdate }: Props) {
+function RatingContainer({ movie, user, onRatingUpdate, maxRating }: Props) {
     const avgRating = movie.avgRating || 0;
 
     return (
@@ -22,6 +23,7 @@ function RatingContainer({ movie, user, onRatingUpdate }: Props) {
                     movieId={movie.id}
                     ratings={movie.ratings}
                     onRatingUpdate={onRatingUpdate}
+                    maxRating={maxRating}
                 />
             )}
             <div className={styles.avgRatingContainer}>
@@ -31,7 +33,7 @@ function RatingContainer({ movie, user, onRatingUpdate }: Props) {
                         <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
                         {avgRating}
                     </span>
-                    /10
+                    /{maxRating}
                 </p>
             </div>
         </div>

@@ -33,6 +33,9 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
         return null;
     }
 
+    const counterValueError = collectionName.length > 30 || !collectionName;
+    const submitButtonDisabled = !collectionName || collectionName.length > 30 || createLoading || addMovieLoading;
+
     return (
         <>
             <Toast ref={toast} />
@@ -52,7 +55,7 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
                         <span
                             className={classNames({
                                 [styles.counterValueError]:
-                                    collectionName.length > 30 || !collectionName,
+                                    counterValueError,
                             })}
                         >
                             {collectionName.length}
@@ -90,12 +93,7 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
                     type="submit"
                     label={createLoading || addMovieLoading ? 'Загрузка...' : 'Создать'}
                     className={styles.submitButton}
-                    disabled={
-                        !collectionName ||
-                        collectionName.length > 30 ||
-                        createLoading ||
-                        addMovieLoading
-                    }
+                    disabled={submitButtonDisabled}
                 />
             </form>
         </>

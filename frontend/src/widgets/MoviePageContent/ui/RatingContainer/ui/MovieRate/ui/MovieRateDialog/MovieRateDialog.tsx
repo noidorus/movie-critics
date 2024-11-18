@@ -29,7 +29,8 @@ function MovieRateDialog({
             ? { severity: 'error', summary: 'Ошибка при выставлении рейтинга', detail: error }
             : null
     );
-        
+    
+    const ratingOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     return (
         <Dialog
@@ -48,20 +49,23 @@ function MovieRateDialog({
                 <div className={styles.starContent}>{starContent}</div>
             </div>
             <div>
-                <div className={styles.ratingOptions}>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
+            <div className={styles.ratingOptions}>
+                {ratingOptions.map((value) => {
+                    const isSelected = selectedRating !== null && value <= selectedRating;
+                    
+                    return (
                         <Button
                             key={value}
                             className={classNames(styles.ratingButton, {
-                                [styles.selected]:
-                                    selectedRating !== null && value <= selectedRating,
+                                [styles.selected]: isSelected,
                             })}
                             onClick={() => setSelectedRating(value)}
                         >
                             <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
                         </Button>
-                    ))}
-                </div>
+                    );
+                })}
+            </div>
             </div>
             <Button
                 label={loading ? 'Загрузка...' : 'Оценить'}
