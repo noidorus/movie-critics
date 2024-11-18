@@ -33,8 +33,8 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
         return null;
     }
 
-    const counterValueError = collectionName.length > 30 || !collectionName;
-    const submitButtonDisabled = !collectionName || collectionName.length > 30 || createLoading || addMovieLoading;
+    const isCounterValueInvalid = collectionName.length > 30 || !collectionName;
+    const isSubmitButtonDisabled = !collectionName || collectionName.length > 30 || createLoading || addMovieLoading;
 
     return (
         <>
@@ -54,8 +54,7 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
                     <div className={styles.counter}>
                         <span
                             className={classNames({
-                                [styles.counterValueError]:
-                                    counterValueError,
+                                [styles.counterValueError]: isCounterValueInvalid,
                             })}
                         >
                             {collectionName.length}
@@ -93,7 +92,7 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
                     type="submit"
                     label={createLoading || addMovieLoading ? 'Загрузка...' : 'Создать'}
                     className={styles.submitButton}
-                    disabled={submitButtonDisabled}
+                    disabled={isSubmitButtonDisabled}
                 />
             </form>
         </>
