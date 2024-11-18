@@ -3,15 +3,15 @@ services:
     image: node-server:latest
     container_name: node-server
     build:
-      context: ..
-      dockerfile: docker/server.Dockerfile
+      context: ../..
+      dockerfile: docker/dev/server.Dockerfile
     ports:
       - "3000:3000"
     environment:
       HOST: '0.0.0.0'
       PORT: '3000'
     env_file:
-      - ../backend/.env.sample
+      - ../../backend/.env.sample
     networks:
       - app-network
     depends_on:
@@ -24,7 +24,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - ../backend/.env.sample
+      - ../../backend/.env.sample
     networks:
       - app-network
     volumes:
@@ -47,8 +47,8 @@ services:
   promtail:
     image: grafana/promtail:latest
     volumes:
-      - ../promtail-config.yaml:/etc/promtail/promtail-config.yaml
-      - ../logs:/log/app
+      - ../../promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - ../../logs:/log/app
       - /var/log:/var/log
       - /var/lib/docker/containers:/var/lib/docker/containers
       - /var/run/docker.sock:/var/run/docker.sock
@@ -65,7 +65,7 @@ services:
     networks:
       - app-network
     volumes:
-      - ../prometheus.yml:/etc/prometheus/prometheus.yml
+      - ../../prometheus.yml:/etc/prometheus/prometheus.yml
 
   loki:
     image: grafana/loki:latest
@@ -86,7 +86,7 @@ networks:
   app-network:
     driver: bridge
 
-# docker compose -f ./docker/docker-compose.yml -p docker up -d
+# docker compose -f ./docker/dev/docker-compose.yml -p docker up -d
 # docker ps
 # docker exec -it 9a512db803a0 sh
 # node dist/prisma/seed.js
