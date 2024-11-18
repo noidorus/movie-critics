@@ -12,6 +12,9 @@ variables:
   DOCKER_IMAGE: 'cr.yandex/$REGISTRY_ID/node-server:latest'
 
 build_backend:
+  image: docker:latest
+  services:
+    - docker:dind
   stage: build
   only:
     - master
