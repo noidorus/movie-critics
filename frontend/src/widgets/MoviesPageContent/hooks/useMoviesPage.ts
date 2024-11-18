@@ -26,18 +26,25 @@ export const useMoviesPage = () => {
     const loadMoreRef = useRef(null);
 
     useEffect(() => {
-        if (initialLoad) {
-            dispatch(fetchMovies(currentPage));
+        if (!initialLoad) {
+            return;
         }
+
+        dispatch(fetchMovies(currentPage));
     }, [dispatch, currentPage, initialLoad]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting && !isFetching && !isLoading && currentPage < totalPages) {
-                    dispatch(setFetching(true));
-                    dispatch(fetchMovies(currentPage + 1)).then(() => dispatch(setFetching(false)));
+                const shouldFetch =
+                    entry.isIntersecting && !isFetching && !isLoading && currentPage < totalPages;
+
+                if (!shouldFetch) {
+                    return;
                 }
+
+                dispatch(setFetching(true));
+                dispatch(fetchMovies(currentPage + 1)).then(() => dispatch(setFetching(false)));
             },
             { rootMargin: '250px' },
         );
