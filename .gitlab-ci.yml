@@ -1,6 +1,7 @@
 stages:
   # - install
   # - validate
+  # - build
   - deploy
 
 # cache:
