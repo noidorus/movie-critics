@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import styles from './CreateCollectionForm.module.css';
 import classNames from 'classnames';
-import { useToastNotifications } from './hooks/useToastNotifications';
+import { useToastNotifications } from '@/shared/hooks/useToastNotifications';
 
 export type Props = {
     onHide: () => void;
@@ -27,7 +27,12 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
         onSubmit,
     } = useCreateCollection(onHide, movieId);
 
-    const toast = useToastNotifications(createError, addMovieError);
+    const toast = useToastNotifications({
+        errors: {
+            createError,
+            addMovieError,
+        },
+    });
 
     if (!visible) {
         return null;

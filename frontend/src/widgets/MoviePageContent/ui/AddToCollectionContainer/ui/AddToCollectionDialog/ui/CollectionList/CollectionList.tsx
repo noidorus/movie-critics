@@ -15,9 +15,9 @@ type CollectionListProps = {
 };
 
 function CollectionList({ collections, movieId, onChange, error }: CollectionListProps) {
-    const toast = useToastNotifications(
-        error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
-    );
+    const toast = useToastNotifications({
+        notification: error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
+    });
 
     return (
         <div className={styles.collections}>

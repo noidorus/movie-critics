@@ -2,13 +2,19 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { useAuthFormHandler } from '../../hooks/useAuthFormHandler';
 import styles from '../../AuthForms.module.css';
-import { useToastNotifications } from '../../hooks/useToastNotifications';
+import { useToastNotifications } from '@/shared/hooks/useToastNotifications';
 import { Toast } from 'primereact/toast';
 
 export default function LoginForm() {
     const { login, password, handleFieldChange, handleSubmit, errors, serverError, loading } =
         useAuthFormHandler({ isLogin: true });
-    const toast = useToastNotifications(serverError, errors);
+
+    const toast = useToastNotifications({
+        errors: {
+            serverError,
+            validationErrors: errors,
+        },
+    });
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -44,6 +50,10 @@ export default function LoginForm() {
                 label={loading ? 'Загрузка...' : 'Войти'}
                 disabled={loading}
             />
+            {serverError && <p> {serverError.message}</p>}
+            {errors.email && <p> {errors.email}</p>}
+            {errors.password && <p> {errors.password}</p>}
+            {errors.login && <p> {errors.login}</p>}
         </form>
     );
 }

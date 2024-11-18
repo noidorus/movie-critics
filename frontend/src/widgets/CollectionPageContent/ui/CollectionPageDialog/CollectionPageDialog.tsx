@@ -22,9 +22,10 @@ function CollectionPageDialog({
     loading,
     error,
 }: Props) {
-    const toast = useToastNotifications(
-        error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
-    );
+    const toast = useToastNotifications({
+        notification: error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
+    });
+    
     return (
         <Dialog
             header={title}

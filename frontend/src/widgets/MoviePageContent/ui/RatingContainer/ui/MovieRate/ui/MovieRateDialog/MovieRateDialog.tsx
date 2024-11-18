@@ -24,11 +24,10 @@ function MovieRateDialog({
 }: MovieRateDialogProps) {
     const { selectedRating, setSelectedRating, handleRateMovie, loading, error, starContent } =
         useMovieRateDialog(movieId, onRatingUpdate, visible, userRating);
-    const toast = useToastNotifications(
-        error
-            ? { severity: 'error', summary: 'Ошибка при выставлении рейтинга', detail: error }
-            : null,
-    );
+        const toast = useToastNotifications({
+            notification: error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
+        });
+        
 
     const ratingOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
