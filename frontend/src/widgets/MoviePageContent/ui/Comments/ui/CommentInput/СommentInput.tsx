@@ -14,9 +14,7 @@ type Props = {
 function CommentInput({ filmId }: Props) {
     const { commentText, setCommentText, handleSubmit, loading, error } = useInput(filmId);
     const toast = useToastNotifications(
-        error
-            ? { severity: 'error', summary: 'Ошибка', detail: error }
-            : null
+        error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
     );
 
     const isCounterValueInvalid = commentText.length > 400 || !commentText;

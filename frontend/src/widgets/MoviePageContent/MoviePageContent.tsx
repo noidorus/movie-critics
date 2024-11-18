@@ -38,7 +38,12 @@ export default function MoviePageContent() {
     return (
         <div className={styles.content}>
             <TitleContainer movie={movie} />
-            <RatingContainer movie={movie} user={user} onRatingUpdate={handleRatingUpdate} maxRating={maxRating} />
+            <RatingContainer
+                movie={movie}
+                user={user}
+                onRatingUpdate={handleRatingUpdate}
+                maxRating={maxRating}
+            />
             {user ? (
                 <AddToCollectionContainer movieId={movie.id} />
             ) : (

@@ -21,7 +21,7 @@ function MovieRate({ userId, movieId, ratings, onRatingUpdate, maxRating }: Movi
 
     const { isDialogVisible, ratingLoading, userRating, openDialog, closeDialog, updateRating } =
         useMovieRate(userId, movieId, ratings);
-        
+
     return (
         <div className={styles.yourRatingContainer}>
             <p className={styles.title}>Ваша оценка</p>

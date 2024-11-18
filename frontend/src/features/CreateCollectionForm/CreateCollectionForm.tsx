@@ -34,7 +34,8 @@ export default function CreateCollectionForm({ onHide, visible, movieId }: Props
     }
 
     const isCounterValueInvalid = collectionName.length > 30 || !collectionName;
-    const isSubmitButtonDisabled = !collectionName || collectionName.length > 30 || createLoading || addMovieLoading;
+    const isSubmitButtonDisabled =
+        !collectionName || collectionName.length > 30 || createLoading || addMovieLoading;
 
     return (
         <>

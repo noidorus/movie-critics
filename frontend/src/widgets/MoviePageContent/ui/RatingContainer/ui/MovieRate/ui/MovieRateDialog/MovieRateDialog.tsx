@@ -27,9 +27,9 @@ function MovieRateDialog({
     const toast = useToastNotifications(
         error
             ? { severity: 'error', summary: 'Ошибка при выставлении рейтинга', detail: error }
-            : null
+            : null,
     );
-    
+
     const ratingOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     return (
@@ -49,23 +49,25 @@ function MovieRateDialog({
                 <div className={styles.starContent}>{starContent}</div>
             </div>
             <div>
-            <div className={styles.ratingOptions}>
-                {ratingOptions.map((value) => {
-                    const isSelected = selectedRating !== null && value <= selectedRating;
-                    
-                    return (
-                        <Button
-                            key={value}
-                            className={classNames(styles.ratingButton, {
-                                [styles.selected]: isSelected,
-                            })}
-                            onClick={() => setSelectedRating(value)}
-                        >
-                            <span className={classNames('pi', 'pi-star-fill', styles.star)}></span>
-                        </Button>
-                    );
-                })}
-            </div>
+                <div className={styles.ratingOptions}>
+                    {ratingOptions.map((value) => {
+                        const isSelected = selectedRating !== null && value <= selectedRating;
+
+                        return (
+                            <Button
+                                key={value}
+                                className={classNames(styles.ratingButton, {
+                                    [styles.selected]: isSelected,
+                                })}
+                                onClick={() => setSelectedRating(value)}
+                            >
+                                <span
+                                    className={classNames('pi', 'pi-star-fill', styles.star)}
+                                ></span>
+                            </Button>
+                        );
+                    })}
+                </div>
             </div>
             <Button
                 label={loading ? 'Загрузка...' : 'Оценить'}

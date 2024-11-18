@@ -8,9 +8,7 @@ interface ToastNotificationParams {
     life?: number;
 }
 
-export const useToastNotifications = (
-    notification: ToastNotificationParams | null
-) => {
+export const useToastNotifications = (notification: ToastNotificationParams | null) => {
     const toast = useRef<Toast>(null);
 
     useEffect(() => {
