@@ -1,0 +1,20 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Collection } from '@/app/types/CollectionType';
+import { handleFetchError, defaultErrorMessage } from '../../hooks';
+
+export const fetchCollections = createAsyncThunk<
+    Collection[],
+    void,
+    { rejectValue: { message: string; name?: string } }
+>('movies/fetchCollections', async (_, { rejectWithValue }) => {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/lists`);
+        if (!response.ok) {
+            throw new Error(defaultErrorMessage);
+        }
+
+        return await response.json();
+    } catch (error: unknown) {
+        return rejectWithValue(handleFetchError(error));
+    }
+});

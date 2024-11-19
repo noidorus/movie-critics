@@ -1,6 +1,7 @@
 import { Comment } from '@/app/types/CommentType';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchComments, postComment } from './commentsThunks';
+import { fetchComments } from './Thunks/fetchComments';
+import { postComment } from './Thunks/postComment';
 
 interface CommentsState {
     comments: Comment[];

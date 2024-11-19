@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Movie } from '@/app/types/MovieType';
-import { fetchMovieById, rateMovie } from './movieThunks';
+import { fetchMovieById } from './Thunks/fetchMovieById';
+import { rateMovie } from './Thunks/rateMovie';
 
 interface MovieState {
     idle: boolean;

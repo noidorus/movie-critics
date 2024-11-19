@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Collection } from '../../types/CollectionType';
-import { fetchCollections, fetchCollectionsByMe, createCollection } from './collectionsThunks';
+import { fetchCollections } from './Thunks/fetchCollections';
+import { fetchCollectionsByMe } from './Thunks/fetchCollectionsByMe';
+import { createCollection } from './Thunks/createCollection';
 
 interface CollectionsState {
     collections: Collection[];
@@ -76,7 +78,7 @@ const collectionsSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload
                     ? action.payload.message
-                    : 'Ошибка при получении коллекций. Попробуйте позже';
+                    : 'Ошибка при получении подборок. Попробуйте позже';
             })
             .addCase(fetchCollectionsByMe.pending, (state) => {
                 state.idle = false;

@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Collection } from '@/app/types/CollectionType';
-import {
-    fetchCollection,
-    changeVisibility,
-    deleteCollection,
-    deleteMovieFromCollection,
-    addMovieToCollection,
-} from './collectionThunks';
+import { fetchCollection } from './Thunks/fetchCollection';
+import { changeVisibility } from './Thunks/changeVisibility';
+import { deleteCollection } from './Thunks/deleteCollection';
+import { addMovieToCollection } from './Thunks/addMovieToCollection';
+import { deleteMovieFromCollection } from './Thunks/deleteMovieFromCollection';
 
 interface CollectionState {
     collection: Collection | null;

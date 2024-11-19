@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchMovies } from './moviesThunks';
+import { fetchMovies } from './Thunks/fetchMovies';
 import { MoviesResponseData } from '@/app/DTO/MoviesDTO';
 import { MoviePreviewData } from '@/app/types/MovieType';
 
