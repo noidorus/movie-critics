@@ -1,11 +1,45 @@
 .dialog {
     max-inline-size: 90%;
+    border-radius: 8px;
+    position: relative;
+}
+
+.dialogHeader {
+    background-color: var(--secondary-background-color);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+}
+
+.starContainer {
+    position: absolute;
+    top: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.starIcon {
+    font-size: 80px;
+    color: var(--link-color);
+}
+
+.starContent {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .dialogContent {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--secondary-background-color);
+    color: var(--text-color);
 }
 
 .title {
@@ -17,21 +51,36 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
+    gap: 1px;
     margin: 20px 0;
 }
 
 .ratingButton {
     margin: 0;
     min-inline-size: 40px;
-    padding: 8px;
-    font-size: 14px;
-    background-color: var(--action-button-main-color);
+    min-block-size: 40px;
+    color: var(--rating-star-color);
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.star {
+    font-size: 40px;
+}
+
+.ratingButton:hover {
+    color: var(--rating-star-hover-color);
 }
 
 .selected {
-    background-color: var(--action-button-active-color);
-    color: var(--text-light-color);
+    color: var(--rating-star-hover-color);
+}
+
+.ratingButton:focus {
+    outline: none;
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 0px transparent;
+    color: var(--rating-star-hover-color);
 }
 
 .errorMessage {
@@ -41,8 +90,20 @@
 }
 
 .submitButton {
-    margin-top: 20px;
-    min-inline-size: 100%;
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border-color);
+    color: var(--text-color);
+}
+
+.submitButton:hover {
+    background-color: var(--button-hover-color);
+    transition: background-color 0.5s ease;
+}
+
+.submitButton:focus {
+    outline: none;
+    border: 1px solid var(--button-border-color);
+    box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
 }
 
 @media (max-width: 768px) {

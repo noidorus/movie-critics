@@ -16,6 +16,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './styles/App.css';
 import './styles/variables.css';
+import './styles/fonts/fonts.css';
 
 export default function App() {
     const user = useAppSelector(selectUser);

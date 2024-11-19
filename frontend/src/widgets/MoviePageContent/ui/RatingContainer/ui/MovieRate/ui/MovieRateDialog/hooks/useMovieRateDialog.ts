@@ -1,11 +1,16 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { rateMovie } from '@/app/store/Movie/movieThunks';
 import { setRatingUpdated } from '@/app/store/Movie/movieSlice';
 import { selectRatingLoading, selectRatingError } from '@/app/store/Movie/movieSelectors';
 import { RateRequestData } from '@/app/DTO/MovieDTO';
 
-export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void) {
+export function useMovieRateDialog(
+    movieId: number,
+    onRatingUpdate: () => void,
+    visible: boolean,
+    userRating: number | undefined,
+) {
     const dispatch = useAppDispatch();
     const loading = useAppSelector(selectRatingLoading);
     const error = useAppSelector(selectRatingError);
@@ -33,6 +38,22 @@ export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void) 
         }
     }, [dispatch, selectedRating, movieId, onRatingUpdate]);
 
+    useEffect(() => {
+        if (visible) {
+            setSelectedRating(userRating ?? null);
+        }
+    }, [visible, userRating, setSelectedRating]);
+
+    let starContent;
+
+    if (selectedRating !== null) {
+        starContent = selectedRating.toString();
+    } else if (userRating !== undefined) {
+        starContent = userRating.toString();
+    } else {
+        starContent = '?';
+    }
+
     return useMemo(
         () => ({
             selectedRating,
@@ -40,7 +61,8 @@ export function useMovieRateDialog(movieId: number, onRatingUpdate: () => void) 
             handleRateMovie,
             loading,
             error,
+            starContent,
         }),
-        [selectedRating, memoizedSetSelectedRating, handleRateMovie, loading, error],
+        [selectedRating, memoizedSetSelectedRating, handleRateMovie, loading, error, starContent],
     );
 }

@@ -8,6 +8,7 @@
         transform 0.3s ease,
         box-shadow 0.3s ease;
     position: relative;
+    background-color: var(--secondary-background-color);
 }
 
 .movie:hover {
@@ -18,9 +19,48 @@
 .poster {
     inline-size: 100%;
     object-fit: cover;
-    border-bottom: 1px solid var(--border-light);
+    block-size: 100%;
     block-size: 300px;
     aspect-ratio: 2 / 3;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.posterDeleteWrapper {
+    position: relative;
+    inline-size: 100%;
+    block-size: 300px;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+}
+
+.posterDeleteWrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+    transition:
+        opacity 0.5s ease,
+        background-color 0.5s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.movie:hover .posterDeleteWrapper::before {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
+
+.deleteButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    display: none;
+}
+
+.movie:hover .deleteButton {
+    display: block;
 }
 
 .title {
@@ -30,22 +70,11 @@
     font-weight: 600;
     margin: 10px 0;
     padding: 10px;
-    color: var(--text-light-color);
+    color: var(--text-color);
     text-decoration: none;
 }
 
 .title:hover {
     text-decoration: underline;
     cursor: pointer;
-}
-
-.deleteButton {
-    position: absolute;
-    display: none;
-    top: 10px;
-    right: 10px;
-}
-
-.movie:hover .deleteButton {
-    display: block;
 }

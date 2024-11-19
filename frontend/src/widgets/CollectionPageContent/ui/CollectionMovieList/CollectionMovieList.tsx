@@ -3,6 +3,7 @@ import { Button } from 'primereact/button';
 import { Movie } from '@/app/types/MovieType';
 import styles from './CollectionMovieList.module.css';
 import React from 'react';
+import classNames from 'classnames';
 
 interface Props {
     films: Movie[];
@@ -24,10 +25,11 @@ function CollectionMovieList({ films, userId, onDeleteMovie }: Props) {
                     deleteButton={
                         userId && (
                             <Button
-                                icon="pi pi-trash"
-                                className="p-button-danger"
+                                className={styles.deleteButton}
                                 onClick={() => onDeleteMovie(movie.id)}
-                            />
+                            >
+                                <span className={classNames('pi', 'pi-trash', styles.icon)}></span>
+                            </Button>
                         )
                     }
                 />

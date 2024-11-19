@@ -1,5 +1,8 @@
 import { manageMovieRequestData } from '@/app/DTO/CollectionDTO';
-import { selectActionError, selectCollectionUpdated } from '@/app/store/Collection/collectionSelectors';
+import {
+    selectActionError,
+    selectCollectionUpdated,
+} from '@/app/store/Collection/collectionSelectors';
 import {
     addMovieToCollection,
     deleteMovieFromCollection,

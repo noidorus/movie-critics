@@ -33,10 +33,17 @@ export default function MoviePageContent() {
         );
     }
 
+    const MAX_RATING = 10;
+
     return (
         <div className={styles.content}>
             <TitleContainer movie={movie} />
-            <RatingContainer movie={movie} user={user} onRatingUpdate={handleRatingUpdate} />
+            <RatingContainer
+                movie={movie}
+                user={user}
+                onRatingUpdate={handleRatingUpdate}
+                maxRating={MAX_RATING}
+            />
             {user ? (
                 <AddToCollectionContainer movieId={movie.id} />
             ) : (

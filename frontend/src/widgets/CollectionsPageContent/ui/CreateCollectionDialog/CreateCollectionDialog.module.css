@@ -1,10 +1,6 @@
-.createCollection {
-    margin-block-start: 10px;
-}
-
 .dialog {
     min-inline-size: 30%;
-    min-block-size: 50%;
+    min-block-size: 20%;
 }
 
 .header {

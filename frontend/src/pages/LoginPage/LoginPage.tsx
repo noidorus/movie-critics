@@ -1,20 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Button } from 'primereact/button';
+import { useAuthNavigation } from '@/shared/hooks/useAuthNavigation';
 import LoginForm from '@/widgets/AuthForms/ui/LoginForm/LoginForm';
-import classNames from 'classnames';
 import styles from './LoginPage.module.css';
 
 export default function LoginPage() {
+    const handleNavigate = useAuthNavigation('/register');
+
     return (
         <>
             <div className={styles.wrapper}>
                 <h1 className={styles.title}>С возвращением!</h1>
                 <LoginForm />
-                <Link
-                    to="/register"
-                    className={classNames(styles.button, 'p-button', 'p-component')}
-                >
-                    <span className="p-button-label">Нет аккаунта?</span>
-                </Link>
+                <p className={styles.text}>
+                    Еще нет аккаунта?
+                    <Button className={styles.link} onClick={handleNavigate}>
+                        {' '}
+                        Зарегистрироваться{' '}
+                    </Button>
+                </p>
             </div>
         </>
     );

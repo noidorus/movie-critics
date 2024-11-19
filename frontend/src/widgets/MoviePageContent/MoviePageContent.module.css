@@ -1,13 +1,13 @@
 .content {
     max-inline-size: 95vw;
     margin: 0 auto;
-    padding: 15px;
-    background-color: var(--light-background-color);
+    padding: 20px;
+    background-color: var(--secondary-background-color);
     display: grid;
     grid-template-columns: 1fr auto auto;
     grid-template-rows: auto auto 1fr;
     grid-template-areas:
-        'title addButton rating'
+        'title rating addButton'
         'description description description'
         'comments comments comments';
     gap: 10px;
@@ -39,14 +39,14 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .content {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto 1fr;
         grid-template-areas:
-            'title title'
+            'title addButton'
             'description description'
-            'rating addButton'
+            'rating rating'
             'comments comments';
     }
 }

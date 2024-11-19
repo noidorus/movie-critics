@@ -48,3 +48,20 @@ ol {
     clip-path: inset(50%);
     white-space: nowrap;
 }
+
+.submitButton {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border-color);
+    color: var(--text-color);
+}
+
+.submitButton:hover {
+    background-color: var(--button-hover-color);
+    transition: background-color 0.5s ease;
+}
+
+.submitButton:focus {
+    outline: none;
+    border: 1px solid var(--button-border-color);
+    box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
+}

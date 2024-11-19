@@ -5,7 +5,7 @@ import { useMoviesPage } from './hooks/useMoviesPage';
 import styles from './MoviesPageContent.module.css';
 
 export default function MoviesPageContent() {
-    const { movies, isLoading, error } = useMoviesPage();
+    const { movies, isLoading, error, loadMoreRef } = useMoviesPage();
 
     if (isLoading && movies.length === 0) {
         return <Loader />;
@@ -24,6 +24,7 @@ export default function MoviesPageContent() {
                 ))}
             </ul>
             {isLoading && <p className={styles.loadingMessage}>Загрузка ещё...</p>}
+            <div ref={loadMoreRef} className={styles.trigger}></div>
         </>
     );
 }

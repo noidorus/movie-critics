@@ -1,9 +1,11 @@
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { useMovieRateDialog } from './hooks/useMovieRateDialog';
-import classNames from 'classnames';
 import styles from './MovieRateDialog.module.css';
 import React from 'react';
+import classNames from 'classnames';
+import { useToastNotifications } from '@/shared/hooks/useToastNotifications';
+import { Toast } from 'primereact/toast';
 
 type MovieRateDialogProps = {
     visible: boolean;
@@ -20,8 +22,13 @@ function MovieRateDialog({
     userRating,
     onRatingUpdate,
 }: MovieRateDialogProps) {
-    const { selectedRating, setSelectedRating, handleRateMovie, loading, error } =
-        useMovieRateDialog(movieId, onRatingUpdate);
+    const { selectedRating, setSelectedRating, handleRateMovie, loading, error, starContent } =
+        useMovieRateDialog(movieId, onRatingUpdate, visible, userRating);
+    const toast = useToastNotifications({
+        notification: error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
+    });
+
+    const RATING_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     return (
         <Dialog
@@ -31,26 +38,34 @@ function MovieRateDialog({
             closable
             draggable={false}
             className={styles.dialog}
+            contentClassName={styles.dialogContent}
+            headerClassName={styles.dialogHeader}
         >
-            <div className={styles.dialogContent}>
-                {userRating ? (
-                    <p>Ваша текущая оценка: {userRating}/10</p>
-                ) : (
-                    <p>У вас пока нет оценки для этого фильма.</p>
-                )}
+            <Toast ref={toast} />
+            <div className={styles.starContainer}>
+                <i className={classNames('pi pi-star-fill', styles.starIcon)} />
+                <div className={styles.starContent}>{starContent}</div>
+            </div>
+            <div>
                 <div className={styles.ratingOptions}>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
-                        <Button
-                            key={value}
-                            className={classNames(styles.ratingButton, {
-                                [styles.selected]: selectedRating === value,
-                            })}
-                            label={String(value)}
-                            onClick={() => setSelectedRating(value)}
-                        />
-                    ))}
+                    {RATING_OPTIONS.map((value) => {
+                        const isSelected = selectedRating !== null && value <= selectedRating;
+
+                        return (
+                            <Button
+                                key={value}
+                                className={classNames(styles.ratingButton, {
+                                    [styles.selected]: isSelected,
+                                })}
+                                onClick={() => setSelectedRating(value)}
+                            >
+                                <span
+                                    className={classNames('pi', 'pi-star-fill', styles.star)}
+                                ></span>
+                            </Button>
+                        );
+                    })}
                 </div>
-                {error && <p className={styles.errorMessage}>{error}</p>}
             </div>
             <Button
                 label={loading ? 'Загрузка...' : 'Оценить'}

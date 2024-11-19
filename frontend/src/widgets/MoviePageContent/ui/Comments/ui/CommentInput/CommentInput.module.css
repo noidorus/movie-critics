@@ -1,20 +1,34 @@
 .commentInputContainer {
     min-inline-size: 100%;
     margin: 0 auto;
-    padding: 15px;
     border-radius: 8px;
 }
 
-.title {
-    font-size: 1.3em;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
 .textarea {
+    background-color: var(--input-color);
+    color: var(--text-color);
     min-inline-size: 100%;
     margin-bottom: 10px;
     resize: vertical;
+}
+
+.textarea:hover {
+    border: 1px solid var(--border-light);
+}
+
+.textarea:focus {
+    outline: none;
+    border: 1px solid transparent;
+    box-shadow: var(--transparent-box-shadow);
+}
+
+.textarea:focus-visible {
+    outline: none;
+    box-shadow: var(--purple-box-shadow);
+}
+
+.textarea::placeholder {
+    color: var(--text-color);
 }
 
 .error {
@@ -23,6 +37,46 @@
     margin-bottom: 5px;
 }
 
+.sendContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .submitButton {
-    min-inline-size: 100%;
+    background-color: var(--button-color);
+    border: 1px solid var(--button-border-color);
+    color: var(--text-color);
+}
+
+.submitButton:hover {
+    background-color: var(--button-hover-color);
+    transition: background-color 0.5s ease;
+}
+
+.submitButton:focus {
+    outline: none;
+    border: 1px solid transparent;
+    box-shadow: var(--transparent-box-shadow);
+}
+
+.submitButton:focus-visible {
+    outline: none;
+    border: 1px solid var(--button-border-color);
+    box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
+}
+
+.counter {
+    color: var(--text-color);
+}
+
+.counterValueError {
+    color: var(--text-grey-color);
+}
+
+@media (max-width: 768px) {
+    .submitButton {
+        max-inline-size: 40%;
+    }
 }

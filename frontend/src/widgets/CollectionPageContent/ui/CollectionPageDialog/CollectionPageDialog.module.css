@@ -4,10 +4,11 @@
     align-items: center;
     justify-content: space-around;
     gap: 10px;
+    padding-block-start: 8px;
 }
 
 .button {
-    background-color: var(--action-button-main-color);
+    background-color: var(--button-color);
     padding: 10px 17px;
     border-radius: 6px;
     font-family: Inter, sans-serif;
@@ -15,12 +16,40 @@
     font-weight: 400;
     line-height: 19.36px;
     text-align: left;
-    color: var(--action-button-main-text-color);
+    color: var(--text-color);
     text-decoration: none;
-    border: 1px solid var(--border-accent);
+    border: 1px solid var(--button-border-color);
+}
+
+.button:hover {
+    background-color: var(--button-hover-color);
+    transition: background-color 0.5s ease;
+}
+
+.button:focus {
+    outline: none;
+    border: 1px solid var(--button-border-color);
+    box-shadow: 0 0 8px rgba(202, 163, 239, 0.6);
 }
 
 .error {
     font-size: 18px;
     color: var(--error-color);
+}
+
+.dialog {
+    min-inline-size: 30%;
+    min-block-size: 20%;
+}
+
+.header {
+    background-color: var(--secondary-background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content {
+    background-color: var(--secondary-background-color);
 }

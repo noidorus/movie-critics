@@ -16,14 +16,19 @@
     gap: 10px;
     margin-block-end: 10px;
     flex-wrap: wrap;
+    color: var(--text-color);
 }
 
 .genre {
     padding: 5px 10px;
-    border: 1px solid var(--border-dark);
+    border: 1px solid var(--border-light);
     border-radius: 10px;
     font-size: 14px;
     flex-shrink: 0;
+}
+
+.description {
+    color: var(--text-color);
 }
 
 @media (max-width: 1280px) {
