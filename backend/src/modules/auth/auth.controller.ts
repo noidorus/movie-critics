@@ -22,10 +22,11 @@ import { LocalAuthGuard, JwtAuthGuard, JwtRefreshGuard } from './guards';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({ summary: 'Register new user' })
   @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'User created' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
   @ApiResponse({ status: HttpStatus.CONFLICT, description: 'User already exists' })
-  @ApiOperation({ summary: 'Register new user' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Post('register')
   async signUp(@Body() dto: RegisterDTO) {
@@ -41,6 +42,7 @@ export class AuthController {
     headers: { 'Set-Cookie': { description: 'Access and refreshAccess session cookie' } },
   })
   @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Invalid credentials' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
   @HttpCode(HttpStatus.OK)
   @ApiBody({ type: LoginDTO })
   @Post('login')
@@ -66,6 +68,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Logout user' })
   @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'User logged out' })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Get('logout')
   async logout(@Res({ passthrough: true }) res: Response, @Req() req: RequestWithUser) {
