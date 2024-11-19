@@ -61,8 +61,8 @@ export class CommentsController {
   editComment(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
-    @Body() dto: EditCommentDTO,
+    @Body() { text }: EditCommentDTO,
   ): Promise<CommentEntity> {
-    return this.commentsService.edit(req.user.id, id, dto);
+    return this.commentsService.edit(req.user.id, id, text);
   }
 }
