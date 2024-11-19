@@ -11,7 +11,7 @@ type ToastNotificationParams = {
 type UseToastNotificationsParams = {
     notification?: ToastNotificationParams | null;
     errors?: {
-        serverError?: { message: string } | null;
+        serverError?: string | null;
         validationErrors?: Record<string, string>;
         createError?: string | null;
         addMovieError?: string | null;
@@ -45,7 +45,7 @@ export const useToastNotifications = ({
         toast.current?.show({
             severity: 'error',
             summary: 'Ошибка',
-            detail: errors.serverError.message,
+            detail: errors.serverError,
             life: 3000,
         });
     }, [errors.serverError]);
