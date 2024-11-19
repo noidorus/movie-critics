@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setField, clearAuthError } from '@/app/store/Auth/authSlice';
 import { useAppDispatch } from '@/app/store/hooks';
+import * as Sentry from '@sentry/react';
 
 export const useAuthNavigation = (navigateTo: string) => {
     const navigate = useNavigate();
@@ -18,8 +19,7 @@ export const useAuthNavigation = (navigateTo: string) => {
 
             navigate(navigateTo);
         } catch (error) {
-            //потом заменю на sentry
-            console.error('Ошибка:', error);
+            Sentry.captureException(error);
         }
     }, [dispatch, navigate]);
 

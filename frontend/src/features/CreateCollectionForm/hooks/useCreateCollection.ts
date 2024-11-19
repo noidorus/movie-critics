@@ -1,4 +1,5 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import * as Sentry from '@sentry/react';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
     setCollectionName,
@@ -64,6 +65,8 @@ export const useCreateCollection = (onHide: () => void, movieId?: number) => {
                 }
 
                 onHide();
+            } catch (error) {
+                Sentry.captureException(error);
             } finally {
                 setShouldSubmit(false);
             }
