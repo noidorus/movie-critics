@@ -28,7 +28,7 @@ function MovieRateDialog({
         notification: error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
     });
 
-    const ratingOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const RATING_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     return (
         <Dialog
@@ -48,7 +48,7 @@ function MovieRateDialog({
             </div>
             <div>
                 <div className={styles.ratingOptions}>
-                    {ratingOptions.map((value) => {
+                    {RATING_OPTIONS.map((value) => {
                         const isSelected = selectedRating !== null && value <= selectedRating;
 
                         return (
