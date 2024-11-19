@@ -16,7 +16,6 @@ function CommentInput({ filmId }: Props) {
     const toast = useToastNotifications({
         notification: error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
     });
-    
 
     const isCounterValueInvalid = commentText.length > 400 || !commentText;
     const isSubmitButtonDisabled = isCounterValueInvalid || loading;

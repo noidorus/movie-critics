@@ -57,6 +57,12 @@
     transition: background-color 0.3s ease-in-out;
 }
 
+.buttonChecked,
+.buttonChecked:hover {
+    background-color: var(--header-button-active-color);
+    cursor: default;
+}
+
 .button:focus,
 .buttonChecked:focus {
     outline: none;
@@ -68,12 +74,6 @@
     outline: none;
     box-shadow: var(--purple-box-shadow);
     border: 1px solid var(--border-color);
-}
-
-.buttonChecked,
-.buttonChecked:hover {
-    background-color: var(--header-button-active-color);
-    cursor: default;
 }
 
 .menuButton {

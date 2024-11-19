@@ -25,7 +25,7 @@ function CollectionPageDialog({
     const toast = useToastNotifications({
         notification: error ? { severity: 'error', summary: 'Ошибка', detail: error } : null,
     });
-    
+
     return (
         <Dialog
             header={title}
