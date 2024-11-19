@@ -1,6 +1,6 @@
 stages:
-  # - install
-  # - validate
+  - install
+  - validate
   - build
   # - deploy
 
@@ -11,12 +11,67 @@ cache:
 variables:
   DOCKER_IMAGE: 'cr.yandex/$REGISTRY_ID/node-server:latest'
 
+install_frontend:
+  stage: install
+  image: node:20
+  script:
+    - echo "Installing frontend dependencies"
+    - cd frontend && npm ci
+  artifacts:
+    paths:
+      - frontend/node_modules
+      - frontend/package-lock.json
+  rules:
+    - changes:
+        - frontend/**
+
+prettier-check_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Prettier checking frontend"
+    - cd frontend && npm run format
+  rules:
+    - changes:
+        - frontend/**
+
+lint-test_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Linting frontend"
+    - cd frontend && npm run lint
+  rules:
+    - changes:
+        - frontend/**
+
+stylelint-test_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Stylelinting frontend"
+    - cd frontend && npm run stylelint
+  rules:
+    - changes:
+        - frontend/**
+
 build_backend:
+  image: docker:latest
+  services:
+    - docker:dind
   stage: build
-  only:
-    - master
   script:
     - docker-compose build
     - echo $OAuth|docker login --username oauth --password-stdin cr.yandex
     - docker tag node-server $DOCKER_IMAGE
     - docker push $DOCKER_IMAGE
+  rules:
+    - changes:
+        - backend/**
+    - if: $CI_COMMIT_BRANCH == "master"
