@@ -48,6 +48,10 @@ export class FilmsService {
         include: { genres: true, countries: true, ratings: true },
       });
 
+      if (!film) {
+        throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
+      }
+
       const { plot, ...extraInfo } = await this.omdbService.getFilmByTitle(film.nameOriginal);
 
       return new FilmWithExtrasEntity({
@@ -56,7 +60,10 @@ export class FilmsService {
         description: film.description || plot,
         ...extraInfo,
       });
-    } catch {
+    } catch (err) {
+      if (err instanceof HttpException && err.getStatus() === 404) {
+        throw err;
+      }
       throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
     }
   }
@@ -75,7 +82,10 @@ export class FilmsService {
         update: { userRating: rating },
       });
     } catch (err) {
-      throw err;
+      if (err instanceof HttpException && err.getStatus() === 404) {
+        throw err;
+      }
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
