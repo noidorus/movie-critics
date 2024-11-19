@@ -1,10 +1,21 @@
-import { Body, Controller, Delete, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
 import { CreateCommentDTO, EditCommentDTO } from './dto';
 import { JwtAuthGuard } from '../auth/guards';
 import { RequestWithUser } from '../auth/auth.intrfaces';
 import { CommentsService } from './comments.service';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CommentEntity } from './comment.entity';
 
 @ApiTags('Comments')
@@ -13,17 +24,25 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post()
   @ApiOperation({ summary: 'Create comment' })
-  @ApiOkResponse({ type: CommentEntity })
+  @ApiResponse({ status: HttpStatus.CREATED, type: CommentEntity })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
+  @Post()
   create(@Req() req: RequestWithUser, @Body() dto: CreateCommentDTO): Promise<CommentEntity> {
     return this.commentsService.create(req.user.id, dto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
   @ApiOperation({ summary: 'Delete comment by id' })
-  @ApiOkResponse({ description: 'Comment deleted' })
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Comment not found' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id')
   delete(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
@@ -32,14 +51,18 @@ export class CommentsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
   @ApiOperation({ summary: 'Edit comment by id' })
-  @ApiOkResponse({ type: CommentEntity })
+  @ApiResponse({ status: HttpStatus.OK, type: CommentEntity })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Comment not found' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
+  @Patch(':id')
   editComment(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
-    @Body() dto: EditCommentDTO,
+    @Body() { text }: EditCommentDTO,
   ): Promise<CommentEntity> {
-    return this.commentsService.edit(req.user.id, id, dto);
+    return this.commentsService.edit(req.user.id, id, text);
   }
 }

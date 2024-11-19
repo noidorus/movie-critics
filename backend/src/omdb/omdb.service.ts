@@ -54,7 +54,6 @@ export class OmdbService {
 
       return info;
     } catch (err) {
-      // TODO: add logger
       Sentry.captureException(err);
       return defaultInfo;
     }

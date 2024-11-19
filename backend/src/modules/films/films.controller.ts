@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FilmsService } from './films.service';
 import { FilmsQueryDTO, RateFilmBodyDTO } from './dto';
 import { FilmsEntity, FilmWithExtrasEntity, RatingEntity, ShortInfoFilmEntity } from './entities';
@@ -13,24 +23,30 @@ import { CommentEntity } from '../comments/comment.entity';
 export class FilmsController {
   constructor(private readonly filmsService: FilmsService) {}
 
-  @Get()
   @ApiOperation({ summary: 'Get films data' })
-  @ApiOkResponse({ status: 200, type: FilmsEntity })
+  @ApiResponse({ status: HttpStatus.OK, type: FilmsEntity })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
+  @Get()
   async getFilms(@Query() query: FilmsQueryDTO) {
     const { page = 1, limit = 10 } = query;
     return await this.filmsService.getFilms(+page, +limit);
   }
 
-  @Get('search')
   @ApiOperation({ summary: 'Search films by name' })
-  @ApiOkResponse({ status: 200, type: [ShortInfoFilmEntity] })
+  @ApiResponse({ status: HttpStatus.OK, type: [ShortInfoFilmEntity] })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
+  @Get('search')
   async search(@Query('name') name: string): Promise<ShortInfoFilmEntity[]> {
     return await this.filmsService.search(name);
   }
 
-  @Get(':id')
   @ApiOperation({ summary: 'Get film data by id' })
-  @ApiOkResponse({ status: 200, type: FilmWithExtrasEntity })
+  @ApiResponse({ status: HttpStatus.OK, type: FilmWithExtrasEntity })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Film not found' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
+  @Get(':id')
   async getFilmById(
     @Param('id', PositiveNumberValidationPipe) id: number,
   ): Promise<FilmWithExtrasEntity> {
@@ -38,9 +54,13 @@ export class FilmsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Rate film' })
+  @ApiResponse({ status: HttpStatus.OK, type: RatingEntity })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Film not found' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
   @Post(':id/rate')
-  @ApiOperation({ summary: 'Rate film, auth required' })
-  @ApiOkResponse({ status: 200, type: RatingEntity })
   async rateFilm(
     @Req() req: RequestWithUser,
     @Param('id', PositiveNumberValidationPipe) id: number,
@@ -49,9 +69,11 @@ export class FilmsController {
     return this.filmsService.rateFilm(req.user.id, id, rating);
   }
 
-  @Get(':id/comments')
   @ApiOperation({ summary: 'Get comments by film id' })
-  @ApiOkResponse({ status: 200, type: [CommentEntity] })
+  @ApiResponse({ status: HttpStatus.OK, type: [CommentEntity] })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
+  @Get(':id/comments')
   async getCommentsByFilmId(
     @Param('id', PositiveNumberValidationPipe) id: number,
   ): Promise<CommentEntity[]> {

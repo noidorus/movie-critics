@@ -48,6 +48,10 @@ export class FilmsService {
         include: { genres: true, countries: true, ratings: true },
       });
 
+      if (!film) {
+        throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
+      }
+
       const { plot, ...extraInfo } = await this.omdbService.getFilmByTitle(film.nameOriginal);
 
       return new FilmWithExtrasEntity({
@@ -56,7 +60,10 @@ export class FilmsService {
         description: film.description || plot,
         ...extraInfo,
       });
-    } catch {
+    } catch (err) {
+      if (err instanceof HttpException && err.getStatus() === 404) {
+        throw err;
+      }
       throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
     }
   }
@@ -69,13 +76,26 @@ export class FilmsService {
         throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
       }
 
-      return await this.prisma.rating.upsert({
+      const ratingObj = await this.prisma.rating.findUnique({
         where: { filmId_userId: { filmId, userId } },
-        create: { filmId, userId, userRating: rating },
-        update: { userRating: rating },
       });
+
+      switch (true) {
+        case !ratingObj:
+          return await this.prisma.rating.create({ data: { filmId, userId, userRating: rating } });
+        case ratingObj.userRating === rating:
+          return ratingObj;
+        default:
+          return await this.prisma.rating.update({
+            where: { filmId_userId: { filmId, userId } },
+            data: { userRating: rating },
+          });
+      }
     } catch (err) {
-      throw err;
+      if (err instanceof HttpException && err.getStatus() === 404) {
+        throw err;
+      }
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

@@ -1,5 +1,5 @@
 import { PrismaService } from 'src/prismaDB/prisma.service';
-import { CreateCommentDTO, EditCommentDTO } from './dto';
+import { CreateCommentDTO } from './dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { CommentEntity } from './comment.entity';
@@ -30,16 +30,29 @@ export class CommentsService {
     }
   }
 
-  async edit(authorId: number, id: number, dto: EditCommentDTO): Promise<CommentEntity> {
+  async edit(authorId: number, id: number, text: string): Promise<CommentEntity> {
     try {
+      const comment = await this.prisma.comment.findUnique({
+        where: { id, authorId },
+        include: { author: { select: { username: true, id: true } } },
+      });
+
+      if (!comment) {
+        throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
+      }
+
+      if (comment.text === text) {
+        return comment;
+      }
+
       return await this.prisma.comment.update({
         where: { id, authorId },
-        data: { ...dto },
+        data: { text },
         include: { author: { select: { username: true, id: true } } },
       });
     } catch (err) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2025') {
-        throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
+      if (err instanceof HttpException && err.getStatus() === 404) {
+        throw err;
       }
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
