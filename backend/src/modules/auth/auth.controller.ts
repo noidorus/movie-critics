@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
+  HttpCode,
   HttpStatus,
   Post,
   Req,
@@ -22,8 +22,11 @@ import { LocalAuthGuard, JwtAuthGuard, JwtRefreshGuard } from './guards';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @ApiResponse({ status: 201, description: 'User created' })
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'User created' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.CONFLICT, description: 'User already exists' })
   @ApiOperation({ summary: 'Register new user' })
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Post('register')
   async signUp(@Body() dto: RegisterDTO) {
     return await this.authService.register(dto);
@@ -32,11 +35,13 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @ApiOperation({ summary: 'Login user' })
   @ApiResponse({
-    status: 200,
+    status: HttpStatus.OK,
     description: 'User logged in',
     type: UserEntity,
     headers: { 'Set-Cookie': { description: 'Access and refreshAccess session cookie' } },
   })
+  @ApiResponse({ status: HttpStatus.FORBIDDEN, description: 'Invalid credentials' })
+  @HttpCode(HttpStatus.OK)
   @ApiBody({ type: LoginDTO })
   @Post('login')
   async login(
@@ -44,8 +49,8 @@ export class AuthController {
     @Req() req: RequestWithUser,
   ): Promise<UserEntity> {
     const { user } = req;
-
     const { name, token, maxAge } = this.authService.createAccessToken({ username: user.username });
+
     res.cookie(name, token, { httpOnly: true, maxAge });
 
     await this.authService
@@ -59,7 +64,9 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Logout user' })
-  @ApiResponse({ status: 200, description: 'User logged out' })
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'User logged out' })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Get('logout')
   async logout(@Res({ passthrough: true }) res: Response, @Req() req: RequestWithUser) {
     const cookieNames = await this.authService.logout(req.user.username);
@@ -67,13 +74,12 @@ export class AuthController {
     for (const name of cookieNames) {
       res.clearCookie(name);
     }
-
-    throw new HttpException('User logged out', HttpStatus.OK);
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get user data' })
-  @ApiResponse({ status: 200, description: 'User authenticated', type: UserEntity })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Authentificated user', type: UserEntity })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
   @Get()
   async authentificate(@Req() req: RequestWithUser): Promise<UserEntity> {
     return new UserEntity(req.user);
@@ -87,11 +93,13 @@ export class AuthController {
     type: UserEntity,
     headers: { 'Set-Cookie': { description: 'Access session cookie' } },
   })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
   @Get('refresh')
   async refresh(@Res({ passthrough: true }) res: Response, @Req() req: RequestWithUser) {
     const { user } = req;
 
     const { name, token, maxAge } = this.authService.createAccessToken({ username: user.username });
+
     res.cookie(name, token, { httpOnly: true, maxAge });
 
     return new UserEntity(user);
