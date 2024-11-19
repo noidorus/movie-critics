@@ -1,4 +1,5 @@
 export default {
+    extends: ['stylelint-prettier/recommended'],
     rules: {
         'color-named': 'never',
         'block-no-empty': true,
@@ -6,6 +7,6 @@ export default {
         'no-descending-specificity': true,
         'rule-empty-line-before': 'always',
         'declaration-empty-line-before': 'never',
+        'prettier/prettier': true,
     },
-    ignore: ['first-nested'],
 };
