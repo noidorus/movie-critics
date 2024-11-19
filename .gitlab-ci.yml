@@ -61,17 +61,14 @@ stylelint-test_frontend:
     - changes:
         - frontend/**
 
+
 build_backend:
-  image: docker:latest
-  services:
-    - docker:dind
   stage: build
+  only:
+    - master
   script:
     - docker-compose build
     - echo $OAuth|docker login --username oauth --password-stdin cr.yandex
     - docker tag node-server $DOCKER_IMAGE
     - docker push $DOCKER_IMAGE
-  rules:
-    - changes:
-        - backend/**
-    - if: $CI_COMMIT_BRANCH == "master"
+
