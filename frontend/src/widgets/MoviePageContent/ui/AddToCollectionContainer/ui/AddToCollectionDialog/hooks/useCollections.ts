@@ -3,13 +3,11 @@ import {
     selectActionError,
     selectCollectionUpdated,
 } from '@/app/store/Collection/collectionSelectors';
-import {
-    addMovieToCollection,
-    deleteMovieFromCollection,
-} from '@/app/store/Collection/collectionThunks';
+import { addMovieToCollection } from '@/app/store/Collection/Thunks/addMovieToCollection';
+import { deleteMovieFromCollection } from '@/app/store/Collection/Thunks/deleteMovieFromCollection';
 import { selectCollections } from '@/app/store/Collections/collectionsSelectors';
 import { setCollectionUpdated } from '@/app/store/Collection/collectionSlice';
-import { fetchCollectionsByMe } from '@/app/store/Collections/collectionsThunks';
+import { fetchCollectionsByMe } from '@/app/store/Collections/Thunks/fetchCollectionsByMe';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 

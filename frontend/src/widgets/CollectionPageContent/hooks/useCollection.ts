@@ -9,7 +9,7 @@ import {
 } from '@/app/store/Collection/collectionSelectors';
 import { selectUser } from '@/app/store/Auth/authSelectors';
 import { setCollectionUpdated } from '@/app/store/Collection/collectionSlice';
-import { fetchCollection } from '@/app/store/Collection/collectionThunks';
+import { fetchCollection } from '@/app/store/Collection/Thunks/fetchCollection';
 import { useCallback, useEffect, useMemo } from 'react';
 
 export const useCollection = () => {

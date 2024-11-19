@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { clearAuthError, setField, validateForm } from '../../../app/store/Auth/authSlice';
-import { loginUser, registerUser } from '../../../app/store/Auth/authThunks';
+import { loginUser } from '../../../app/store/Auth/Thunks/loginUser';
+import { registerUser } from '../../../app/store/Auth/Thunks/registerUser';
 import {
     selectAuthError,
     selectLoading,

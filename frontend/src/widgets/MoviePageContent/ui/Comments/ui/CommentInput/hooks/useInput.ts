@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { useEffect, useState } from 'react';
-import { postComment } from '@/app/store/Comments/commentsThunks';
+import { postComment } from '@/app/store/Comments/Thunks/postComment';
 import { postCommentRequestData } from '@/app/DTO/CommentsDTO';
 import { selectActionError, selectActionLoading } from '@/app/store/Comments/commentsSelectors';
 

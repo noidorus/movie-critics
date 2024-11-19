@@ -5,7 +5,7 @@ import {
     setIsPrivate,
     validateCollectionName,
 } from '@/app/store/Collections/collectionsSlice';
-import { createCollection } from '@/app/store/Collections/collectionsThunks';
+import { createCollection } from '@/app/store/Collections/Thunks/createCollection';
 import { CreateCollectionRequestData } from '@/app/DTO/CollectionsDTO';
 import {
     selectActionError as selectCollectionsActionError,
@@ -18,7 +18,7 @@ import {
     selectActionError as selectCollectionActionError,
     selectActionLoading as selectCollectionActionLoading,
 } from '@/app/store/Collection/collectionSelectors';
-import { addMovieToCollection } from '@/app/store/Collection/collectionThunks';
+import { addMovieToCollection } from '@/app/store/Collection/Thunks/addMovieToCollection';
 
 export const useCreateCollection = (onHide: () => void, movieId?: number) => {
     const dispatch = useAppDispatch();
