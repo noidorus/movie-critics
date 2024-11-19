@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumberString, IsOptional, Min } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsOptional, IsPositive } from 'class-validator';
 
 export class FilmsQueryDTO {
+  @Type(() => Number)
   @IsOptional()
-  @IsNumberString()
+  @IsPositive()
   @ApiProperty({ required: false, format: 'int32', default: 1 })
-  @Min(1)
   page?: number;
 
+  @Type(() => Number)
   @IsOptional()
-  @IsNumberString()
   @ApiProperty({ required: false, format: 'int32', default: 10 })
-  @Min(1)
   limit?: number;
 }
