@@ -8,6 +8,7 @@ import { refreshAccessToken } from './Thunks/refreshAccessToken';
 import { logoutUser } from './Thunks/logoutUser';
 import { User } from '@/app/types/UserType';
 import { authSchema } from './validationSchema';
+import { defaultErrorMessage } from '../hooks';
 
 interface AuthState {
     user: User | null;
@@ -103,7 +104,7 @@ const authSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.error = action.payload
                     ? action.payload.message
-                    : 'Ошибка сервера. Попробуйте позже';
+                    : defaultErrorMessage;
                 state.isLoading = false;
                 state.user = null;
             })
@@ -117,7 +118,7 @@ const authSlice = createSlice({
             .addCase(registerUser.rejected, (state, action) => {
                 state.error = action.payload
                     ? action.payload.message
-                    : 'Ошибка сервера. Попробуйте позже';
+                    : defaultErrorMessage;
                 state.isLoading = false;
                 state.user = null;
             })
@@ -140,7 +141,7 @@ const authSlice = createSlice({
             .addCase(logoutUser.rejected, (state, action) => {
                 state.error = action.payload
                     ? action.payload.message
-                    : 'Ошибка сервера. Попробуйте позже';
+                    : defaultErrorMessage;
                 state.isLoading = false;
             })
             .addCase(refreshAccessToken.pending, (state) => {
