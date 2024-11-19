@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Length, Min } from 'class-validator';
 
 export class CreateCommentDTO {
   @ApiProperty({ type: String, example: 'text', required: true })
@@ -10,5 +10,6 @@ export class CreateCommentDTO {
   @ApiProperty({ type: Number, example: 1, required: true })
   @IsNumber()
   @IsNotEmpty()
+  @Min(1)
   filmId: number;
 }
