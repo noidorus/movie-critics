@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Button } from 'primereact/button';
+import { useAuthNavigation } from '@/shared/hooks/useAuthNavigation';
 import LoginForm from '@/widgets/AuthForms/ui/LoginForm/LoginForm';
 import styles from './LoginPage.module.css';
 
 export default function LoginPage() {
+    const handleNavigate = useAuthNavigation('/register');
+
     return (
         <>
             <div className={styles.wrapper}>
@@ -10,10 +13,10 @@ export default function LoginPage() {
                 <LoginForm />
                 <p className={styles.text}>
                     Еще нет аккаунта?
-                    <Link className={styles.link} to="/register">
+                    <Button className={styles.link} onClick={handleNavigate}>
                         {' '}
                         Зарегистрироваться{' '}
-                    </Link>
+                    </Button>
                 </p>
             </div>
         </>

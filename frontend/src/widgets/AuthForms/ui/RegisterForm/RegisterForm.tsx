@@ -70,10 +70,6 @@ export default function RegisterForm() {
                 label={loading ? 'Загрузка...' : 'Зарегистрироваться'}
                 disabled={loading}
             />
-            {serverError && <p> {serverError.message}</p>}
-            {errors.email && <p> {errors.email}</p>}
-            {errors.password && <p> {errors.password}</p>}
-            {errors.login && <p> {errors.login}</p>}
         </form>
     );
 }

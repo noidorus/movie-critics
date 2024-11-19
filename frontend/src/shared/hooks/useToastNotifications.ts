@@ -55,8 +55,6 @@ export const useToastNotifications = ({
             return;
         }
 
-        console.log('...', errors.validationErrors);
-
         Object.values(errors.validationErrors)
             .filter((error) => error)
             .forEach((error) => {
