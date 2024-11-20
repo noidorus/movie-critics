@@ -7,7 +7,6 @@ stages:
 cache:
   paths:
     - '**/node_modules'
-    - .cache/ms-playwright/
 
 variables:
   DOCKER_IMAGE: 'cr.yandex/$REGISTRY_ID/node-server:latest'
@@ -87,7 +86,7 @@ integration-test_frontend:
     - echo "Waiting for the server to start"
     - |
       for i in {1..30}; do
-        if curl -s http://localhost:3000; then
+        if curl -s http://localhost:5173; then
           break
         fi
         echo "Waiting for server..."
