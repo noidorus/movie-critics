@@ -5,7 +5,7 @@ describe('ErrorComponent', () => {
     it('если есть сообщение об ошибке, то оно отображается', () => {
         const errorMessage = 'Ошибка загрузки данных';
         render(<ErrorComponent error={errorMessage} />);
-        
+
         const errorElement = screen.getByText(errorMessage);
         expect(errorElement).toBeInTheDocument();
     });

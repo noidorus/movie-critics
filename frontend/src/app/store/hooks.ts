@@ -6,7 +6,7 @@ export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 
 export const DEFAULT_ERROR_MESSAGE = 'Ошибка сервера. Попробуйте позже или обратитесь в поддержку.';
-export const API_URL = import.meta.env.VITE_API_URL || "/api";
+export const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 export const handleFetchError = (error: unknown) => {
     Sentry.captureException(error);

@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 
-test('Если нажать на кнопку регистрации, то перенесет на страницу регистрации', async ({ page }) => {
+test('Если нажать на кнопку регистрации, то перенесет на страницу регистрации', async ({
+    page,
+}) => {
     await page.goto('http://localhost:5173/login');
 
     await page.getByRole('button', { name: 'Зарегистрироваться' }).click();
