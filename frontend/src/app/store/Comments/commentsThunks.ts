@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Comment } from '@/app/types/CommentType';
 import { postCommentRequestData } from '@/app/DTO/CommentsDTO';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'http://localhost:3000/api';
 
 export const fetchComments = createAsyncThunk<Comment[], number, { rejectValue: Error }>(
     'comments/fetchComments',

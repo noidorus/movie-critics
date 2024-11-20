@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Movie } from '@/app/types/MovieType';
 import { RateRequestData } from '@/app/DTO/MovieDTO';
 
-const API_URL = 'http://localhost:3001/api/films';
+const API_URL = 'http://localhost:3000/api/films';
 
 export const fetchMovieById = createAsyncThunk<Movie, number, { rejectValue: Error }>(
     'movies/fetchMovieById',

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '../../types/CollectionType';
 import { CreateCollectionRequestData } from '@/app/DTO/CollectionsDTO';
 
-const API_URL = 'http://localhost:3001/api/lists';
+const API_URL = 'http://localhost:3000/api/lists';
 
 export const fetchCollections = createAsyncThunk<Collection[], void, { rejectValue: Error }>(
     'movies/fetchCollections',
