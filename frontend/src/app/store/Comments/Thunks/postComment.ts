@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Comment } from '@/app/types/CommentType';
 import { postCommentRequestData } from '@/app/DTO/CommentsDTO';
-import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE, API_URL } from '../../hooks';
 
 export const postComment = createAsyncThunk<
     Comment,
@@ -9,7 +9,7 @@ export const postComment = createAsyncThunk<
     { rejectValue: Error }
 >('comments/postComment', async (commentData, { rejectWithValue }) => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/comments`, {
+        const response = await fetch(`${API_URL}/comments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { manageMovieRequestData } from '@/app/DTO/CollectionDTO';
-import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE, API_URL } from '../../hooks';
 
 export const addMovieToCollection = createAsyncThunk<
     void,
@@ -9,7 +9,7 @@ export const addMovieToCollection = createAsyncThunk<
 >('collection/addMovieToCollection', async (deleteMovieData, { rejectWithValue }) => {
     try {
         const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/lists/${deleteMovieData.collectionId}/films/${deleteMovieData.filmId}`,
+            `${API_URL}/lists/${deleteMovieData.collectionId}/films/${deleteMovieData.filmId}`,
             {
                 method: 'POST',
                 credentials: 'include',

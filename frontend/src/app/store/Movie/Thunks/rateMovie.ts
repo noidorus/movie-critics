@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Movie } from '@/app/types/MovieType';
 import { RateRequestData } from '@/app/DTO/MovieDTO';
-import { handleFetchError } from '../../hooks';
+import { handleFetchError, API_URL } from '../../hooks';
 
 export const rateMovie = createAsyncThunk<Movie, RateRequestData, { rejectValue: Error }>(
     'movies/rateMovie',
     async ({ rating, filmId }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/films/${filmId}/rate`, {
+            const response = await fetch(`${API_URL}/films/${filmId}/rate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '@/app/types/CollectionType';
 import { CreateCollectionRequestData } from '@/app/DTO/CollectionsDTO';
-import { handleFetchError } from '../../hooks';
+import { handleFetchError, API_URL } from '../../hooks';
 
 export const createCollection = createAsyncThunk<
     Collection,
@@ -9,7 +9,7 @@ export const createCollection = createAsyncThunk<
     { rejectValue: { message: string; name?: string } }
 >('movies/createCollection', async (collectionData, { rejectWithValue }) => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/lists`, {
+        const response = await fetch(`${API_URL}/lists`, {
             credentials: 'include',
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
