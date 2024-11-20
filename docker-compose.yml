@@ -3,7 +3,7 @@ services:
     image: node-server:latest
     container_name: node-server
     build:
-      dockerfile: server.Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:

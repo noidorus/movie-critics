@@ -7,6 +7,8 @@ import config from './config/config';
 import { validate } from './config/config.validation';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { LoggerModule } from 'nestjs-pino';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -18,8 +20,10 @@ import { LoggerModule } from 'nestjs-pino';
         level: process.env.LOG_LEVEL || 'info',
         formatters: { level: (label) => ({ level: label }) },
         mixin: () => ({ reqId: rTracer.id() }),
+        transport: { target: 'pino-pretty', options: { colorize: true, ignore: 'pid,hostname' } },
       },
     }),
+    ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', 'static') }),
     FilmsModule,
     AuthModule,
     ListsModule,
