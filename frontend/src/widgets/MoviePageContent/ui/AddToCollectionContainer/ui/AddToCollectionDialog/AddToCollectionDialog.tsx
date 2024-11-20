@@ -4,7 +4,7 @@ import { useFormVisibility } from './hooks/useFormVisibility';
 import CreateCollectionForm from '@/features/CreateCollectionForm/CreateCollectionForm';
 import CreateCollectionCheckbox from './ui/CreateCollectionCheckbox/CreateCollectionCheckbox';
 import CollectionList from './ui/CollectionList/CollectionList';
-import styles from './addToCollectionDialog.module.css';
+import styles from './AddToCollectionDialog.module.css';
 import React from 'react';
 
 type Props = {
