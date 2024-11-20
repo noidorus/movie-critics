@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { manageMovieRequestData } from '@/app/DTO/CollectionDTO';
-import { handleFetchError, defaultErrorMessage } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
 
 export const deleteMovieFromCollection = createAsyncThunk<
     void,
@@ -17,7 +17,7 @@ export const deleteMovieFromCollection = createAsyncThunk<
         );
 
         if (!response.ok) {
-            throw new Error(defaultErrorMessage);
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
     } catch (error: unknown) {
         return rejectWithValue(handleFetchError(error));

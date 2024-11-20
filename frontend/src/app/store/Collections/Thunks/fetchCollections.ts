@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '@/app/types/CollectionType';
-import { handleFetchError, defaultErrorMessage } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
 
 export const fetchCollections = createAsyncThunk<
     Collection[],
@@ -10,7 +10,7 @@ export const fetchCollections = createAsyncThunk<
     try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/lists`);
         if (!response.ok) {
-            throw new Error(defaultErrorMessage);
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
 
         return await response.json();

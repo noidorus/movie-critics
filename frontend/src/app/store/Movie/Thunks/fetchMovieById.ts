@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Movie } from '@/app/types/MovieType';
-import { handleFetchError, defaultErrorMessage } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
 
 export const fetchMovieById = createAsyncThunk<Movie, number, { rejectValue: Error }>(
     'movies/fetchMovieById',
@@ -8,7 +8,7 @@ export const fetchMovieById = createAsyncThunk<Movie, number, { rejectValue: Err
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/films/${id}`);
             if (!response.ok) {
-                throw new Error(defaultErrorMessage);
+                throw new Error(DEFAULT_ERROR_MESSAGE);
             }
 
             return await response.json();

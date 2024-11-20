@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Comment } from '@/app/types/CommentType';
-import { handleFetchError, defaultErrorMessage } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
 
 export const fetchComments = createAsyncThunk<Comment[], number, { rejectValue: Error }>(
     'comments/fetchComments',
@@ -10,7 +10,7 @@ export const fetchComments = createAsyncThunk<Comment[], number, { rejectValue: 
                 `${import.meta.env.VITE_API_URL}/films/${filmId}/comments`,
             );
             if (!response.ok) {
-                throw new Error(defaultErrorMessage);
+                throw new Error(DEFAULT_ERROR_MESSAGE);
             }
 
             return await response.json();

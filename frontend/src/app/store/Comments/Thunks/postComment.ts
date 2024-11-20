@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Comment } from '@/app/types/CommentType';
 import { postCommentRequestData } from '@/app/DTO/CommentsDTO';
-import { handleFetchError, defaultErrorMessage } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
 
 export const postComment = createAsyncThunk<
     Comment,
@@ -18,7 +18,7 @@ export const postComment = createAsyncThunk<
             body: JSON.stringify(commentData),
         });
         if (!response.ok) {
-            throw new Error(defaultErrorMessage);
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
 
         return await response.json();

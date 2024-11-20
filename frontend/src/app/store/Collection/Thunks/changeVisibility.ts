@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '@/app/types/CollectionType';
 import { visibilityRequestData } from '@/app/DTO/CollectionDTO';
-import { handleFetchError, defaultErrorMessage } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
 
 export const changeVisibility = createAsyncThunk<
     Collection,
@@ -20,7 +20,7 @@ export const changeVisibility = createAsyncThunk<
         );
 
         if (!response.ok) {
-            throw new Error(defaultErrorMessage);
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
 
         return await response.json();

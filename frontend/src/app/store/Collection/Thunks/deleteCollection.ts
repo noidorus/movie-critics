@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { handleFetchError, defaultErrorMessage } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
 
 export const deleteCollection = createAsyncThunk<void, number, { rejectValue: Error }>(
     'collection/deleteCollection',
@@ -11,7 +11,7 @@ export const deleteCollection = createAsyncThunk<void, number, { rejectValue: Er
             });
 
             if (!response.ok) {
-                throw new Error(defaultErrorMessage);
+                throw new Error(DEFAULT_ERROR_MESSAGE);
             }
         } catch (error: unknown) {
             return rejectWithValue(handleFetchError(error));
