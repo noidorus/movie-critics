@@ -2,7 +2,7 @@ stages:
   - install
   - validate
   - build
-  # - deploy
+  - deploy
 
 cache:
   paths:
@@ -11,6 +11,7 @@ cache:
 variables:
   DOCKER_IMAGE: 'cr.yandex/$REGISTRY_ID/node-server:latest'
 
+# FRONTEND
 install_frontend:
   stage: install
   image: node:20
@@ -82,7 +83,7 @@ integration-test_frontend:
     - echo "Installing Playwright browsers"
     - npx playwright install --with-deps
     - echo "Running frontend server"
-    - cd frontend && npm run dev & 
+    - cd frontend && npm run dev &
     - echo "Waiting for the server to start"
     - |
       for i in {1..30}; do
@@ -93,7 +94,7 @@ integration-test_frontend:
         sleep 1
       done
     - echo "Running integration tests"
-    - cd frontend && npm run integration 
+    - cd frontend && npm run integration
   artifacts:
     paths:
       - frontend/test-results/
@@ -102,11 +103,47 @@ integration-test_frontend:
     - changes:
         - frontend/**
 
-build_backend:
+# BACKEND
+install_backend:
+  stage: install
+  image: node:20
+  script:
+    - echo "Installing backend dependencies"
+    - cd backend && yarn install
+  artifacts:
+    paths:
+      - backend/node_modules
+      - backend/yarn.lock
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "back-dev"'
+
+prettier-check_backend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_backend
+  script:
+    - echo "Prettier checking backend"
+    - cd backend && yarn format
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "back-dev"'
+
+lint-test_backend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_backend
+  script:
+    - echo "Linting backend"
+    - cd backend && yarn lint
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "back-dev"'
+
+build_docker:
   stage: build
   image: docker
   services:
-   - docker:dind
+    - docker:dind
   only:
     - master
   script:
@@ -115,3 +152,17 @@ build_backend:
     - docker tag node-server $DOCKER_IMAGE
     - docker push $DOCKER_IMAGE
 
+deploy_docker:
+  stage: deploy
+  only:
+    - master
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh $SSH_USER@$VM_IP_ADDRESS "docker stop mc && docker rm mc && docker run --name mc --env-file .env -p 80:3000 -d $DOCKER_IMAGE && docker system prune -f"
