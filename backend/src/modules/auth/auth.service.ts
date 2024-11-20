@@ -54,9 +54,9 @@ export class AuthService {
   }
 
   async logout(username: string): Promise<[string, string]> {
-    await this.userService.removeRefreshToken(username);
-
-    return [this.jwt.name, this.refreshJwt.name];
+    return await this.userService.removeRefreshToken(username).then(() => {
+      return [this.jwt.name, this.refreshJwt.name];
+    });
   }
 
   async createRefreshToken({ username }: JwtPayload): Promise<JwtCookie> {
