@@ -7,6 +7,7 @@ stages:
 cache:
   paths:
     - '**/node_modules'
+    - .cache/ms-playwright/
 
 variables:
   DOCKER_IMAGE: 'cr.yandex/$REGISTRY_ID/node-server:latest'
@@ -75,12 +76,18 @@ unit-test_frontend:
 
 integration-test_frontend:
   stage: validate
-  image: node:20
+  image: mcr.microsoft.com/playwright:v1.40.0-focal
   dependencies:
     - install_frontend
   script:
-    - echo "Integration testing frontend"
+    - echo "Installing Playwright browsers"
+    - cd frontend && npx playwright install --with-deps
+    - echo "Running integration tests"
     - cd frontend && npm run integration
+  artifacts:
+    paths:
+      - frontend/test-results/
+    expire_in: 1 week
   rules:
     - changes:
         - frontend/**
