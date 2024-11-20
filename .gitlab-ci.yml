@@ -104,6 +104,9 @@ integration-test_frontend:
 
 build_backend:
   stage: build
+  image: docker
+  services:
+   - docker:dind
   only:
     - master
   script:
