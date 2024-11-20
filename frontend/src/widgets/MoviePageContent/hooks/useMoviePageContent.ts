@@ -18,7 +18,6 @@ import {
     selectError,
     selectCommentsUpdated,
 } from '@/app/store/Comments/commentsSelectors';
-import { setCommentsUpdated } from '@/app/store/Comments/commentsSlice';
 
 export function useMoviePageContent() {
     const { id } = useParams<{ id: string }>();
@@ -47,16 +46,14 @@ export function useMoviePageContent() {
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (ratingUpdated && id) {
+        if (ratingUpdated) {
             dispatch(fetchMovieById(Number(id)));
-            dispatch(setRatingUpdated(false));
         }
-    }, [ratingUpdated, dispatch, id]);
+    }, [ratingUpdated, dispatch]);
 
     useEffect(() => {
         if (commentsUpdated) {
             dispatch(fetchComments(Number(id)));
-            dispatch(setCommentsUpdated(false));
         }
     }, [commentsUpdated, dispatch, id]);
 
@@ -72,14 +69,6 @@ export function useMoviePageContent() {
             commentsLoading,
             commentsError,
         }),
-        [
-            movie,
-            isLoading,
-            error,
-            user,
-            comments,
-            commentsLoading,
-            commentsError,
-        ],
+        [movie, isLoading, error, user, comments, commentsLoading, commentsError],
     );
 }
