@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieById } from '@/app/store/Movie/Thunks/fetchMovieById';
 import { useAppSelector, useAppDispatch } from '@/app/store/hooks';
@@ -60,10 +60,6 @@ export function useMoviePageContent() {
         }
     }, [commentsUpdated, dispatch, id]);
 
-    const handleRatingUpdate = useCallback(() => {
-        dispatch(setRatingUpdated(true));
-    }, [dispatch]);
-
     return useMemo(
         () => ({
             movie,
@@ -71,7 +67,7 @@ export function useMoviePageContent() {
             isLoading,
             error,
             user,
-            handleRatingUpdate,
+            handleRatingUpdate: () => dispatch(setRatingUpdated(true)),
             comments,
             commentsLoading,
             commentsError,
@@ -81,7 +77,6 @@ export function useMoviePageContent() {
             isLoading,
             error,
             user,
-            handleRatingUpdate,
             comments,
             commentsLoading,
             commentsError,

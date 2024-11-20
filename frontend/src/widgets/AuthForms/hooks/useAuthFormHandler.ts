@@ -33,13 +33,6 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
         dispatch(clearAuthError());
     }, [dispatch]);
 
-    const handleFieldChange = useCallback(
-        (field: 'login' | 'email' | 'password', value: string) => {
-            dispatch(setField({ field, value }));
-        },
-        [dispatch],
-    );
-
     const handleSubmit = useCallback(
         (event: React.FormEvent) => {
             event.preventDefault();
@@ -77,12 +70,13 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
             login,
             email,
             password,
-            handleFieldChange,
+            handleFieldChange: (field: 'login' | 'email' | 'password', value: string) =>
+                dispatch(setField({ field, value })),
             handleSubmit,
             errors,
             serverError,
             loading,
         }),
-        [login, email, password, handleFieldChange, handleSubmit, errors, serverError, loading],
+        [login, email, password, handleSubmit, errors, serverError, loading],
     );
 };
