@@ -83,7 +83,8 @@ integration-test_frontend:
     - echo "Installing Playwright browsers"
     - npx playwright install --with-deps
     - echo "Running integration tests"
-    - cd frontend && npm run dev && npm run integration
+    - cd frontend && npm run dev & 
+    - npm run integration
   artifacts:
     paths:
       - frontend/test-results/
