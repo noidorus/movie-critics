@@ -165,4 +165,8 @@ deploy_docker:
     - ssh-keyscan $VM_IP_ADDRESS >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh $SSH_USER@$VM_IP_ADDRESS "docker stop mc && docker rm mc && docker run --name mc --env-file .env -p 80:3000 -d $DOCKER_IMAGE && docker system prune -f"
+    - ssh $SSH_USER@$VM_IP_ADDRESS \
+      "docker stop mc && \
+      docker rm mc && \
+      docker run --name mc --env-file .env -p 80:3000 -d $DOCKER_IMAGE && \
+      docker system prune -f"
