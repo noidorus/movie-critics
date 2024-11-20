@@ -36,7 +36,7 @@ export class CommentsController {
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete comment by id' })
-  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'NO CONTENT' })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Comment not found' })

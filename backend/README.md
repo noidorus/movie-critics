@@ -1,85 +1,52 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API "Movie Critics"
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Автор - Русских Родион
 
-## Description
+`API "Movie Critics"` - приложение с базой данных фильмов, где пользователи могут добавлять фильмы в свои списки, комментировать их и оценивать. Приложение обеспечивает аутентификацию пользователей, управление списками фильмов, взаимодействие с внешними API для получения информации о фильмах и систему комментариев для обмена мнениями. API реализовано в модульной структуре для упрощения поддержки и масштабирования.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Основной стэк:** NestJS, PrismaORM, PostgreSQL, Docker.
 
-## Project setup
+## Структура проекта
 
-```bash
-$ yarn install
-```
+---
 
-## Compile and run the project
+Навигация по важным файлам и директориям проекта
 
-```bash
-# development
-$ yarn run start
+- `Prisma` - директория в корне проекта, содержащая схему базы данных, миграции и seed файл.
+- `Modules` - директория, содержащая модули приложения. Каждый модуль реализует основную часть функциональности приложения и состоит из набора компонентов, обеспечивающих его работу.
+  - `Auth` - директория, содержащая module, controller, service, dto, guards и strategies для аутентификации в приложении.
+  - `Comments` - директория, содержащая module, service, controller и dto для создания комментариев к фильмам.
+  - `Films` - директория, содержащая module, service, controller, entities и dto для получения фильмов и комментариев к фильмам, а также выставления рейтинга.
+  - `Lists` - директория, содержащая module, service, controller, entities и dto для создания, получения, удаления и изменения видимости списков, добавления и удаления фильмов из списков.
+- `Services` - директория, содержащая сервисы, которые помогают в работе основных модулей.
+  - `Config` - директория для валидации и взаимодействия с **.env** файлом.
+  - `Omdb` - директория для взаимодействия с **OMDb API** и насыщения нашей базы данных фильмов.
+  - `Prisma` - директория для взаимодействия с **Prisma ORM**.
+  - `User` - директория, содержащая service, entity и dto для создания, получения пользователя и изменения refresh токена.
+- `Interceptors` – директория с перехватчиками, применяемыми к запросам и ответам в приложении.
+- `Pipes` - содержит пайпы, которые обрабатывают, валидируют и трансформируют входящие данные перед передачей в контроллеры.
+- `Utils` - содержит утилитарные функции, которые могут использоваться в различных модулях приложения. 
 
-# watch mode
-$ yarn run start:dev
+## Как использовать
 
-# production mode
-$ yarn run start:prod
-```
+---
 
-## Run tests
+Перед запуском приложения создать `.env.sample` файл c :
 
-```bash
-# unit tests
-$ yarn run test
+- `PORT` - порт на котором запустится сервер (указать 3000 так как на нем запустится docker)
+- `CLIENT_URL` - ссылка на клиент для cors policy
+- `SENTRY_DSN` - можно получить по [ссылке](https://sentry.io/)
+- `JWT_NAME` - имя для cookie access токена
+- `JWT_SECRET` - секретный токен для access cookie
+- `JWT_EXP_HOURS` - срок истечения в часах
+- `REFRESH_JWT_NAME` - имя для cookie refresh токена
+- `REFRESH_JWT_SECRET` - секретный токен для refresh cookie
+- `REFRESH_JWT_EXP_HOURS` - срок истечения в часах
+- `OMDB_API_URL_WITH_KEY` - ключ можно получить по [ссылке](https://www.omdbapi.com/)
+- `DATABASE_URL` - ссылка на PostgreSQL (пример ссылки - **postgresql://postgres:{password}@postgres:5432/mc?schema=public**)
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Запуск приложения командой `docker-compose up -d`
+Подключение к терминалу docker `docker exec -it node-server sh`
+Ввести команду для сидирования `node dist/prisma/seed.js`

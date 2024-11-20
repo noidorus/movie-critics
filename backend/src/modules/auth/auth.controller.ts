@@ -83,6 +83,8 @@ export class AuthController {
   @ApiOperation({ summary: 'Get user data' })
   @ApiResponse({ status: HttpStatus.OK, description: 'Authentificated user', type: UserEntity })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
   @Get()
   async authentificate(@Req() req: RequestWithUser): Promise<UserEntity> {
     return new UserEntity(req.user);
@@ -97,6 +99,8 @@ export class AuthController {
     headers: { 'Set-Cookie': { description: 'Access session cookie' } },
   })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found' })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
   @Get('refresh')
   async refresh(@Res({ passthrough: true }) res: Response, @Req() req: RequestWithUser) {
     const { user } = req;
