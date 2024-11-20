@@ -61,6 +61,29 @@ stylelint-test_frontend:
     - changes:
         - frontend/**
 
+unit-test_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Unit testing frontend"
+    - cd frontend && npm run test
+  rules:
+    - changes:
+        - frontend/**
+
+integration-test_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Integration testing frontend"
+    - cd frontend && npm run integration
+  rules:
+    - changes:
+        - frontend/**
 
 build_backend:
   stage: build

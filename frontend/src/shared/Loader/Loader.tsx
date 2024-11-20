@@ -2,8 +2,8 @@ import styles from './Loader.module.css';
 
 const Loader = () => {
     return (
-        <div className={styles.loaderContainer}>
-            <div className={styles.loader}></div>
+        <div className={styles.loaderContainer} role="presentation">
+            <div className={styles.loader} data-testid="loader"></div>
         </div>
     );
 };
