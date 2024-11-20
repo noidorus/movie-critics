@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { lastValueFrom, map } from 'rxjs';
-import { TypedConfigService } from 'src/config/typed-config.service';
+import { TypedConfigService } from 'src/services/config/typed-config.service';
 import { OmdbData, OmdbDataSummary } from './omdb.interface';
 import * as Sentry from '@sentry/nestjs';
 
@@ -49,7 +49,7 @@ export class OmdbService {
         boxOffice: this.validateValue(data.BoxOffice),
         actors: this.validateValue(data.Actors),
       };
-
+      console.log(info);
       await this.cacheManager.set(title, info);
 
       return info;

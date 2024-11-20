@@ -3,8 +3,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { TypedConfigService } from './config/typed-config.service';
-import { initSentry, SentryInterceptor } from './sentry';
+import { TypedConfigService } from './services/config/typed-config.service';
+import { SentryInterceptor } from './interceptors/SentryInterceptor';
+import * as Sentry from '@sentry/nestjs';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { Logger } from 'nestjs-pino';
 import rTracer from 'cls-rtracer';
 
@@ -13,7 +15,12 @@ async function bootstrap() {
 
   const configService = app.get(TypedConfigService);
 
-  initSentry(configService.get('sentryDsn'));
+  Sentry.init({
+    dsn: configService.get('sentryDsn'),
+    integrations: [nodeProfilingIntegration()],
+    tracesSampleRate: 1.0,
+  });
+
   app.useGlobalInterceptors(new SentryInterceptor());
   app.use(rTracer.expressMiddleware());
 

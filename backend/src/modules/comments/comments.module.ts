@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { PrismaService } from 'src/prismaDB/prisma.service';
+import { PrismaService } from 'src/services/prisma/prisma.service';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
 

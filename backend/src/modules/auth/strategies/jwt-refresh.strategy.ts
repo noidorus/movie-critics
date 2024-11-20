@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { User } from '@prisma/client';
 import { AuthService } from '../auth.service';
 import { JwtPayload } from '../auth.intrfaces';
-import { TypedConfigService } from 'src/config/typed-config.service';
+import { TypedConfigService } from 'src/services/config/typed-config.service';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh-token') {

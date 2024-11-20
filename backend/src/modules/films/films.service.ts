@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prismaDB/prisma.service';
+import { PrismaService } from 'src/services/prisma/prisma.service';
 import {
   FilmsEntity,
   FilmWithExtrasEntity,
@@ -7,7 +7,7 @@ import {
   ShortInfoFilmEntity,
 } from './entities';
 import { Rating } from '@prisma/client';
-import { OmdbService } from 'src/omdb/omdb.service';
+import { OmdbService } from 'src/services/omdb/omdb.service';
 import { calculateAvgRating } from 'src/utils/calculateAvgRating';
 import { CommentEntity } from '../comments/comment.entity';
 

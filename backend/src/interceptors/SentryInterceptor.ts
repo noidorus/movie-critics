@@ -6,16 +6,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import * as Sentry from '@sentry/nestjs';
-import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { catchError, Observable, throwError } from 'rxjs';
-
-export function initSentry(dsn: string) {
-  Sentry.init({
-    dsn,
-    integrations: [nodeProfilingIntegration()],
-    tracesSampleRate: 1.0,
-  });
-}
 
 @Injectable()
 export class SentryInterceptor implements NestInterceptor {
