@@ -27,7 +27,7 @@ export default function CollectionPage() {
     }
 
     if (!collection) {
-        return <ErrorComponent error="Коллекция не наидена" />;
+        return <ErrorComponent error="Подборка не наидена" />;
     }
 
     return (
