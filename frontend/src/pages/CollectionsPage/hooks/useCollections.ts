@@ -5,7 +5,7 @@ import {
     selectError,
     selectIdle,
 } from '@/app/store/Collections/collectionsSelectors';
-import { fetchCollections } from '@/app/store/Collections/collectionsThunks';
+import { fetchCollections } from '@/app/store/Collections/Thunks/fetchCollections';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 
 export const useCollections = () => {

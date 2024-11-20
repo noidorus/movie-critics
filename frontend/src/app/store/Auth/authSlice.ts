@@ -1,13 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import zod from 'zod';
-import { AuthError, LoginResponseData } from '@/app/DTO/AuthDTO';
-import { loginUser, registerUser, checkAuth, logoutUser, refreshAccessToken } from './authThunks';
+import { LoginResponseData } from '@/app/DTO/AuthDTO';
+import { loginUser } from './Thunks/loginUser';
+import { registerUser } from './Thunks/registerUser';
+import { checkAuth } from './Thunks/checkAuth';
+import { refreshAccessToken } from './Thunks/refreshAccessToken';
+import { logoutUser } from './Thunks/logoutUser';
 import { User } from '@/app/types/UserType';
 import { authSchema } from './validationSchema';
+import { DEFAULT_ERROR_MESSAGE } from '../hooks';
 
 interface AuthState {
     user: User | null;
-    error: AuthError | null;
+    error: string | null;
     isLoading: boolean;
     isRefreshLoading: boolean;
     formFields: {
@@ -96,11 +101,10 @@ const authSlice = createSlice({
                 state.error = null;
                 state.isLoading = false;
             })
-            .addCase(loginUser.rejected, (state, action: PayloadAction<AuthError | undefined>) => {
-                state.error = action.payload || {
-                    message: 'Ошибка сервера. Попробуйте позже.',
-                    status: 500,
-                };
+            .addCase(loginUser.rejected, (state, action) => {
+                state.error = action.payload
+                    ? action.payload.message
+                    : DEFAULT_ERROR_MESSAGE;
                 state.isLoading = false;
                 state.user = null;
             })
@@ -111,13 +115,13 @@ const authSlice = createSlice({
                 state.error = null;
                 state.isLoading = false;
             })
-            .addCase(
-                registerUser.rejected,
-                (state, action: PayloadAction<AuthError | undefined>) => {
-                    state.error = action.payload || { message: 'Ошибка', status: 500 };
-                    state.isLoading = false;
-                },
-            )
+            .addCase(registerUser.rejected, (state, action) => {
+                state.error = action.payload
+                    ? action.payload.message
+                    : DEFAULT_ERROR_MESSAGE;
+                state.isLoading = false;
+                state.user = null;
+            })
             .addCase(checkAuth.fulfilled, (state, action: PayloadAction<User>) => {
                 state.user = action.payload;
                 localStorage.setItem('user', JSON.stringify(action.payload));
@@ -134,11 +138,10 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 localStorage.removeItem('user');
             })
-            .addCase(logoutUser.rejected, (state, action: PayloadAction<AuthError | undefined>) => {
-                state.error = action.payload || {
-                    message: 'Ошибка при выходе',
-                    status: 500,
-                };
+            .addCase(logoutUser.rejected, (state, action) => {
+                state.error = action.payload
+                    ? action.payload.message
+                    : DEFAULT_ERROR_MESSAGE;
                 state.isLoading = false;
             })
             .addCase(refreshAccessToken.pending, (state) => {

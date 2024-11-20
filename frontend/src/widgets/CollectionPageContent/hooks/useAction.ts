@@ -1,10 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { selectActionLoading, selectActionError } from '@/app/store/Collection/collectionSelectors';
-import {
-    changeVisibility,
-    deleteCollection,
-    deleteMovieFromCollection,
-} from '@/app/store/Collection/collectionThunks';
+import { changeVisibility } from '@/app/store/Collection/Thunks/changeVisibility';
+import { deleteCollection } from '@/app/store/Collection/Thunks/deleteCollection';
+import { deleteMovieFromCollection } from '@/app/store/Collection/Thunks/deleteMovieFromCollection';
 import { useCallback } from 'react';
 import { manageMovieRequestData, visibilityRequestData } from '@/app/DTO/CollectionDTO';
 import { useNavigate } from 'react-router-dom';

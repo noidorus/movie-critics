@@ -6,7 +6,7 @@ import {
     selectCollectionsUpdated,
     selectIdle,
 } from '@/app/store/Collections/collectionsSelectors';
-import { fetchCollectionsByMe } from '@/app/store/Collections/collectionsThunks';
+import { fetchCollectionsByMe } from '@/app/store/Collections/Thunks/fetchCollectionsByMe';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { setCollectionsUpdated } from '@/app/store/Collections/collectionsSlice';
 

@@ -15,7 +15,7 @@ export default function Header({ activeTab }: HeaderProps) {
         <div className={styles.header}>
             <p className={styles.logo}>MOVIE CRITICS</p>
             <Button className={styles.menuButton} onClick={toggleMenu}>
-                <span className={classNames('pi', 'pi-bars')}></span>
+                <span className={classNames('pi', 'pi-bars', styles.icon)}></span>
             </Button>
             <div className={classNames(styles.buttons, { [styles.open]: isMenuOpen })}>
                 <div className={styles.leftButtons}>

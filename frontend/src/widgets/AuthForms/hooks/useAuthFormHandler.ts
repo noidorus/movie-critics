@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
 import { clearAuthError, setField, validateForm } from '../../../app/store/Auth/authSlice';
-import { loginUser, registerUser } from '../../../app/store/Auth/authThunks';
+import { loginUser } from '@/app/store/Auth/Thunks/loginUser';
+import { registerUser } from '@/app/store/Auth/Thunks/registerUser';
 import {
     selectAuthError,
     selectLoading,
@@ -9,6 +10,7 @@ import {
     selectFormErrors,
     selectIsFormValid,
 } from '../../../app/store/Auth/authSelectors';
+import * as Sentry from '@sentry/react';
 
 interface AuthFormHandlerProps {
     isLogin: boolean;
@@ -60,6 +62,8 @@ export const useAuthFormHandler = ({ isLogin }: AuthFormHandlerProps) => {
                     await dispatch(registerUser({ username: login, email, password })).unwrap();
                     await dispatch(loginUser({ username: login, password })).unwrap();
                 }
+            } catch (error) {
+                Sentry.captureException(error);
             } finally {
                 setShouldSubmit(false);
             }

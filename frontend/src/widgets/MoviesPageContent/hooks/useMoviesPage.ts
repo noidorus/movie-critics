@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../app/store/hooks';
-import { fetchMovies } from '../../../app/store/Movies/moviesThunks';
+import { fetchMovies } from '../../../app/store/Movies/Thunks/fetchMovies';
 import {
     selectMovies,
     selectIsLoading,

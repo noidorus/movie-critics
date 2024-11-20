@@ -1,6 +1,6 @@
 stages:
-  # - install
-  # - validate
+  - install
+  - validate
   - build
   # - deploy
 
@@ -11,6 +11,97 @@ cache:
 variables:
   DOCKER_IMAGE: 'cr.yandex/$REGISTRY_ID/node-server:latest'
 
+install_frontend:
+  stage: install
+  image: node:20
+  script:
+    - echo "Installing frontend dependencies"
+    - cd frontend && npm ci
+  artifacts:
+    paths:
+      - frontend/node_modules
+      - frontend/package-lock.json
+  rules:
+    - changes:
+        - frontend/**
+
+prettier-check_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Prettier checking frontend"
+    - cd frontend && npm run format
+  rules:
+    - changes:
+        - frontend/**
+
+lint-test_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Linting frontend"
+    - cd frontend && npm run lint
+  rules:
+    - changes:
+        - frontend/**
+
+stylelint-test_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Stylelinting frontend"
+    - cd frontend && npm run stylelint
+  rules:
+    - changes:
+        - frontend/**
+
+unit-test_frontend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Unit testing frontend"
+    - cd frontend && npm run test
+  rules:
+    - changes:
+        - frontend/**
+
+integration-test_frontend:
+  stage: validate
+  image: mcr.microsoft.com/playwright:v1.40.0-focal
+  dependencies:
+    - install_frontend
+  script:
+    - echo "Installing Playwright browsers"
+    - npx playwright install --with-deps
+    - echo "Running frontend server"
+    - cd frontend && npm run dev & 
+    - echo "Waiting for the server to start"
+    - |
+      for i in {1..30}; do
+        if curl -s http://localhost:5173; then
+          break
+        fi
+        echo "Waiting for server..."
+        sleep 1
+      done
+    - echo "Running integration tests"
+    - cd frontend && npm run integration 
+  artifacts:
+    paths:
+      - frontend/test-results/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - frontend/**
+
 build_backend:
   stage: build
   only:
@@ -20,3 +111,4 @@ build_backend:
     - echo $OAuth|docker login --username oauth --password-stdin cr.yandex
     - docker tag node-server $DOCKER_IMAGE
     - docker push $DOCKER_IMAGE
+

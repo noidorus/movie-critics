@@ -9,7 +9,7 @@
     padding: 20px;
     font-size: 25px;
     font-size: 400;
-    color: var(--text-light-color);
+    color: var(--text-color);
 }
 
 .deleteButton {

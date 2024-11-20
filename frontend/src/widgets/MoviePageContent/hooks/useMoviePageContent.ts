@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchMovieById } from '@/app/store/Movie/movieThunks';
+import { fetchMovieById } from '@/app/store/Movie/Thunks/fetchMovieById';
 import { useAppSelector, useAppDispatch } from '@/app/store/hooks';
 import {
     selectMovie,
@@ -11,7 +11,7 @@ import {
 } from '@/app/store/Movie/movieSelectors';
 import { setRatingUpdated } from '@/app/store/Movie/movieSlice';
 import { selectUser } from '@/app/store/Auth/authSelectors';
-import { fetchComments } from '@/app/store/Comments/commentsThunks';
+import { fetchComments } from '@/app/store/Comments/Thunks/fetchComments';
 import {
     selectComments,
     selectLoading,

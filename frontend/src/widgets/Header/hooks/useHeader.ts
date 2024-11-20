@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { logoutUser } from '@/app/store/Auth/authThunks';
+import { logoutUser } from '@/app/store/Auth/Thunks/logoutUser';
 import { selectUser } from '@/app/store/Auth/authSelectors';
 import { LinkType } from '@/app/types/LinkType';
 

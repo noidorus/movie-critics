@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { rateMovie } from '@/app/store/Movie/movieThunks';
+import { rateMovie } from '@/app/store/Movie/Thunks/rateMovie';
 import { setRatingUpdated } from '@/app/store/Movie/movieSlice';
 import { selectRatingLoading, selectRatingError } from '@/app/store/Movie/movieSelectors';
 import { RateRequestData } from '@/app/DTO/MovieDTO';
