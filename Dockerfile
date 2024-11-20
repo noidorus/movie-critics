@@ -23,8 +23,7 @@ WORKDIR /usr/src/app
 COPY --from=backend-build /usr/src/app/package.json /usr/src/app/yarn.lock /usr/src/app/docker-entrypoint.sh /usr/src/app/wait-for-it.sh ./
 COPY --from=backend-build  usr/src/app/prisma ./prisma
 COPY --from=backend-build /usr/src/app/dist ./dist
-COPY --from=backend-build /usr/src/app/node_modules ./node_modules
-# RUN yarn install --only=production --frozen-lockfile
+RUN yarn install --only=production --frozen-lockfile
 COPY --from=frontend-build /usr/src/app/dist ./dist/static
 
 EXPOSE 3000
