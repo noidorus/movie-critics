@@ -6,9 +6,7 @@ export const fetchComments = createAsyncThunk<Comment[], number, { rejectValue: 
     'comments/fetchComments',
     async (filmId, { rejectWithValue }) => {
         try {
-            const response = await fetch(
-                `${API_URL}/films/${filmId}/comments`,
-            );
+            const response = await fetch(`${API_URL}/films/${filmId}/comments`);
             if (!response.ok) {
                 throw new Error(DEFAULT_ERROR_MESSAGE);
             }

@@ -9,15 +9,12 @@ export const changeVisibility = createAsyncThunk<
     { rejectValue: Error }
 >('collection/changeVisibility', async (visibilityData, { rejectWithValue }) => {
     try {
-        const response = await fetch(
-            `${API_URL}/lists/${visibilityData.collectionId}/visibility`,
-            {
-                method: 'PATCH',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ private: visibilityData.private }),
-            },
-        );
+        const response = await fetch(`${API_URL}/lists/${visibilityData.collectionId}/visibility`, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ private: visibilityData.private }),
+        });
 
         if (!response.ok) {
             throw new Error(DEFAULT_ERROR_MESSAGE);

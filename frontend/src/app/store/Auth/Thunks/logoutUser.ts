@@ -13,8 +13,6 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: { message:
             if (!response.ok) {
                 throw new Error('Не получилось выйти');
             }
-
-            return await response.json();
         } catch (error: unknown) {
             return rejectWithValue(handleFetchError(error));
         }

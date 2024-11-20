@@ -102,9 +102,7 @@ const authSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(loginUser.rejected, (state, action) => {
-                state.error = action.payload
-                    ? action.payload.message
-                    : DEFAULT_ERROR_MESSAGE;
+                state.error = action.payload ? action.payload.message : DEFAULT_ERROR_MESSAGE;
                 state.isLoading = false;
                 state.user = null;
             })
@@ -116,9 +114,7 @@ const authSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(registerUser.rejected, (state, action) => {
-                state.error = action.payload
-                    ? action.payload.message
-                    : DEFAULT_ERROR_MESSAGE;
+                state.error = action.payload ? action.payload.message : DEFAULT_ERROR_MESSAGE;
                 state.isLoading = false;
                 state.user = null;
             })
@@ -139,9 +135,7 @@ const authSlice = createSlice({
                 localStorage.removeItem('user');
             })
             .addCase(logoutUser.rejected, (state, action) => {
-                state.error = action.payload
-                    ? action.payload.message
-                    : DEFAULT_ERROR_MESSAGE;
+                state.error = action.payload ? action.payload.message : DEFAULT_ERROR_MESSAGE;
                 state.isLoading = false;
             })
             .addCase(refreshAccessToken.pending, (state) => {
