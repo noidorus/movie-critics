@@ -82,9 +82,19 @@ integration-test_frontend:
   script:
     - echo "Installing Playwright browsers"
     - npx playwright install --with-deps
-    - echo "Running integration tests"
+    - echo "Running frontend server"
     - cd frontend && npm run dev & 
-    - npm run integration
+    - echo "Waiting for the server to start"
+    - |
+      for i in {1..30}; do
+        if curl -s http://localhost:3000; then
+          break
+        fi
+        echo "Waiting for server..."
+        sleep 1
+      done
+    - echo "Running integration tests"
+    - cd frontend && npm run integration 
   artifacts:
     paths:
       - frontend/test-results/
