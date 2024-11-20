@@ -52,7 +52,7 @@ export default function CollectionsPageContent({
                     ))}
                 </ul>
             ) : (
-                <ErrorComponent error="Подборок пока нет. Создайте первую!" />
+                <ErrorComponent error="Подборок пока нет." />
             )}
             <CreateCollectionDialog visible={visible} onHide={onHide} />
         </>

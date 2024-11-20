@@ -78,6 +78,18 @@
 
 .menuButton {
     display: none;
+    outline: none;
+    box-shadow: var(--transparent-box-shadow);
+    border: 1px solid transparent;
+}
+
+.icon {
+    color: var(--text-color);
+}
+
+.icon:hover {
+    color: var(--icon-hover-color);
+    transition: color 0.5s ease;
 }
 
 @media (max-width: 1024px) {
