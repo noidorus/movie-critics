@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { handleFetchError } from '../../hooks';
+import { handleFetchError, API_URL } from '../../hooks';
 
 export const logoutUser = createAsyncThunk<void, void, { rejectValue: { message: string } }>(
     'auth/logout',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+            const response = await fetch(`${API_URL}/auth/logout`, {
                 method: 'GET',
                 credentials: 'include',
             });

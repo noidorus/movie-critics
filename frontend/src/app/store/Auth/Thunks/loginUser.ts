@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { LoginRequestData, LoginResponseData } from '@/app/DTO/AuthDTO';
-import { handleFetchError } from '../../hooks';
+import { handleFetchError, API_URL } from '../../hooks';
 
 export const loginUser = createAsyncThunk<
     LoginResponseData,
@@ -8,7 +8,7 @@ export const loginUser = createAsyncThunk<
     { rejectValue: { message: string } }
 >('auth/login', async (loginData, { rejectWithValue }) => {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+        const response = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

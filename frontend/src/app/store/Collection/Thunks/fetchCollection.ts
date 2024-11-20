@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '@/app/types/CollectionType';
+import { API_URL } from '../../hooks';
 
 export const fetchCollection = createAsyncThunk<Collection, number, { rejectValue: Error }>(
     'collection/fetchCollection',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/lists/${id}`, {
+            const response = await fetch(`${API_URL}/lists/${id}`, {
                 credentials: 'include',
             });
             if (!response.ok) {

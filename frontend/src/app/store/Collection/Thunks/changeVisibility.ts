@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Collection } from '@/app/types/CollectionType';
 import { visibilityRequestData } from '@/app/DTO/CollectionDTO';
-import { handleFetchError, DEFAULT_ERROR_MESSAGE } from '../../hooks';
+import { handleFetchError, DEFAULT_ERROR_MESSAGE, API_URL } from '../../hooks';
 
 export const changeVisibility = createAsyncThunk<
     Collection,
@@ -10,7 +10,7 @@ export const changeVisibility = createAsyncThunk<
 >('collection/changeVisibility', async (visibilityData, { rejectWithValue }) => {
     try {
         const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/lists/${visibilityData.collectionId}/visibility`,
+            `${API_URL}/lists/${visibilityData.collectionId}/visibility`,
             {
                 method: 'PATCH',
                 credentials: 'include',
