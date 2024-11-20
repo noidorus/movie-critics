@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
-import { PrismaService } from 'src/prismaDB/prisma.service';
+import { PrismaService } from 'src/services/prisma/prisma.service';
 import { CreateUserDTO } from './dto/createUser.dto';
 import { genSalt, hash } from 'bcrypt';
 

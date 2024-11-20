@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prismaDB/prisma.service';
+import { PrismaService } from 'src/services/prisma/prisma.service';
 import { CreateListDTO } from './dto';
 import { Prisma } from '@prisma/client';
 import { calculateAvgRating } from 'src/utils/calculateAvgRating';
