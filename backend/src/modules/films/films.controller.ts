@@ -72,6 +72,7 @@ export class FilmsController {
   @ApiOperation({ summary: 'Get comments by film id' })
   @ApiResponse({ status: HttpStatus.OK, type: [CommentEntity] })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad request' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Film not found' })
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Something went wrong' })
   @Get(':id/comments')
   async getCommentsByFilmId(

@@ -25,13 +25,20 @@ export class UserService {
   }
 
   async getUserByUsername(username: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { username } });
+    try {
+      const user = await this.prisma.user.findUnique({ where: { username } });
 
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+
+      return user;
+    } catch (err) {
+      if (err instanceof HttpException && err.getStatus() === 404) {
+        throw err;
+      }
+      throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    return user;
   }
 
   async setRefreshToken(username: string, token: string) {

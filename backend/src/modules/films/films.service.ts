@@ -101,13 +101,20 @@ export class FilmsService {
 
   async getCommentsByFilmId(filmId: number): Promise<CommentEntity[]> {
     try {
-      const comments = await this.prisma.comment.findMany({
-        where: { filmId },
-        include: { author: { select: { username: true, id: true } } },
+      const film = await this.prisma.film.findUnique({
+        where: { id: filmId },
+        select: { comments: { include: { author: { select: { username: true, id: true } } } } },
       });
 
-      return comments.sort((a, b) => a.id - b.id);
-    } catch {
+      if (!film) {
+        throw new HttpException('Film not found', HttpStatus.NOT_FOUND);
+      }
+
+      return film.comments.sort((a, b) => a.id - b.id);
+    } catch (err) {
+      if (err instanceof HttpException && err.getStatus() === 404) {
+        throw err;
+      }
       throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

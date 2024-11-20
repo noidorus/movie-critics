@@ -1,115 +1,119 @@
 openapi: 3.0.1
 info:
   title: Movie Critics Api
-  description: "Movie Critics Api - provides access to movie data and allows you to create lists with movies, comment on movies, and set ratings."
+  description: 'Movie Critics Api - provides access to movie data and allows you to create lists with movies, comment on movies, and set ratings.'
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url: /
+  - url: /
 tags:
-- name: Auth
-  description: "Authentication endpoints"
-- name: Comments
-  description: "Operations for creating, editing and deleting comments"
-- name: Films
-  description: "Operations for getting: film, filters, comments; rating films"
-- name: Lists
-  description: "Operations for creating, editing and deleting lists"
-  
+  - name: Auth
+    description: 'Authentication endpoints'
+  - name: Comments
+    description: 'Operations for creating, editing and deleting comments'
+  - name: Films
+    description: 'Operations for getting: film, filters, comments; rating films'
+  - name: Lists
+    description: 'Operations for creating, editing and deleting lists'
+
 paths:
   /api/auth/register:
     post:
       tags:
-      - Auth
-      summary: "Register new user"
-      operationId: "registerUser"
+        - Auth
+      summary: 'Register new user'
+      operationId: 'registerUser'
       requestBody:
-        description: "User data for registration"
+        description: 'User data for registration'
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RegisterDTO"
+              $ref: '#/components/schemas/RegisterDTO'
         required: true
       responses:
-        "201":
-          description: "User created"
-        "400":
-          description: "Invalid input"
-      
+        '204':
+          description: 'User created'
+        '400':
+          description: 'Bad request'
+        '409':
+          description: 'User already exists'
+        '500':
+          description: 'Something went wrong'
+
   /api/auth/login:
     post:
       tags:
-      - Auth
-      summary: "Login user"
-      description: " Logs in the user and returns a session."
-      operationId: "loginUser"
+        - Auth
+      summary: 'Login user'
+      operationId: 'loginUser'
       requestBody:
-        description: "User login data"
+        description: 'User login data'
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginDTO"
+              $ref: '#/components/schemas/LoginDTO'
         required: true
       responses:
-        "200":
-          description: "User logged in"
+        '200':
+          description: 'User logged in'
           headers:
             Set-Cookie:
-              description: "Session tokens are set as cookies. Example: `jwt=abcd1234; 
-                \ HttpOnly; Path=/; Max-Age=3600` and `refresh_jwt=abcd5678; HttpOnly;\
-                \ Path=/; Max-Age=86400`"
+              description: 'Access and refreshAccess session cookie'
               schema:
                 type: string
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserEntity"
-        "401":
-          description: 'Unauthorized'
-          
+                $ref: '#/components/schemas/UserEntity'
+        '403':
+          description: 'Invalid credentials'
+        '500':
+          description: 'Something went wrong'
+
   /api/auth/logout:
     get:
       tags:
-      - Auth
-      summary: "Logout user"
-      operationId: "logoutUser"
+        - Auth
+      summary: 'Logout user'
+      operationId: 'logoutUser'
       responses:
-        "200":
-          description: "User logged out"
-        "401":
-          description: "Unauthorized"
-      security:
-      - AccessToken: []
-      
-  /api/auth/:
+        '204':
+          description: 'User logged out'
+        '401':
+          description: 'Unauthorized'
+        '500':
+          description: 'Something went wrong'
+
+  /api/auth:
     get:
       tags:
-      - Auth
-      summary: "Get authenticated user data"
-      operationId: "getUserData"
+        - Auth
+      summary: 'Get authenticated user data'
+      operationId: 'getUserData'
       responses:
-        "200":
-          description: "User authenticated"
+        '200':
+          description: 'User authenticated'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserEntity"
-        "401":
-          description: "Unauthorized"
-      security:
-      - AccessToken: []
-      
+                $ref: '#/components/schemas/UserEntity'
+        '401':
+          description: 'Unauthorized'
+        '404':
+          description: 'User not found'
+        '500':
+          description: 'Something went wrong'
+
   /api/auth/refresh:
     get:
       tags:
-      - Auth
-      summary: "Refresh access token"
-      operationId: "refreshToken"
+        - Auth
+      summary: 'Refresh access token'
       responses:
-        "200":
-          description: "Access token updated"
+        '200':
+          description: 'Access token updated'
           headers:
             Set-Cookie:
               description: "Access token are set as cookie. Example: `refresh_jwt=abcd5678;\
@@ -119,399 +123,452 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserEntity"
-        "401":
-          description: "Unauthorized"
-      security:
-      - RefreshToken: []
-      
+                $ref: '#/components/schemas/UserEntity'
+        '401':
+          description: 'Unauthorized'
+        '404':
+          description: 'User not found'
+        '500':
+          description: 'Something went wrong'
+
   /api/films:
     get:
       tags:
-      - Films
-      summary: "Get films data"
-      description: "Fetches a paginated list of films."
-      operationId: "getFilms"
+        - Films
+      summary: 'Get films data'
+      operationId: 'getFilms'
       parameters:
-      - name: page
-        in: query
-        description: "Page number for pagination"
-        schema:
-          type: integer
-          default: 1
-      - name: limit
-        in: query
-        description: "Number of films per page"
-        schema:
-          type: integer
-          default: 10
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
       responses:
-        "200":
-          description: "List of films"
+        '200':
+          description: 'List of films'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FilmsEntity"
-                
-  /api/films/filters:
+                $ref: '#/components/schemas/FilmsEntity'
+        '400':
+          description: 'Bad request'
+        '500':
+          description: 'Something went wrong'
+
+  /api/films/search:
     get:
       tags:
-      - Films
-      summary: "Get filters data"
-      operationId: "getFilters"
+        - Films
+      summary: 'Search films by name'
+      operationId: 'searchFilms'
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+            example: 'Avatar'
       responses:
-        "200":
-          description: "Filters data"
+        '200':
+          description: 'Film data with extras'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FiltersEntity"
-                
+                $ref: '#/components/schemas/FilmWithExtrasEntity'
+        '500':
+          description: 'Something went wrong'
+
   /api/films/{id}:
     get:
       tags:
-      - Films
-      summary: "Get film data by ID"
-      description: "Fetches detailed information about a specific film by its ID."
-      operationId: "getFilmById"
+        - Films
+      summary: 'Get film data by ID'
+      description: 'Fetches detailed information about a specific film by its ID.'
+      operationId: 'getFilmById'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          example: 1
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
       responses:
-        200:
-          description: "Film data with extras"
+        '200':
+          description: 'Film data with extras'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FilmWithExtrasEntity"
-        404:
-          description: "Film not found"
-          
+                $ref: '#/components/schemas/FilmWithExtrasEntity'
+        '400':
+          description: 'Bad request'
+        '404':
+          description: 'Film not found'
+        '500':
+          description: 'Something went wrong'
+
   /api/films/{id}/rate:
     post:
       tags:
-      - Films
-      summary: "Rate a film"
-      operationId: "rateFilm"
-      security:
-      - AccessToken: []
+        - Films
+      summary: 'Rate a film'
+      operationId: 'rateFilm'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RateFilmBodyDTO"
+              $ref: '#/components/schemas/RateFilmBodyDTO'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: "integer"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: 'integer'
       responses:
-        200:
-          description: "Film rated successfully"
+        '200':
+          description: 'Film rated successfully'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RatingEntity"
-        401:
-          description: "Unauthorized"
-          
+                $ref: '#/components/schemas/RatingEntity'
+        '401':
+          description: 'Unauthorized'
+        '400':
+          description: 'Bad request'
+        '404':
+          description: 'Film not found'
+        '500':
+          description: 'Something went wrong'
+
   /api/films/{id}/comments:
     get:
       tags:
-      - Films
-      summary: "Get comments by film ID"
-      description: "Retrieves comments for a specific film by its ID."
-      operationId: "getCommentsByFilmId"
+        - Films
+      summary: 'Get comments by film ID'
+      operationId: 'getCommentsByFilmId'
       parameters:
-      - name: id
-        in: path
-        required: true
-        description: "ID of the film to retrieve comments for"
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the film to retrieve comments for'
+          schema:
+            type: integer
       responses:
-        200:
-          description: "List of comments for the film"
+        '200':
+          description: 'List of comments for the film'
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/CommentEntity"
-        404:
-          description: "Film not found"
-  
+                  $ref: '#/components/schemas/CommentEntity'
+        '400':
+          description: 'Bad request'
+        '404':
+          description: 'Film not found'
+        '500':
+          description: 'Something went wrong'
+
   /api/comments:
     post:
       tags:
-      - Comments
-      summary: "Create comment"
-      operationId: "createComment"
-      security:
-      - AccessToken: []
+        - Comments
+      summary: 'Create comment'
+      operationId: 'createComment'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateCommentDTO"
+              $ref: '#/components/schemas/CreateCommentDTO'
       responses:
-        200:
-          description: "Comment created successfully"
+        '200':
+          description: 'Comment created successfully'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CommentEntity"
-        401:
-          description: "Unauthorized"
-          
+                $ref: '#/components/schemas/CommentEntity'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '500':
+          description: 'Something went wrong'
+
   /api/comments/{id}:
     delete:
       tags:
-      - Comments
-      summary: "Delete comment by ID"
-      operationId: "deleteComment"
-      security:
-      - AccessToken: []
+        - Comments
+      summary: 'Delete comment by ID'
+      operationId: 'deleteComment'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        200:
-          description: "Comment deleted successfully"
-        401:
-          description: "Unauthorized"
-        404:
-          description: "Comment not found"
+        '204':
+          description: 'Comment deleted successfully'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '404':
+          description: 'Comment not found'
+        '500':
+          description: 'Something went wrong'
     patch:
       tags:
-      - Comments
-      summary: "Edit comment by ID"
-      operationId: "editComment"
-      security:
-      - AccessToken: []
+        - Comments
+      summary: 'Edit comment by ID'
+      operationId: 'editComment'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EditCommentDTO"
+              $ref: '#/components/schemas/EditCommentDTO'
       responses:
-        200:
-          description: "Comment edited successfully"
+        '200':
+          description: 'Comment edited successfully'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CommentEntity"
-        401:
-          description: "Unauthorized"
-        404:
-          description: "Comment not found"        
-          
+                $ref: '#/components/schemas/CommentEntity'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '404':
+          description: 'Comment not found'
+        '500':
+          description: 'Something went wrong'
+
   /api/lists:
     get:
       tags:
-      - Lists
-      summary: "Get all public lists"
-      operationId: "getLists"
+        - Lists
+      summary: 'Get all public lists'
+      operationId: 'getLists'
       responses:
-        200:
-          description: "List of public lists"
+        '200':
+          description: 'List of public lists'
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ShortInfoListWithAuthorAndFilms"
+                  $ref: '#/components/schemas/ListWithAuthorAndShortFilms'
+        '500':
+          description: 'Something went wrong'
     post:
       tags:
-      - Lists
-      summary: "Create list"
-      operationId: "createList"
-      security:
-      - AccessToken: []
+        - Lists
+      summary: 'Create list'
+      operationId: 'createList'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateListDTO"
+              $ref: '#/components/schemas/CreateListDTO'
       responses:
-        200:
-          description: "List created"
+        '201':
+          description: 'List created'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListEntity"
-        401:
-          description: "Unauthorized"
-          
+                $ref: '#/components/schemas/ListEntity'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '409':
+          description: 'List with this name already exists'
+        '500':
+          description: 'Something went wrong'
+
   /api/lists/my:
     get:
       tags:
-      - Lists
-      summary: "Get authentificated user lists"
-      operationId: "getMyLists"
-      security:
-      - AccessToken: []
+        - Lists
+      summary: 'Get authentificated user lists'
+      operationId: 'getMyLists'
       responses:
-        200:
+        '200':
           description: "User's lists"
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ShortInfoListWithAuthorAndFilms"
-        401:
-          description: "Unauthorized"
-          
+                  $ref: '#/components/schemas/ListWithAuthorAndShortFilms'
+        '401':
+          description: 'Unauthorized'
+        '500':
+          description: 'Something went wrong'
+
   /api/lists/{id}:
     get:
       tags:
-      - Lists
-      summary: "Get list by ID"
-      description: "Returns public list or if user authentificated return his private list"
-      operationId: "getListById"
-      security:
-      - AccessToken: []
+        - Lists
+      summary: 'Get list by ID'
+      description: 'Returns public list or private list if user authentificated'
+      operationId: 'getListById'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        200:
-          description: "List data"
+        '200':
+          description: 'List data'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/InfoListWithAuthorAndFilms"
-        404:
-          description: "List not found"
+                $ref: '#/components/schemas/ListWithAuthorAndFilms'
+        '400':
+          description: 'Bad request'
+        '404':
+          description: 'List not found'
+        '500':
+          description: 'Something went wrong'
     delete:
       tags:
-      - Lists
-      summary: "Delete list by ID"
-      operationId: "removeList"
-      security:
-      - AccessToken: []
+        - Lists
+      summary: 'Delete list by ID'
+      operationId: 'removeList'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        200:
-          description: "List deleted successfully"
-        401:
-          description: "Unauthorized"
-        404:
-          description: "List not found"
+        '204':
+          description: 'List deleted successfully'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '404':
+          description: 'List not found'
+        '500':
+          description: 'Something went wrong'
+
+  /api/lists/{id}/visibility:
     patch:
       tags:
-      - Lists
-      summary: "Change list visibility"
-      operationId: "changeListVisibility"
-      security:
-      - AccessToken: []
+        - Lists
+      summary: 'Change list visibility'
+      operationId: 'changeListVisibility'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChangeListVisibilityDTO"
+              $ref: '#/components/schemas/ChangeListVisibilityDTO'
       responses:
-        200:
-          description: "List visibility updated"
+        '200':
+          description: 'List visibility updated'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListEntity"
-        401:
-          description: "Unauthorized"
-        404:
-          description: "List not found"
-          
+                $ref: '#/components/schemas/ListEntity'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '403':
+          description: 'You have not access to this list'
+        '404':
+          description: 'List not found'
+        '500':
+          description: 'Something went wrong'
+
   /api/lists/{id}/films/{filmId}:
     post:
       tags:
-      - Lists
-      summary: "Add film to list"
-      operationId: "addFilmToList"
-      security:
-      - AccessToken: []
+        - Lists
+      summary: 'Add film to list'
+      operationId: 'addFilmToList'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: filmId
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: filmId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         200:
-          description: "Film added to list"
+          description: 'Film added to list'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FilmInListEntity"
-        401:
-          description: "Unauthorized"
-        404:
-          description: "List or film not found"
+                $ref: '#/components/schemas/FilmInListEntity'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '403':
+          description: 'You have not access to this list'
+        '404':
+          description: 'List not found'
+        '500':
+          description: 'Something went wrong'
     delete:
       tags:
-      - Lists
-      summary: "Remove film from list"
-      operationId: "removeFilmFromList"
-      security:
-      - AccessToken: []
+        - Lists
+      summary: 'Remove film from list'
+      operationId: 'removeFilmFromList'
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: filmId
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: filmId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        200:
-          description: "Film removed from list"
-        401:
-          description: "Unauthorized"
-        404:
-          description: "List or film not found"
-                
+        '204':
+          description: 'Film removed from list'
+        '400':
+          description: 'Bad request'
+        '401':
+          description: 'Unauthorized'
+        '403':
+          description: 'You have not access to this list'
+        '404':
+          description: 'List or film not found'
+        '500':
+          description: 'Something went wrong'
+
 components:
   schemas:
     RegisterDTO:
@@ -526,7 +583,7 @@ components:
         email:
           type: string
           example: user@example.com
-    
+
     LoginDTO:
       type: object
       properties:
@@ -536,7 +593,7 @@ components:
         password:
           type: string
           example: password123
-    
+
     UserEntity:
       type: object
       properties:
@@ -553,9 +610,9 @@ components:
           type: string
           example: CLIENT
           enum:
-          - CLIENT
-          - ADMIN
-          - ROOT
+            - CLIENT
+            - ADMIN
+            - ROOT
         createdAt:
           type: string
           format: date-time
@@ -564,7 +621,66 @@ components:
           type: string
           format: date-time
           example: 2023-01-02T12:00:00Z
-          
+
+    ShortInfoFilmEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the film
+          example: 1282979
+        nameRu:
+          type: string
+          example: LEGO Ниндзяго
+          nullable: true
+        nameOriginal:
+          type: string
+          example: null
+          nullable: true
+        filmLength:
+          type: integer
+          description: Length of the film in minutes or in series
+          example: 11
+        year:
+          type: integer
+          example: 2019
+        posterUrlPreview:
+          type: string
+          example: https://placehold.co/600x400
+        type:
+          type: string
+          example: TV_SERIES
+          enum:
+            - VIDEO
+            - FILM
+            - MINI_SERIES
+            - TV_SERIES
+            - TV_SHOW
+        countries:
+          type: array
+          example:
+            - name: США
+            - name: Канада
+            - name: Дания
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+        genres:
+          type: array
+          example:
+            - name: приключения
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+        avgRating:
+          type: number
+          format: float
+          example: 6.0
+
     FilmEntity:
       type: object
       properties:
@@ -610,17 +726,17 @@ components:
           type: string
           example: TV_SERIES
           enum:
-          - VIDEO
-          - FILM
-          - MINI_SERIES
-          - TV_SERIES
-          - TV_SHOW
+            - VIDEO
+            - FILM
+            - MINI_SERIES
+            - TV_SERIES
+            - TV_SHOW
         countries:
           type: array
           example:
-          - name: США
-          - name: Канада
-          - name: Дания
+            - name: США
+            - name: Канада
+            - name: Дания
           items:
             type: object
             properties:
@@ -629,9 +745,9 @@ components:
         genres:
           type: array
           example:
-          - name: приключения
-          - name: боевик
-          - name: мультфильм
+            - name: приключения
+            - name: боевик
+            - name: мультфильм
           items:
             type: object
             properties:
@@ -641,7 +757,7 @@ components:
           type: number
           format: float
           example: 6.0
-          
+
     FilmsEntity:
       type: object
       properties:
@@ -658,7 +774,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FilmEntity'
-            
+
     FilmWithExtrasEntity:
       type: object
       properties:
@@ -704,17 +820,17 @@ components:
           type: string
           example: TV_SERIES
           enum:
-          - VIDEO
-          - FILM
-          - MINI_SERIES
-          - TV_SERIES
-          - TV_SHOW
+            - VIDEO
+            - FILM
+            - MINI_SERIES
+            - TV_SERIES
+            - TV_SHOW
         countries:
           type: array
           example:
-          - name: США
-          - name: Канада
-          - name: Дания
+            - name: США
+            - name: Канада
+            - name: Дания
           items:
             type: object
             properties:
@@ -723,9 +839,9 @@ components:
         genres:
           type: array
           example:
-          - name: приключения
-          - name: боевик
-          - name: мультфильм
+            - name: приключения
+            - name: боевик
+            - name: мультфильм
           items:
             type: object
             properties:
@@ -760,47 +876,19 @@ components:
           type: string
           nullable: true
           example: '3 wins'
-            
-    FiltersEntity:
-      type: object
-      properties:
-        countries:
-          type: array
-          example:
-          - США
-          - Канада
-          - Дания
-          items:
-            type: string
-        genres:
-          type: array
-          example:
-          - приключения
-          - боевик
-          - мультфильм
-          - семейный
-          - детский
-          items:
-            type: string
-        types:
-          type: array
-          example:
-          - VIDEO
-          - FILM
-          - MINI_SERIES
-          - TV_SERIES
-          - TV_SHOW
-          items:
-            type: string
-            
+        actors:
+          type: string
+          nullable: true
+          example: 'Kazumi Evans, Sabrina Pitre, Rebecca Shoichet'
+
     RateFilmBodyDTO:
       type: object
       properties:
         rating:
           type: integer
-          description: "Rating value for the film, typically between 1 and 5"
+          description: 'Rating value for the film, typically between 1 and 5'
           example: 4
-          
+
     RatingEntity:
       type: object
       properties:
@@ -816,15 +904,17 @@ components:
         userRating:
           type: integer
           example: 5
-          
+
     CreateCommentDTO:
       type: object
       properties:
-        content:
+        text:
           type: string
-          description: The content of the comment
           example: This is a new comment.
-          
+        filmId:
+          type: integer
+          example: 1
+
     EditCommentDTO:
       type: object
       properties:
@@ -832,7 +922,7 @@ components:
           type: string
           description: The updated content of the comment
           example: Updated comment content.
-          
+
     CommentEntity:
       type: object
       properties:
@@ -856,13 +946,22 @@ components:
           type: string
           format: date-time
           example: 2023-01-02T12:00:00Z
-    
+        author:
+          type: object
+          properties:
+            username:
+              type: string
+              example: user123
+            id:
+              type: integer
+              example: 1
+
     CreateListDTO:
       type: object
       properties:
         name:
           type: string
-          example: "My Favorite Movies"
+          example: 'My Favorite Movies'
         private:
           type: boolean
           example: true
@@ -886,7 +985,7 @@ components:
           example: 1
         name:
           type: string
-          example: "My Favorite Movies"
+          example: 'My Favorite Movies'
         private:
           type: boolean
           example: false
@@ -902,7 +1001,7 @@ components:
           format: date-time
           example: 2023-01-02T12:00:00Z
 
-    ShortInfoListWithAuthorAndFilms:
+    ListWithAuthorAndShortFilms:
       type: object
       properties:
         id:
@@ -910,7 +1009,7 @@ components:
           example: 1
         name:
           type: string
-          example: "My Favorite Movies"
+          example: 'My Favorite Movies'
         private:
           type: boolean
           example: false
@@ -928,9 +1027,9 @@ components:
         author:
           type: object
           properties:
-            name:
+            username:
               type: string
-              example: "username123"
+              example: 'username123'
         films:
           type: array
           items:
@@ -943,7 +1042,7 @@ components:
                 type: string
                 example: https://placehold.co/600x400
 
-    InfoListWithAuthorAndFilms:
+    ListWithAuthorAndFilms:
       type: object
       properties:
         id:
@@ -951,7 +1050,7 @@ components:
           example: 1
         name:
           type: string
-          example: "My Favorite Movies"
+          example: 'My Favorite Movies'
         private:
           type: boolean
           example: false
@@ -971,11 +1070,11 @@ components:
           properties:
             name:
               type: string
-              example: "username123"
+              example: 'username123'
         films:
           type: array
           items:
-            $ref: "#/components/schemas/FilmInListEntity"
+            $ref: '#/components/schemas/FilmInListEntity'
 
     FilmInListEntity:
       type: object
@@ -1010,17 +1109,17 @@ components:
           type: string
           example: TV_SERIES
           enum:
-          - VIDEO
-          - FILM
-          - MINI_SERIES
-          - TV_SERIES
-          - TV_SHOW
+            - VIDEO
+            - FILM
+            - MINI_SERIES
+            - TV_SERIES
+            - TV_SHOW
         countries:
           type: array
           example:
-          - name: США
-          - name: Канада
-          - name: Дания
+            - name: США
+            - name: Канада
+            - name: Дания
           items:
             type: object
             properties:
@@ -1029,9 +1128,9 @@ components:
         genres:
           type: array
           example:
-          - name: приключения
-          - name: боевик
-          - name: мультфильм
+            - name: приключения
+            - name: боевик
+            - name: мультфильм
           items:
             type: object
             properties:
@@ -1041,13 +1140,3 @@ components:
           type: number
           format: float
           example: 6.0
-
-  securitySchemes:
-    AccessToken:
-      type: apiKey
-      name: Authorization
-      in: header
-    RefreshToken:
-      type: apiKey
-      name: Refresh Authorization
-      in: header
