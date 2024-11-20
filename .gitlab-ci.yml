@@ -162,7 +162,7 @@ deploy_docker:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
+    - ssh-keyscan $VM_IP_ADDRESS >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
     - ssh $SSH_USER@$VM_IP_ADDRESS "docker stop mc && docker rm mc && docker run --name mc --env-file .env -p 80:3000 -d $DOCKER_IMAGE && docker system prune -f"
