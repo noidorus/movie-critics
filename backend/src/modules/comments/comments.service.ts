@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/services/prisma/prisma.service';
+import { PrismaService } from '../../services/prisma/prisma.service';
 import { CreateCommentDTO } from './dto';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';

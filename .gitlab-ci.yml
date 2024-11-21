@@ -139,6 +139,17 @@ lint-test_backend:
   rules:
     - if: '$CI_COMMIT_BRANCH == "back-dev"'
 
+test_backend:
+  stage: validate
+  image: node:20
+  dependencies:
+    - install_backend
+  script:
+    - echo "Testing backend"
+    - cd backend && yarn test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "back-dev"'
+
 build_docker:
   stage: build
   image: docker
