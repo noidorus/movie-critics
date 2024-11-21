@@ -24,6 +24,11 @@ function DescriptionContainer({ movie }: Props) {
                         ))}
                     </ul>
                 )}
+                {movie.actors && (
+                    <p className={styles.actors}>
+                        Актеры: <span>{movie.actors}</span>
+                    </p>
+                )}
                 <p className={styles.description}>{movie.description}</p>
             </div>
         </div>

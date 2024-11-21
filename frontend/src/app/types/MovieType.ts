@@ -24,6 +24,7 @@ export type Movie = {
     genres: Genre[];
     avgRating: number;
     ratings: Rating[];
+    actors: string;
 };
 
 export type MoviePreviewData = Pick<Movie, 'id' | 'nameRu' | 'nameOriginal' | 'posterUrlPreview'>;

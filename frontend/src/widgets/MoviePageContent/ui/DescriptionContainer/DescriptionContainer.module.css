@@ -27,6 +27,11 @@
     flex-shrink: 0;
 }
 
+.actors {
+    color: var(--text-color);
+    padding-block-end: 20px;
+}
+
 .description {
     color: var(--text-color);
 }
