@@ -37,7 +37,7 @@ export default function App() {
     useEffect(() => {
         const refreshTokenInterval = setInterval(() => {
             dispatch(refreshAccessToken());
-        }, 1000 * 30);
+        }, 1000 * 60 * 25);
 
         return () => clearInterval(refreshTokenInterval);
     }, [dispatch]);
