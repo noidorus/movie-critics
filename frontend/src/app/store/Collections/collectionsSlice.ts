@@ -90,7 +90,6 @@ const collectionsSlice = createSlice({
                 (state, action: PayloadAction<Collection[]>) => {
                     state.isLoading = false;
                     state.collections = action.payload;
-                    state.collectionsUpdated = false;
                 },
             )
             .addCase(fetchCollectionsByMe.rejected, (state, action) => {

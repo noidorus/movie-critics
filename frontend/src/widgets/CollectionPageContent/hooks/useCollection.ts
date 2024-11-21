@@ -36,14 +36,7 @@ export const useCollection = () => {
     }, [collectionUpdated, dispatch, id]);
 
     return useMemo(
-        () => ({
-            collection,
-            idle,
-            loading,
-            error,
-            user,
-            handleCollectionUpdate: () => dispatch(setCollectionUpdated(true)),
-        }),
+        () => ({ collection, idle, loading, error, user, handleCollectionUpdate: () => dispatch(setCollectionUpdated(true)), }),
         [collection, idle, loading, error, user],
     );
 };
