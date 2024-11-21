@@ -10,7 +10,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { PositiveNumberValidationPipe } from 'src/pipes/PositiveNumberValidationPipe';
+import { PositiveNumberValidationPipe } from '../../pipes/PositiveNumberValidationPipe';
 import { CreateCommentDTO, EditCommentDTO } from './dto';
 import { JwtAuthGuard } from '../auth/guards';
 import { RequestWithUser } from '../auth/auth.intrfaces';
