@@ -6,6 +6,7 @@ import { lastValueFrom, map } from 'rxjs';
 import { TypedConfigService } from 'src/services/config/typed-config.service';
 import { OmdbData, OmdbDataSummary } from './omdb.interface';
 import * as Sentry from '@sentry/nestjs';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class OmdbService {
@@ -15,6 +16,7 @@ export class OmdbService {
     private readonly configService: TypedConfigService,
     private readonly httpService: HttpService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @InjectPinoLogger(OmdbService.name) private readonly logger: PinoLogger,
   ) {
     this.url = this.configService.get('omdbApiUrl');
   }
@@ -49,11 +51,12 @@ export class OmdbService {
         boxOffice: this.validateValue(data.BoxOffice),
         actors: this.validateValue(data.Actors),
       };
-      console.log(info);
+      this.logger.info(info);
       await this.cacheManager.set(title, info);
 
       return info;
     } catch (err) {
+      this.logger.error(err);
       Sentry.captureException(err);
       return defaultInfo;
     }
