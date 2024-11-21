@@ -51,7 +51,7 @@ export class OmdbService {
         boxOffice: this.validateValue(data.BoxOffice),
         actors: this.validateValue(data.Actors),
       };
-      this.logger.info(info);
+
       await this.cacheManager.set(title, info);
 
       return info;
