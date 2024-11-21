@@ -17,6 +17,7 @@ describe('DescriptionContainer', () => {
         ratings: [],
         type: 'movie',
         slogan: 'Slogan',
+        actors: 'Actor 1, Actor 2',
         posterUrlPreview: 'https://example.com/preview.jpg',
     };
 
