@@ -75,21 +75,12 @@ export const useCreateCollection = (onHide: () => void, movieId?: number) => {
         submitCollection();
     }, [shouldSubmit, formError, collectionName, isPrivate, movieId, dispatch, onHide]);
 
-    const handleChangeName = useCallback(
-        (name: string) => dispatch(setCollectionName(name)),
-        [dispatch],
-    );
-    const handleChangePrivate = useCallback(
-        (privacy: boolean) => dispatch(setIsPrivate(privacy)),
-        [dispatch],
-    );
-
     return useMemo(
         () => ({
             collectionName,
-            setCollectionName: handleChangeName,
+            setCollectionName: (name: string) => dispatch(setCollectionName(name)),
             isPrivate,
-            setIsPrivate: handleChangePrivate,
+            setIsPrivate: (privacy: boolean) => dispatch(setIsPrivate(privacy)),
             formError,
             createLoading,
             addMovieLoading,
@@ -105,8 +96,6 @@ export const useCreateCollection = (onHide: () => void, movieId?: number) => {
             addMovieLoading,
             createError,
             addMovieError,
-            handleChangeName,
-            handleChangePrivate,
             onSubmit,
         ],
     );

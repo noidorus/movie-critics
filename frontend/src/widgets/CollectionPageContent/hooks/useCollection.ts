@@ -10,7 +10,7 @@ import {
 import { selectUser } from '@/app/store/Auth/authSelectors';
 import { setCollectionUpdated } from '@/app/store/Collection/collectionSlice';
 import { fetchCollection } from '@/app/store/Collection/Thunks/fetchCollection';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export const useCollection = () => {
     const { id } = useParams<{ id: string }>();
@@ -35,12 +35,15 @@ export const useCollection = () => {
         }
     }, [collectionUpdated, dispatch, id]);
 
-    const handleCollectionUpdate = useCallback(() => {
-        dispatch(setCollectionUpdated(true));
-    }, [dispatch]);
-
     return useMemo(
-        () => ({ collection, idle, loading, error, user, handleCollectionUpdate }),
-        [collection, idle, loading, error, user, handleCollectionUpdate],
+        () => ({
+            collection,
+            idle,
+            loading,
+            error,
+            user,
+            handleCollectionUpdate: () => dispatch(setCollectionUpdated(true)),
+        }),
+        [collection, idle, loading, error, user],
     );
 };

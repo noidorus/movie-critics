@@ -41,6 +41,7 @@ const movieSlice = createSlice({
             .addCase(fetchMovieById.fulfilled, (state, action: PayloadAction<Movie>) => {
                 state.isLoading = false;
                 state.movie = action.payload;
+                state.ratingUpdated = false;
             })
             .addCase(fetchMovieById.rejected, (state, action) => {
                 state.isLoading = false;

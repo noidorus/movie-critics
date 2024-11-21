@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieById } from '@/app/store/Movie/Thunks/fetchMovieById';
 import { useAppSelector, useAppDispatch } from '@/app/store/hooks';
@@ -18,7 +18,6 @@ import {
     selectError,
     selectCommentsUpdated,
 } from '@/app/store/Comments/commentsSelectors';
-import { setCommentsUpdated } from '@/app/store/Comments/commentsSlice';
 
 export function useMoviePageContent() {
     const { id } = useParams<{ id: string }>();
@@ -47,22 +46,16 @@ export function useMoviePageContent() {
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (ratingUpdated && id) {
+        if (ratingUpdated) {
             dispatch(fetchMovieById(Number(id)));
-            dispatch(setRatingUpdated(false));
         }
-    }, [ratingUpdated, dispatch, id]);
+    }, [ratingUpdated, dispatch]);
 
     useEffect(() => {
         if (commentsUpdated) {
             dispatch(fetchComments(Number(id)));
-            dispatch(setCommentsUpdated(false));
         }
     }, [commentsUpdated, dispatch, id]);
-
-    const handleRatingUpdate = useCallback(() => {
-        dispatch(setRatingUpdated(true));
-    }, [dispatch]);
 
     return useMemo(
         () => ({
@@ -71,20 +64,11 @@ export function useMoviePageContent() {
             isLoading,
             error,
             user,
-            handleRatingUpdate,
+            handleRatingUpdate: () => dispatch(setRatingUpdated(true)),
             comments,
             commentsLoading,
             commentsError,
         }),
-        [
-            movie,
-            isLoading,
-            error,
-            user,
-            handleRatingUpdate,
-            comments,
-            commentsLoading,
-            commentsError,
-        ],
+        [movie, isLoading, error, user, comments, commentsLoading, commentsError],
     );
 }
